@@ -2,7 +2,17 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     id("org.jlleitschuh.gradle.ktlint")
-    alias(libs.plugins.detekt)
+    alias(libs.plugins.kover)
+}
+
+kover {
+    reports {
+        filters {
+            excludes {
+                classes("*.MainActivity", "*.ui.theme.*") // Rapor dışı bırakmak istediğiniz paketler
+            }
+        }
+    }
 }
 
 android {
