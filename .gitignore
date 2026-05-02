@@ -1,0 +1,31 @@
+# IDE (Android Studio / IntelliJ)
+*.iml
+.gradle/
+.idea/
+!.idea/codeStyles/
+!.idea/dictionaries/
+workspace.xml
+tasks.xml
+gradle.xml
+dictionaries/
+layout.attributes
+.settings/
+
+# Local configuration file (ÖZEL ŞİFRELER BURADA - KESİNLİKLE IGNORE EDİLMELİ)
+local.properties
+
+# Build files
+build/
+*/build/
+captures/
+
+# Mac / Windows OS files
+.DS_Store
+Thumbs.db
+
+# Keystore files (İleride release alırken ekleyeceğimiz imza dosyaları)
+*.jks
+*.keystore
+
+# Log Files
+*.log
