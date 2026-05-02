@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.compose)
     id("org.jlleitschuh.gradle.ktlint")
+    alias(libs.plugins.detekt)
 }
 
 android {
@@ -64,3 +65,4 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
 // Bu satırdan sonra mutlaka bir boş satır bırak!
+
