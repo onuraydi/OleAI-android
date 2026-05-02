@@ -65,4 +65,3 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
 }
 // Bu satırdan sonra mutlaka bir boş satır bırak!
-
