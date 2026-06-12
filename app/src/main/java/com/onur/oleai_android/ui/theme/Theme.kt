@@ -1,6 +1,5 @@
 package com.onur.oleai_android.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -9,35 +8,48 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = DarkPrimary,
+    onPrimary = DarkPrimaryFg,
+    secondary = DarkSecondary,
+    onSecondary = DarkSecondaryFg,
+    background = DarkBackground,
+    onBackground = DarkForeground,
+    surface = DarkCard,
+    onSurface = DarkForeground,
+    surfaceVariant = DarkMuted,
+    onSurfaceVariant = DarkMutedFg,
+    error = LightDestructive, // Assuming destructive is same across for now or close enough
+    onError = Color.White,
+    outline = DarkBorder,
+    outlineVariant = DarkBorder
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = LightPrimary,
+    onPrimary = LightPrimaryFg,
+    secondary = LightSecondary,
+    onSecondary = LightSecondaryFg,
+    background = LightBackground,
+    onBackground = LightForeground,
+    surface = LightCard,
+    onSurface = LightForeground,
+    surfaceVariant = LightMuted,
+    onSurfaceVariant = LightMutedFg,
+    error = LightDestructive,
+    onError = Color.White,
+    outline = LightBorder,
+    outlineVariant = LightBorder
 )
 
 @Composable
 fun OleAIandroidTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    // Dynamic color is DISABLED by default to enforce our custom design system
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -53,6 +65,7 @@ fun OleAIandroidTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
+        shapes = Shapes, // Enforcing custom shapes
         content = content
     )
 }
