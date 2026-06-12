@@ -4,4 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose) apply false
     id("org.jlleitschuh.gradle.ktlint") version "12.1.1"
     alias(libs.plugins.kover) apply false
+    alias(libs.plugins.hilt) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
 }

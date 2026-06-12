@@ -30,3 +30,4 @@ Thumbs.db
 # Log Files
 *.log
 /.agent
+swagger.json
