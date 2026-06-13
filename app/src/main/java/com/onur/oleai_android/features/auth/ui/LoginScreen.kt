@@ -43,6 +43,7 @@ fun LoginScreen(
     onNavigateToRegister: () -> Unit,
     onNavigateToForgotPassword: () -> Unit,
     onLoginSuccess: () -> Unit,
+    onRequireEmailVerification: (String) -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     var email by remember { mutableStateOf("") }
@@ -54,10 +55,19 @@ fun LoginScreen(
     val isLoading by viewModel.isLoading.collectAsState()
     val error by viewModel.error.collectAsState()
     val loginSuccess by viewModel.loginSuccess.collectAsState()
+    val requireEmailVerification by viewModel.requireEmailVerification.collectAsState()
 
     LaunchedEffect(loginSuccess) {
         if (loginSuccess) {
+            viewModel.clearState()
             onLoginSuccess()
+        }
+    }
+
+    LaunchedEffect(requireEmailVerification) {
+        requireEmailVerification?.let { email ->
+            viewModel.clearState()
+            onRequireEmailVerification(email)
         }
     }
 
