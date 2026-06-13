@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.onur.oleai_android.core.network.dto.LoginRequest
 import com.onur.oleai_android.core.network.dto.RegisterRequest
+import com.onur.oleai_android.core.network.dto.ForgotPasswordRequest
+import com.onur.oleai_android.core.network.dto.ResetPasswordRequest
 import com.onur.oleai_android.features.auth.data.AuthRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -28,6 +30,12 @@ class AuthViewModel @Inject constructor(
 
     private val _registerSuccess = MutableStateFlow(false)
     val registerSuccess: StateFlow<Boolean> = _registerSuccess.asStateFlow()
+
+    private val _forgotPasswordSuccess = MutableStateFlow(false)
+    val forgotPasswordSuccess: StateFlow<Boolean> = _forgotPasswordSuccess.asStateFlow()
+
+    private val _resetPasswordSuccess = MutableStateFlow(false)
+    val resetPasswordSuccess: StateFlow<Boolean> = _resetPasswordSuccess.asStateFlow()
 
     fun login(request: LoginRequest) {
         viewModelScope.launch {
@@ -59,6 +67,46 @@ class AuthViewModel @Inject constructor(
             
             _isLoading.value = false
         }
+    }
+
+    fun forgotPassword(request: ForgotPasswordRequest) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _error.value = null
+            
+            val result = authRepository.forgotPassword(request)
+            result.onSuccess {
+                _forgotPasswordSuccess.value = true
+            }.onFailure {
+                _error.value = it.message ?: "Kod gönderimi başarısız"
+            }
+            
+            _isLoading.value = false
+        }
+    }
+
+    fun resetPassword(request: ResetPasswordRequest) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            _error.value = null
+            
+            val result = authRepository.resetPassword(request)
+            result.onSuccess {
+                _resetPasswordSuccess.value = true
+            }.onFailure {
+                _error.value = it.message ?: "Şifre sıfırlama başarısız"
+            }
+            
+            _isLoading.value = false
+        }
+    }
+
+    fun clearState() {
+        _error.value = null
+        _loginSuccess.value = false
+        _registerSuccess.value = false
+        _forgotPasswordSuccess.value = false
+        _resetPasswordSuccess.value = false
     }
 
     fun clearError() {

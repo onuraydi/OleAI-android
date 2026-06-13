@@ -34,13 +34,33 @@ import androidx.compose.ui.unit.dp
 import com.onur.oleai_android.features.auth.ui.components.AuthButton
 import com.onur.oleai_android.features.auth.ui.components.AuthTextField
 
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.CircularProgressIndicator
+import com.onur.oleai_android.features.auth.viewmodel.AuthViewModel
+import com.onur.oleai_android.core.network.dto.ForgotPasswordRequest
+import com.onur.oleai_android.features.auth.ui.components.AuthErrorMessage
+
 @Composable
 fun ForgotPasswordScreen(
     onNavigateBack: () -> Unit,
-    onCodeSent: (String) -> Unit
+    onCodeSent: (String) -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     var email by remember { mutableStateOf("") }
     var emailError by remember { mutableStateOf<String?>(null) }
+
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
+    val forgotPasswordSuccess by viewModel.forgotPasswordSuccess.collectAsState()
+
+    LaunchedEffect(forgotPasswordSuccess) {
+        if (forgotPasswordSuccess) {
+            viewModel.clearState()
+            onCodeSent(email)
+        }
+    }
 
     fun validate(): Boolean {
         if (email.isBlank() || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
@@ -119,16 +139,22 @@ fun ForgotPasswordScreen(
             errorMessage = emailError
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        AuthButton(
-            text = "Kodu Gönder",
-            onClick = {
-                if (validate()) {
-                    onCodeSent(email)
+        AuthErrorMessage(error = error)
+
+        if (isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        } else {
+            AuthButton(
+                text = "Kodu Gönder",
+                onClick = {
+                    if (validate()) {
+                        viewModel.forgotPassword(ForgotPasswordRequest(email = email))
+                    }
                 }
-            }
-        )
+            )
+        }
         
         Spacer(modifier = Modifier.height(48.dp))
     }

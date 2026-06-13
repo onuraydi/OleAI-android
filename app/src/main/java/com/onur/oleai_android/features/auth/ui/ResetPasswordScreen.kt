@@ -31,16 +31,38 @@ import androidx.compose.ui.unit.dp
 import com.onur.oleai_android.features.auth.ui.components.AuthButton
 import com.onur.oleai_android.features.auth.ui.components.AuthTextField
 
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.material3.CircularProgressIndicator
+import com.onur.oleai_android.features.auth.viewmodel.AuthViewModel
+import com.onur.oleai_android.core.network.dto.ResetPasswordRequest
+import com.onur.oleai_android.features.auth.ui.components.AuthErrorMessage
+
 @Composable
 fun ResetPasswordScreen(
+    email: String,
+    otp: String,
     onNavigateBack: () -> Unit,
-    onPasswordReset: () -> Unit
+    onPasswordReset: () -> Unit,
+    viewModel: AuthViewModel = hiltViewModel()
 ) {
     var password by remember { mutableStateOf("") }
     var passwordRepeat by remember { mutableStateOf("") }
     
     var passwordError by remember { mutableStateOf<String?>(null) }
     var passwordRepeatError by remember { mutableStateOf<String?>(null) }
+
+    val isLoading by viewModel.isLoading.collectAsState()
+    val error by viewModel.error.collectAsState()
+    val resetPasswordSuccess by viewModel.resetPasswordSuccess.collectAsState()
+
+    LaunchedEffect(resetPasswordSuccess) {
+        if (resetPasswordSuccess) {
+            viewModel.clearState()
+            onPasswordReset()
+        }
+    }
 
     fun validate(): Boolean {
         var isValid = true
@@ -139,16 +161,28 @@ fun ResetPasswordScreen(
             errorMessage = passwordRepeatError
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Spacer(modifier = Modifier.height(16.dp))
 
-        AuthButton(
-            text = "Şifreyi Sıfırla",
-            onClick = {
-                if (validate()) {
-                    onPasswordReset()
+        AuthErrorMessage(error = error)
+
+        if (isLoading) {
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
+        } else {
+            AuthButton(
+                text = "Şifreyi Sıfırla",
+                onClick = {
+                    if (validate()) {
+                        viewModel.resetPassword(
+                            ResetPasswordRequest(
+                                email = email,
+                                otpCode = otp,
+                                newPassword = password
+                            )
+                        )
+                    }
                 }
-            }
-        )
+            )
+        }
         
         Spacer(modifier = Modifier.height(48.dp))
     }

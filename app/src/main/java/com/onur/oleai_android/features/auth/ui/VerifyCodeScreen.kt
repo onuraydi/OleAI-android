@@ -39,7 +39,7 @@ import kotlinx.coroutines.delay
 fun VerifyCodeScreen(
     email: String,
     onNavigateBack: () -> Unit,
-    onCodeVerified: () -> Unit,
+    onCodeVerified: (String) -> Unit,
     onResendCode: () -> Unit = {}
 ) {
     var code by remember { mutableStateOf("") }
@@ -136,7 +136,7 @@ fun VerifyCodeScreen(
             text = "Doğrula",
             onClick = {
                 if (validate()) {
-                    onCodeVerified()
+                    onCodeVerified(code)
                 }
             }
         )
