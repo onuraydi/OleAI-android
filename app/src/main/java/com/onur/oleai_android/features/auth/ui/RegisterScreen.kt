@@ -44,11 +44,13 @@ import com.onur.oleai_android.features.auth.ui.components.AuthTextField
 import com.onur.oleai_android.features.auth.viewmodel.AuthViewModel
 import com.onur.oleai_android.core.network.dto.RegisterRequest
 import com.onur.oleai_android.features.auth.ui.components.AuthErrorMessage
+import com.onur.oleai_android.core.util.isValidPassword
+import com.onur.oleai_android.core.util.getPasswordErrorMessage
 
 @Composable
 fun RegisterScreen(
     onNavigateToLogin: () -> Unit,
-    onRegisterSuccess: () -> Unit,
+    onRegisterSuccess: (String) -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     var firstName by remember { mutableStateOf("") }
@@ -74,7 +76,8 @@ fun RegisterScreen(
 
     LaunchedEffect(registerSuccess) {
         if (registerSuccess) {
-            onRegisterSuccess()
+            viewModel.clearState()
+            onRegisterSuccess(email)
         }
     }
 
@@ -102,8 +105,8 @@ fun RegisterScreen(
             isValid = false
         } else emailError = null
 
-        if (password.length < 6) {
-            passwordError = "Şifre en az 6 karakter olmalıdır"
+        if (!isValidPassword(password)) {
+            passwordError = getPasswordErrorMessage()
             isValid = false
         } else passwordError = null
 
@@ -288,7 +291,8 @@ fun RegisterScreen(
                                 firstName = firstName,
                                 lastName = lastName,
                                 email = email,
-                                password = password
+                                password = password,
+                                acceptTerms = termsAccepted
                             )
                         )
                     }

@@ -38,6 +38,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import com.onur.oleai_android.features.auth.viewmodel.AuthViewModel
 import com.onur.oleai_android.core.network.dto.ResetPasswordRequest
 import com.onur.oleai_android.features.auth.ui.components.AuthErrorMessage
+import com.onur.oleai_android.core.util.isValidPassword
+import com.onur.oleai_android.core.util.getPasswordErrorMessage
 
 @Composable
 fun ResetPasswordScreen(
@@ -67,8 +69,8 @@ fun ResetPasswordScreen(
     fun validate(): Boolean {
         var isValid = true
 
-        if (password.length < 6) {
-            passwordError = "Şifre en az 6 karakter olmalıdır"
+        if (!isValidPassword(password)) {
+            passwordError = getPasswordErrorMessage()
             isValid = false
         } else passwordError = null
 
@@ -125,7 +127,7 @@ fun ResetPasswordScreen(
         Spacer(modifier = Modifier.height(16.dp))
 
         Text(
-            text = "Lütfen yeni şifrenizi girin. Şifreniz en az 6 karakter uzunluğunda olmalıdır.",
+            text = "Lütfen yeni şifrenizi girin. ${getPasswordErrorMessage()}.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
             textAlign = TextAlign.Center
