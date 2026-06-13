@@ -12,19 +12,51 @@ import com.onur.oleai_android.features.auth.ui.RegisterScreen
 import com.onur.oleai_android.features.auth.ui.VerifyEmailScreen
 import com.onur.oleai_android.features.auth.ui.ResetPasswordScreen
 import com.onur.oleai_android.features.auth.ui.VerifyCodeScreen
+import com.onur.oleai_android.features.auth.ui.SplashScreen
 import com.onur.oleai_android.features.home.ui.HomeScreen
+import com.onur.oleai_android.features.onboarding.ui.OnboardingScreen
 
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "login") {
+    NavHost(navController = navController, startDestination = "splash") {
+        composable("splash") {
+            SplashScreen(
+                onNavigateToLogin = {
+                    navController.navigate("login") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                },
+                onNavigateToOnboarding = {
+                    navController.navigate("onboarding") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                },
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("splash") { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable("onboarding") {
+            OnboardingScreen(
+                onNavigateToHome = {
+                    navController.navigate("home") {
+                        popUpTo("onboarding") { inclusive = true }
+                    }
+                }
+            )
+        }
         composable("login") {
             LoginScreen(
                 onNavigateToRegister = { navController.navigate("register") },
                 onNavigateToForgotPassword = { navController.navigate("forgot_password") },
                 onLoginSuccess = {
-                    navController.navigate("home") {
+                    // Login başarılı olunca splash'e geri dönüp user profile kontrolü yapmasını sağlayalım.
+                    // Ya da direkt checkInitialState yapabiliriz. splash route'una gitmek en temizi.
+                    navController.navigate("splash") {
                         popUpTo("login") { inclusive = true }
                     }
                 },
