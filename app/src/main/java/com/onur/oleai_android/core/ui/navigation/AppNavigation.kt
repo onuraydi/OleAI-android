@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.onur.oleai_android.features.auth.ui.ForgotPasswordScreen
 import com.onur.oleai_android.features.auth.ui.LoginScreen
 import com.onur.oleai_android.features.auth.ui.RegisterScreen
+import com.onur.oleai_android.features.auth.ui.VerifyEmailScreen
 import com.onur.oleai_android.features.auth.ui.ResetPasswordScreen
 import com.onur.oleai_android.features.auth.ui.VerifyCodeScreen
 import com.onur.oleai_android.features.home.ui.HomeScreen
@@ -26,15 +27,33 @@ fun AppNavigation() {
                     navController.navigate("home") {
                         popUpTo("login") { inclusive = true }
                     }
+                },
+                onRequireEmailVerification = { email ->
+                    navController.navigate("verify_email/$email")
                 }
             )
         }
         composable("register") {
             RegisterScreen(
-                onNavigateToLogin = { navController.popBackStack() },
-                onRegisterSuccess = {
-                    navController.navigate("home") {
-                        popUpTo("login") { inclusive = true }
+                onNavigateToLogin = { navController.navigate("login") },
+                onRegisterSuccess = { email ->
+                    navController.navigate("verify_email/$email") {
+                        popUpTo("register") { inclusive = true }
+                    }
+                }
+            )
+        }
+        composable(
+            route = "verify_email/{email}",
+            arguments = listOf(navArgument("email") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            VerifyEmailScreen(
+                email = email,
+                onNavigateBack = { navController.popBackStack() },
+                onEmailVerified = {
+                    navController.navigate("login") {
+                        popUpTo("verify_email") { inclusive = true }
                     }
                 }
             )

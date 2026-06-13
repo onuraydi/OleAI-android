@@ -11,6 +11,11 @@ import com.onur.oleai_android.core.network.dto.ForgotPasswordRequest
 import com.onur.oleai_android.core.network.dto.ForgotPasswordCommand
 import com.onur.oleai_android.core.network.dto.ResetPasswordRequest
 import com.onur.oleai_android.core.network.dto.ResetPasswordCommand
+import com.onur.oleai_android.core.network.dto.VerifyEmailRequest
+import com.onur.oleai_android.core.network.dto.VerifyEmailCommand
+import com.onur.oleai_android.core.network.dto.ResendOtpCodeRequest
+import com.onur.oleai_android.core.network.dto.ResendOtpCommand
+import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -22,14 +27,8 @@ class AuthRepository @Inject constructor(
         return try {
             val response = apiService.login(LoginCommand(request))
             Result.success(response)
-        } catch (e: HttpException) {
-            val message = when(e.code()) {
-                400 -> "E-posta veya şifre hatalı"
-                else -> e.message()
-            }
-            Result.failure(Exception(message))
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(handleException(e))
         }
     }
 
@@ -38,7 +37,7 @@ class AuthRepository @Inject constructor(
             val response = apiService.register(RegisterCommand(request))
             Result.success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(handleException(e))
         }
     }
 
@@ -47,7 +46,7 @@ class AuthRepository @Inject constructor(
             val response = apiService.forgotPassword(ForgotPasswordCommand(request))
             Result.success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(handleException(e))
         }
     }
 
@@ -56,7 +55,50 @@ class AuthRepository @Inject constructor(
             val response = apiService.resetPassword(ResetPasswordCommand(request))
             Result.success(response)
         } catch (e: Exception) {
-            Result.failure(e)
+            Result.failure(handleException(e))
         }
     }
+
+    suspend fun verifyEmail(request: VerifyEmailRequest): Result<AuthResponse> {
+        return try {
+            val response = apiService.verifyEmail(VerifyEmailCommand(request))
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(handleException(e))
+        }
+    }
+
+    suspend fun resendOtp(request: ResendOtpCodeRequest): Result<AuthResponse> {
+        return try {
+            val response = apiService.resendOtp(ResendOtpCommand(request))
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(handleException(e))
+        }
+    }
+
+    private fun handleException(e: Exception): Exception {
+        if (e is HttpException) {
+            val errorBody = e.response()?.errorBody()?.string()
+            var message = "Bir hata oluştu"
+            try {
+                if (!errorBody.isNullOrBlank()) {
+                    val jsonObject = JSONObject(errorBody)
+                    if (jsonObject.has("detail")) {
+                        message = jsonObject.getString("detail")
+                    } else if (jsonObject.has("message")) {
+                        message = jsonObject.getString("message")
+                    }
+                } else if (e.code() == 400) {
+                    message = "Geçersiz istek (400)"
+                }
+                return Exception(message)
+            } catch (jsonEx: Exception) {
+                return Exception(if (e.code() == 400) "Geçersiz istek" else e.message())
+            }
+        }
+        return e
+    }
 }
+
+
