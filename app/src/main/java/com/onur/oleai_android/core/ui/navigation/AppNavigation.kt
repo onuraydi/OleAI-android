@@ -58,13 +58,23 @@ fun AppNavigation() {
             VerifyCodeScreen(
                 email = email,
                 onNavigateBack = { navController.popBackStack() },
-                onCodeVerified = {
-                    navController.navigate("reset_password")
+                onCodeVerified = { otp ->
+                    navController.navigate("reset_password/$email/$otp")
                 }
             )
         }
-        composable("reset_password") {
+        composable(
+            route = "reset_password/{email}/{otp}",
+            arguments = listOf(
+                navArgument("email") { type = NavType.StringType },
+                navArgument("otp") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
+            val email = backStackEntry.arguments?.getString("email") ?: ""
+            val otp = backStackEntry.arguments?.getString("otp") ?: ""
             ResetPasswordScreen(
+                email = email,
+                otp = otp,
                 onNavigateBack = { navController.popBackStack() },
                 onPasswordReset = {
                     navController.navigate("login") {

@@ -7,6 +7,10 @@ import retrofit2.HttpException
 import com.onur.oleai_android.core.network.dto.AuthResponse
 import com.onur.oleai_android.core.network.dto.LoginCommand
 import com.onur.oleai_android.core.network.dto.RegisterCommand
+import com.onur.oleai_android.core.network.dto.ForgotPasswordRequest
+import com.onur.oleai_android.core.network.dto.ForgotPasswordCommand
+import com.onur.oleai_android.core.network.dto.ResetPasswordRequest
+import com.onur.oleai_android.core.network.dto.ResetPasswordCommand
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -32,6 +36,24 @@ class AuthRepository @Inject constructor(
     suspend fun register(request: RegisterRequest): Result<AuthResponse> {
         return try {
             val response = apiService.register(RegisterCommand(request))
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun forgotPassword(request: ForgotPasswordRequest): Result<AuthResponse> {
+        return try {
+            val response = apiService.forgotPassword(ForgotPasswordCommand(request))
+            Result.success(response)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
+    suspend fun resetPassword(request: ResetPasswordRequest): Result<AuthResponse> {
+        return try {
+            val response = apiService.resetPassword(ResetPasswordCommand(request))
             Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)

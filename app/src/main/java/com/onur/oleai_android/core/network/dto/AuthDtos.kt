@@ -30,3 +30,25 @@ data class LoginCommand(
 data class RegisterCommand(
     val request: RegisterRequest
 )
+
+@Serializable
+data class ForgotPasswordRequest(
+    val email: String
+)
+
+@Serializable
+data class ForgotPasswordCommand(
+    val request: ForgotPasswordRequest
+)
+
+@Serializable
+data class ResetPasswordRequest(
+    val email: String,
+    val otpCode: String,
+    val newPassword: String
+)
+
+@Serializable
+data class ResetPasswordCommand(
+    val request: ResetPasswordRequest
+)
