@@ -19,6 +19,7 @@ fun SplashScreen(
     onNavigateToLogin: () -> Unit,
     onNavigateToOnboarding: () -> Unit,
     onNavigateToHome: () -> Unit,
+    onNavigateToPersonalization: () -> Unit,
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     val authState by userViewModel.authState.collectAsState()

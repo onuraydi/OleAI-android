@@ -28,13 +28,15 @@ import androidx.compose.ui.platform.LocalContext
 import android.widget.Toast
 import com.onur.oleai_android.R
 import com.onur.oleai_android.features.profile.viewmodel.UserViewModel
+import com.onur.oleai_android.core.ui.utils.IconMapper
 import kotlinx.coroutines.launch
 
 data class OnboardingPage(
     val imageRes: Int,
     val badgeText: String,
     val title: String,
-    val description: String
+    val description: String,
+    val iconName: String
 )
 
 val onboardingPages = listOf(
@@ -42,19 +44,22 @@ val onboardingPages = listOf(
         imageRes = R.drawable.img_onboarding_1,
         badgeText = "YAPAY ZEKA",
         title = "AI Mutfak Sihri",
-        description = "Mutfağındaki malzemelere göre sana özel akıllı tarif önerileri al. OleAI, senin için en uygun lezzetleri saniyeler içinde keşfeder."
+        description = "Mutfağındaki malzemelere göre sana özel akıllı tarif önerileri al. OleAI, senin için en uygun lezzetleri saniyeler içinde keşfeder.",
+        iconName = "sparkles"
     ),
     OnboardingPage(
         imageRes = R.drawable.img_onboarding_2,
         badgeText = "DOLABIM",
         title = "Akıllı Dolabım",
-        description = "Elindeki malzemeleri dijital dolabına ekle, son kullanma tarihlerini takip et ve israfı önle. Dolabında ne varsa, tarifinde o var!"
+        description = "Elindeki malzemeleri dijital dolabına ekle, son kullanma tarihlerini takip et ve israfı önle. Dolabında ne varsa, tarifinde o var!",
+        iconName = "refrigerator"
     ),
     OnboardingPage(
         imageRes = R.drawable.img_onboarding_3,
         badgeText = "TOPLULUK",
         title = "Paylaş ve Keşfet",
-        description = "Yemek tutkunları topluluğuna katıl. Kendi tariflerini paylaş, popüler trendleri takip et ve dünya mutfaklarından ilham al."
+        description = "Yemek tutkunları topluluğuna katıl. Kendi tariflerini paylaş, popüler trendleri takip et ve dünya mutfaklarından ilham al.",
+        iconName = "users"
     )
 )
 
@@ -62,6 +67,8 @@ val onboardingPages = listOf(
 @Composable
 fun OnboardingScreen(
     onNavigateToHome: () -> Unit,
+    onNavigateToLogin: () -> Unit,
+    onNavigateToPersonalization: () -> Unit,
     userViewModel: UserViewModel = hiltViewModel()
 ) {
     val pagerState = rememberPagerState(pageCount = { onboardingPages.size })
@@ -78,23 +85,44 @@ fun OnboardingScreen(
         }
     }
 
-    // Eğer onboarding başarıyla güncellendiyse anasayfaya yönlendir
-    LaunchedEffect(onboardingCompleted) {
-        if (onboardingCompleted) {
-            onNavigateToHome()
-        }
-    }
-
-    Box(
+    Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(Color(0xFF0F0F0F)) // Koyu arkaplan
+            .background(MaterialTheme.colorScheme.background)
     ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 24.dp, vertical = 16.dp)
+                .statusBarsPadding(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "OleAI",
+                color = MaterialTheme.colorScheme.primary,
+                style = MaterialTheme.typography.titleLarge.copy(
+                    fontWeight = FontWeight.ExtraBold,
+                    letterSpacing = 1.sp
+                )
+            )
+            TextButton(
+                onClick = onNavigateToPersonalization,
+                modifier = Modifier.wrapContentWidth()
+            ) {
+                Text(
+                    text = "Atla",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+                )
+            }
+        }
 
-        // Orta Kısım: Horizontal Pager
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.weight(1f)
         ) { page ->
             val item = onboardingPages[page]
             Column(
@@ -104,7 +132,6 @@ fun OnboardingScreen(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                // Görsel ve Badge
                 Box(
                     contentAlignment = Alignment.BottomEnd,
                     modifier = Modifier.padding(bottom = 32.dp)
@@ -118,131 +145,102 @@ fun OnboardingScreen(
                         contentScale = ContentScale.Crop
                     )
                     
-                    // Badge
                     Box(
                         modifier = Modifier
-                            .offset(y = 12.dp)
-                            .background(Color(0xFF1E2319), RoundedCornerShape(8.dp))
+                            .align(Alignment.BottomEnd)
+                            .padding(16.dp)
+                            .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(8.dp))
                             .padding(horizontal = 12.dp, vertical = 6.dp)
                     ) {
-                        Text(
-                            text = item.badgeText,
-                            color = Color(0xFF8DBE55),
-                            fontSize = 10.sp,
-                            fontWeight = FontWeight.Bold
-                        )
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.spacedBy(6.dp)
+                        ) {
+                            Icon(
+                                imageVector = IconMapper.getIconByName(item.iconName),
+                                contentDescription = null,
+                                tint = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Text(
+                                text = item.badgeText,
+                                color = MaterialTheme.colorScheme.primary,
+                                style = MaterialTheme.typography.labelSmall.copy(fontWeight = FontWeight.Bold)
+                            )
+                        }
                     }
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // Başlık
                 Text(
                     text = item.title,
-                    color = Color.White,
-                    fontSize = 28.sp,
-                    fontWeight = FontWeight.Bold,
+                    style = MaterialTheme.typography.headlineLarge.copy(
+                        color = MaterialTheme.colorScheme.onBackground,
+                        fontWeight = FontWeight.ExtraBold
+                    ),
                     textAlign = TextAlign.Center
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Açıklama
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
                 Text(
                     text = item.description,
-                    color = Color.Gray,
-                    fontSize = 14.sp,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 22.sp
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.onBackground.copy(alpha = 0.7f),
+                        lineHeight = 22.sp
+                    ),
+                    textAlign = TextAlign.Center
                 )
             }
         }
 
-        // Alt Kısım: Pager Indicator ve Buton
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 48.dp)
+                .padding(24.dp)
                 .navigationBarsPadding(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Pager Dots
             Row(
                 modifier = Modifier.padding(bottom = 32.dp),
-                horizontalArrangement = Arrangement.Center
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 repeat(onboardingPages.size) { iteration ->
-                    val color = if (pagerState.currentPage == iteration) Color(0xFF8DBE55) else Color.DarkGray
-                    val width = if (pagerState.currentPage == iteration) 16.dp else 8.dp
+                    val color = if (pagerState.currentPage == iteration) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground.copy(alpha = 0.3f)
                     Box(
                         modifier = Modifier
                             .padding(2.dp)
                             .clip(CircleShape)
                             .background(color)
-                            .height(8.dp)
-                            .width(width)
+                            .size(if (pagerState.currentPage == iteration) 10.dp else 8.dp)
                     )
                 }
             }
 
-            // Buton
             Button(
                 onClick = {
-                    if (pagerState.currentPage < onboardingPages.size - 1) {
-                        coroutineScope.launch {
+                    coroutineScope.launch {
+                        if (pagerState.currentPage < onboardingPages.size - 1) {
                             pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                        } else {
+                            onNavigateToPersonalization()
                         }
-                    } else {
-                        userViewModel.completeOnboarding()
                     }
                 },
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8DBE55)),
                 modifier = Modifier
-                    .fillMaxWidth(0.6f)
-                    .height(50.dp),
-                shape = RoundedCornerShape(25.dp)
+                    .fillMaxWidth()
+                    .height(56.dp),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
+                shape = RoundedCornerShape(16.dp)
             ) {
                 Text(
-                    text = if (pagerState.currentPage == onboardingPages.size - 1) "Hadi Başlayalım!" else "Sıradaki",
-                    color = Color.Black,
-                    fontWeight = FontWeight.Bold
-                )
-                if (pagerState.currentPage < onboardingPages.size - 1) {
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                        contentDescription = "İleri",
-                        tint = Color.Black,
-                        modifier = Modifier.size(16.dp)
+                    text = if (pagerState.currentPage == onboardingPages.size - 1) "Devam Et" else "İlerle",
+                    style = MaterialTheme.typography.titleMedium.copy(
+                        color = MaterialTheme.colorScheme.onPrimary,
+                        fontWeight = FontWeight.Bold
                     )
-                }
-            }
-        }
-
-        // Üst Kısım: Logo ve Geç Butonu (En üstte çizilmesi için Box'ın en sonuna eklendi)
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 24.dp, vertical = 32.dp)
-                .statusBarsPadding(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "OleAI",
-                color = Color(0xFF8DBE55),
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold
-            )
-            TextButton(
-                onClick = { userViewModel.completeOnboarding() },
-                modifier = Modifier
-            ) {
-                Text(
-                    text = "Geç",
-                    color = Color.Gray,
-                    fontSize = 14.sp
                 )
             }
         }

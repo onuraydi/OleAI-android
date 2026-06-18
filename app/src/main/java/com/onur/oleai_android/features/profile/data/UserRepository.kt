@@ -4,6 +4,7 @@ import com.onur.oleai_android.core.network.ApiService
 import com.onur.oleai_android.core.network.dto.UpdateProfileResponse
 import com.onur.oleai_android.core.network.dto.UserProfileResponse
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.HttpException
 import org.json.JSONObject
@@ -26,10 +27,10 @@ class UserRepository @Inject constructor(
     suspend fun setOnboardedStatus(isOnboarded: Boolean): Result<UpdateProfileResponse> {
         return try {
             // Convert boolean to RequestBody for multipart/form-data
-            val isOnboardedBody = isOnboarded.toString().toRequestBody("text/plain".toMediaTypeOrNull())
+            val isOnboardedPart = MultipartBody.Part.createFormData("IsOnboarded", isOnboarded.toString())
             
             val response = apiService.updateProfile(
-                isOnboarded = isOnboardedBody
+                isOnboarded = isOnboardedPart
             )
             Result.success(response)
         } catch (e: Exception) {

@@ -55,23 +55,9 @@ class UserViewModel @Inject constructor(
     }
 
     fun completeOnboarding() {
-        viewModelScope.launch {
-            _isLoading.value = true
-            _error.value = null
-            
-            val result = userRepository.setOnboardedStatus(true)
-            result.onSuccess {
-                _onboardingCompleted.value = true
-                // Profil nesnemizi güncelleyelim
-                _userProfile.value = _userProfile.value?.copy(isOnboarded = true)
-            }.onFailure {
-                _error.value = it.message ?: "Onboarding durumu güncellenemedi."
-            }
-            
-            _isLoading.value = false
-        }
+        _onboardingCompleted.value = true
+        _userProfile.value = _userProfile.value?.copy(isOnboarded = true)
     }
-
     fun clearState() {
         _error.value = null
         _onboardingCompleted.value = false
