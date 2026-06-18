@@ -20,6 +20,11 @@ import com.onur.oleai_android.core.network.dto.UpdateUserPreferencesRequest
 import com.onur.oleai_android.core.network.dto.UpdateUserAllergiesRequest
 import com.onur.oleai_android.core.network.dto.PopularDislikedIngredientResponse
 import com.onur.oleai_android.core.network.dto.UpdateUserDislikedIngredientsRequest
+import com.onur.oleai_android.core.network.dto.RecipeListItemResponse
+import com.onur.oleai_android.core.network.dto.PaginatedResponse
+import com.onur.oleai_android.core.network.dto.RecipeCategoryResponse
+import com.onur.oleai_android.core.network.dto.MyPantryItemResponse
+import com.onur.oleai_android.core.network.dto.ShoppingListItemResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.GET
@@ -84,6 +89,28 @@ interface ApiService {
 
     @PUT("/api/users/me/disliked-ingredients")
     suspend fun updateDislikedIngredients(@Body request: UpdateUserDislikedIngredientsRequest): UpdateProfileResponse
+
+    @GET("/api/recipes")
+    suspend fun getPublishedRecipes(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("searchQuery") searchQuery: String? = null,
+        @Query("categoryId") categoryId: Int? = null,
+        @Query("maxPrepTime") maxPrepTime: Int? = null,
+        @Query("minRating") minRating: Double? = null,
+        @Query("maxDifficulty") maxDifficulty: Int? = null,
+        @Query("sortBy") sortBy: String? = null,
+        @Query("isForYou") isForYou: Boolean? = null
+    ): PaginatedResponse<RecipeListItemResponse>
+
+    @GET("/api/pantry")
+    suspend fun getMyPantry(): List<MyPantryItemResponse>
+
+    @GET("/api/shopping-list")
+    suspend fun getMyShoppingList(): List<ShoppingListItemResponse>
+
+    @GET("/api/RecipeTaxonomy/categories")
+    suspend fun getRecipeCategories(): List<RecipeCategoryResponse>
 
     @POST("/api/Auth/refresh-token")
     fun refreshToken(): Call<Unit>
