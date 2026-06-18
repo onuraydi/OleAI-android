@@ -19,6 +19,8 @@ kotlinxSerializationJson = "1.6.3"
 hiltNavigationCompose = "1.2.0"
 coil = "2.6.0"
 composeLucide = "1.1.0"
+paging = "3.3.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -49,6 +51,8 @@ okhttp-logging = { group = "com.squareup.okhttp3", name = "logging-interceptor",
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 composables-icons-lucide = { group = "com.composables", name = "icons-lucide", version.ref = "composeLucide" }
+androidx-paging-runtime = { group = "androidx.paging", name = "paging-runtime", version.ref = "paging" }
+androidx-paging-compose = { group = "androidx.paging", name = "paging-compose", version.ref = "paging" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
