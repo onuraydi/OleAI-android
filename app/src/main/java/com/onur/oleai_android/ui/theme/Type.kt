@@ -8,28 +8,42 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.onur.oleai_android.R
 
-val OutfitFontFamily = FontFamily(
-    Font(R.font.outfit, FontWeight.Normal)
+import androidx.compose.ui.text.googlefonts.GoogleFont
+import androidx.compose.ui.text.googlefonts.Font
+
+val provider = GoogleFont.Provider(
+    providerAuthority = "com.google.android.gms.fonts",
+    providerPackage = "com.google.android.gms",
+    certificates = R.array.com_google_android_gms_fonts_certs
 )
 
-val OutfitFontFeatureSettings = "\"rlig\" 1, \"calt\" 1"
+val OutfitFontName = GoogleFont("Outfit")
+
+val OutfitFontFamily = FontFamily(
+    Font(googleFont = OutfitFontName, fontProvider = provider, weight = FontWeight.Light),
+    Font(googleFont = OutfitFontName, fontProvider = provider, weight = FontWeight.Normal),
+    Font(googleFont = OutfitFontName, fontProvider = provider, weight = FontWeight.Medium),
+    Font(googleFont = OutfitFontName, fontProvider = provider, weight = FontWeight.SemiBold),
+    Font(googleFont = OutfitFontName, fontProvider = provider, weight = FontWeight.Bold),
+    Font(googleFont = OutfitFontName, fontProvider = provider, weight = FontWeight.ExtraBold)
+)
 
 val defaultTypography = Typography()
 
 val Typography = Typography(
-    displayLarge = defaultTypography.displayLarge.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    displayMedium = defaultTypography.displayMedium.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    displaySmall = defaultTypography.displaySmall.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    headlineLarge = defaultTypography.headlineLarge.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    headlineMedium = defaultTypography.headlineMedium.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    headlineSmall = defaultTypography.headlineSmall.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    titleLarge = defaultTypography.titleLarge.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    titleMedium = defaultTypography.titleMedium.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    titleSmall = defaultTypography.titleSmall.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    bodyLarge = defaultTypography.bodyLarge.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    bodyMedium = defaultTypography.bodyMedium.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    bodySmall = defaultTypography.bodySmall.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    labelLarge = defaultTypography.labelLarge.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    labelMedium = defaultTypography.labelMedium.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings),
-    labelSmall = defaultTypography.labelSmall.copy(fontFamily = OutfitFontFamily, fontFeatureSettings = OutfitFontFeatureSettings)
+    displayLarge = defaultTypography.displayLarge.copy(fontFamily = OutfitFontFamily),
+    displayMedium = defaultTypography.displayMedium.copy(fontFamily = OutfitFontFamily),
+    displaySmall = defaultTypography.displaySmall.copy(fontFamily = OutfitFontFamily),
+    headlineLarge = defaultTypography.headlineLarge.copy(fontFamily = OutfitFontFamily),
+    headlineMedium = defaultTypography.headlineMedium.copy(fontFamily = OutfitFontFamily),
+    headlineSmall = defaultTypography.headlineSmall.copy(fontFamily = OutfitFontFamily),
+    titleLarge = defaultTypography.titleLarge.copy(fontFamily = OutfitFontFamily),
+    titleMedium = defaultTypography.titleMedium.copy(fontFamily = OutfitFontFamily),
+    titleSmall = defaultTypography.titleSmall.copy(fontFamily = OutfitFontFamily),
+    bodyLarge = defaultTypography.bodyLarge.copy(fontFamily = OutfitFontFamily),
+    bodyMedium = defaultTypography.bodyMedium.copy(fontFamily = OutfitFontFamily),
+    bodySmall = defaultTypography.bodySmall.copy(fontFamily = OutfitFontFamily),
+    labelLarge = defaultTypography.labelLarge.copy(fontFamily = OutfitFontFamily),
+    labelMedium = defaultTypography.labelMedium.copy(fontFamily = OutfitFontFamily),
+    labelSmall = defaultTypography.labelSmall.copy(fontFamily = OutfitFontFamily)
 )
