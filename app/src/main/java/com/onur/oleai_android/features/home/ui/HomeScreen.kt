@@ -52,6 +52,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -74,6 +75,7 @@ import com.onur.oleai_android.features.home.ui.components.ShoppingProgressCard
 import com.onur.oleai_android.features.home.viewmodel.HomeUiState
 import com.onur.oleai_android.features.home.viewmodel.HomeViewModel
 import com.onur.oleai_android.features.discover.ui.DiscoverScreen
+import com.onur.oleai_android.features.pantry.ui.PantryScreen
 
 data class BottomNavItem(
     val label: String,
@@ -94,7 +96,7 @@ fun HomeScreen(
             BottomNavItem("Ana Sayfa", Icons.Filled.Home, Icons.Outlined.Home),
             BottomNavItem("Keşfet", Icons.Filled.Explore, Icons.Outlined.Explore),
             BottomNavItem("AI Asistan", Icons.Filled.AutoAwesome, Icons.Filled.AutoAwesome),
-            BottomNavItem("Kilerim", Icons.Filled.Kitchen, Icons.Outlined.Kitchen),
+            BottomNavItem("Dolabım", Icons.Filled.Kitchen, Icons.Outlined.Kitchen),
             BottomNavItem("Profil", Icons.Filled.Person, Icons.Outlined.Person)
         )
     }
@@ -139,8 +141,8 @@ fun HomeScreen(
         bottomBar = {
             NavigationBar(
                 containerColor = MaterialTheme.colorScheme.surface,
-                tonalElevation = 0.dp
-            ) {
+                    tonalElevation = 0.dp
+                ) {
                 navItems.forEachIndexed { index, item ->
                     val isAiTab = index == 2
 
@@ -217,10 +219,7 @@ fun HomeScreen(
                 icon = Icons.Filled.AutoAwesome,
                 modifier = Modifier.padding(innerPadding)
             )
-            3 -> PlaceholderTab(
-                title = "Kilerim",
-                subtitle = "Dolabındaki malzemeleri yönet",
-                icon = Icons.Filled.Kitchen,
+            3 -> PantryScreen(
                 modifier = Modifier.padding(innerPadding)
             )
             4 -> PlaceholderTab(
