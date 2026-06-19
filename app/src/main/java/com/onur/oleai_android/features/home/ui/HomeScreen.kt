@@ -73,6 +73,7 @@ import com.onur.oleai_android.features.home.ui.components.RecipeCard
 import com.onur.oleai_android.features.home.ui.components.ShoppingProgressCard
 import com.onur.oleai_android.features.home.viewmodel.HomeUiState
 import com.onur.oleai_android.features.home.viewmodel.HomeViewModel
+import com.onur.oleai_android.features.discover.ui.DiscoverScreen
 
 data class BottomNavItem(
     val label: String,
@@ -207,10 +208,7 @@ fun HomeScreen(
                 uiState = uiState,
                 modifier = Modifier.padding(innerPadding)
             )
-            1 -> PlaceholderTab(
-                title = "Keşfet",
-                subtitle = "Binlerce tarifi keşfet, yeni lezzetler dene",
-                icon = Icons.Filled.Explore,
+            1 -> DiscoverScreen(
                 modifier = Modifier.padding(innerPadding)
             )
             2 -> PlaceholderTab(
