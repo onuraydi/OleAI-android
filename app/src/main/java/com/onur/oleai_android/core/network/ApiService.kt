@@ -23,6 +23,7 @@ import com.onur.oleai_android.core.network.dto.UpdateUserDislikedIngredientsRequ
 import com.onur.oleai_android.core.network.dto.RecipeListItemResponse
 import com.onur.oleai_android.core.network.dto.PaginatedResponse
 import com.onur.oleai_android.core.network.dto.RecipeCategoryResponse
+import com.onur.oleai_android.core.network.dto.TagDto
 import com.onur.oleai_android.core.network.dto.MyPantryItemResponse
 import com.onur.oleai_android.core.network.dto.ShoppingListItemResponse
 import okhttp3.MultipartBody
@@ -94,11 +95,12 @@ interface ApiService {
     suspend fun getPublishedRecipes(
         @Query("page") page: Int? = null,
         @Query("size") size: Int? = null,
-        @Query("searchQuery") searchQuery: String? = null,
+        @Query("searchTerm") searchTerm: String? = null,
         @Query("categoryId") categoryId: Int? = null,
-        @Query("maxPrepTime") maxPrepTime: Int? = null,
+        @Query("maxTotalTime") maxTotalTime: Int? = null,
         @Query("minRating") minRating: Double? = null,
-        @Query("maxDifficulty") maxDifficulty: Int? = null,
+        @Query("difficulty") difficulty: Int? = null,
+        @Query("tagId") tagId: Int? = null,
         @Query("sortBy") sortBy: String? = null,
         @Query("isForYou") isForYou: Boolean? = null
     ): PaginatedResponse<RecipeListItemResponse>
@@ -111,6 +113,9 @@ interface ApiService {
 
     @GET("/api/RecipeTaxonomy/categories")
     suspend fun getRecipeCategories(): List<RecipeCategoryResponse>
+
+    @GET("/api/RecipeTaxonomy/tags")
+    suspend fun getRecipeTags(): List<TagDto>
 
     @POST("/api/Auth/refresh-token")
     fun refreshToken(): Call<Unit>
