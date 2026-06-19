@@ -25,7 +25,8 @@ data class IngredientSearchResultResponse(
     val isAlias: Boolean = false,
     val categoryId: String? = null,
     val categoryName: String? = null,
-    val categoryIconName: String? = null
+    val categoryIconName: String? = null,
+    val unitFamily: String = "Count" // Default Count
 )
 
 @Serializable

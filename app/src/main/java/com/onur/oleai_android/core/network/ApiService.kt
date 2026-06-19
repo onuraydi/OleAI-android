@@ -24,6 +24,9 @@ import com.onur.oleai_android.core.network.dto.RecipeListItemResponse
 import com.onur.oleai_android.core.network.dto.PaginatedResponse
 import com.onur.oleai_android.core.network.dto.RecipeCategoryResponse
 import com.onur.oleai_android.core.network.dto.TagDto
+import com.onur.oleai_android.core.network.dto.AddMultipleUserIngredientsCommand
+import com.onur.oleai_android.core.network.dto.AddMultipleUserIngredientsRequest
+import com.onur.oleai_android.core.network.dto.AddedUserIngredientResponse
 import com.onur.oleai_android.core.network.dto.MyPantryItemResponse
 import com.onur.oleai_android.core.network.dto.ShoppingListItemResponse
 import okhttp3.MultipartBody
@@ -76,8 +79,11 @@ interface ApiService {
     @GET("/api/pantry/search")
     suspend fun searchIngredients(@Query("keyword") keyword: String): List<IngredientSearchResultResponse>
 
-    @GET("/api/pantry/popular-by-category")
+    @GET("/api/Pantry/popular-by-category")
     suspend fun getPopularIngredientsByCategory(): List<CategorizedPopularIngredientsResponse>
+
+    @GET("/api/IngredientCategories")
+    suspend fun getIngredientCategories(): List<com.onur.oleai_android.core.network.dto.IngredientCategoryResponse>
 
     @GET("/api/pantry/popular-dislikes")
     suspend fun getPopularDislikedIngredients(): List<PopularDislikedIngredientResponse>
@@ -108,8 +114,27 @@ interface ApiService {
     @GET("/api/pantry")
     suspend fun getMyPantry(): List<MyPantryItemResponse>
 
+    @POST("api/pantry/bulk")
+    suspend fun addMultipleIngredients(@Body request: AddMultipleUserIngredientsCommand): List<AddedUserIngredientResponse>
+
+    @PUT("/api/Pantry/{id}")
+    suspend fun updateIngredientQuantity(
+        @retrofit2.http.Path("id") id: String,
+        @Body request: com.onur.oleai_android.core.network.dto.UpdateUserIngredientRequest
+    ): com.onur.oleai_android.core.network.dto.GenericMessageResponse
+
+    @retrofit2.http.DELETE("/api/Pantry/{id}")
+    suspend fun deleteIngredient(
+        @retrofit2.http.Path("id") id: String
+    ): com.onur.oleai_android.core.network.dto.GenericMessageResponse
+
     @GET("/api/shopping-list")
     suspend fun getMyShoppingList(): List<ShoppingListItemResponse>
+
+    @POST("/api/shopping-list")
+    suspend fun addShoppingListItem(
+        @Body request: com.onur.oleai_android.core.network.dto.AddShoppingListItemRequest
+    ): ShoppingListItemResponse
 
     @GET("/api/RecipeTaxonomy/categories")
     suspend fun getRecipeCategories(): List<RecipeCategoryResponse>
