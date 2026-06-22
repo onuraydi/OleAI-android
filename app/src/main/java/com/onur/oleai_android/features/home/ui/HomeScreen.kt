@@ -96,8 +96,8 @@ fun HomeScreen(
             BottomNavItem("Ana Sayfa", Icons.Filled.Home, Icons.Outlined.Home),
             BottomNavItem("Keşfet", Icons.Filled.Explore, Icons.Outlined.Explore),
             BottomNavItem("AI Asistan", Icons.Filled.AutoAwesome, Icons.Filled.AutoAwesome),
-            BottomNavItem("Dolabım", Icons.Filled.Kitchen, Icons.Outlined.Kitchen),
-            BottomNavItem("Profil", Icons.Filled.Person, Icons.Outlined.Person)
+            BottomNavItem("Listem", Icons.Filled.ShoppingCart, Icons.Outlined.ShoppingCart),
+            BottomNavItem("Dolabım", Icons.Filled.Kitchen, Icons.Outlined.Kitchen)
         )
     }
 
@@ -130,6 +130,13 @@ fun HomeScreen(
                                 tint = MaterialTheme.colorScheme.onBackground
                             )
                         }
+                    }
+                    IconButton(onClick = { selectedTab = 5 }) {
+                        Icon(
+                            imageVector = Icons.Outlined.Person,
+                            contentDescription = "Profil",
+                            tint = MaterialTheme.colorScheme.onBackground
+                        )
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
@@ -219,10 +226,13 @@ fun HomeScreen(
                 icon = Icons.Filled.AutoAwesome,
                 modifier = Modifier.padding(innerPadding)
             )
-            3 -> PantryScreen(
+            3 -> com.onur.oleai_android.features.shoppinglist.ui.ShoppingListScreen(
                 modifier = Modifier.padding(innerPadding)
             )
-            4 -> PlaceholderTab(
+            4 -> PantryScreen(
+                modifier = Modifier.padding(innerPadding)
+            )
+            5 -> PlaceholderTab(
                 title = "Profil",
                 subtitle = "Hesap ayarlarını düzenle",
                 icon = Icons.Filled.Person,
