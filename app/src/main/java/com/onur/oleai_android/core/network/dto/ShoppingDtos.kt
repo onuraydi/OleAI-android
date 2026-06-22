@@ -1,6 +1,20 @@
-package com.onur.oleai_android.core.network.dto
+﻿package com.onur.oleai_android.core.network.dto
 
 import kotlinx.serialization.Serializable
+
+@Serializable
+data class MyShoppingListItemResponse(
+    val id: String,
+    val ingredientId: String? = null,
+    val ingredientRequestId: String? = null,
+    val ingredientName: String,
+    val categoryName: String,
+    val categoryIconName: String,
+    val quantity: Double,
+    val unit: String = "",
+    val isPurchased: Boolean,
+    val isPendingApproval: Boolean = false
+)
 
 @Serializable
 data class ShoppingListItemResponse(
@@ -16,3 +30,15 @@ data class AddShoppingListItemRequest(
     val quantity: Double,
     val unit: Int
 )
+
+@Serializable
+data class AddMultipleShoppingListItemsRequest(
+    val items: List<AddShoppingListItemRequest>
+)
+
+@Serializable
+data class UpdateShoppingListItemRequest(
+    val newQuantity: Double,
+    val newUnit: Int
+)
+

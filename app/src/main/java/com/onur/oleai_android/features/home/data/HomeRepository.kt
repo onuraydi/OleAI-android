@@ -38,7 +38,7 @@ class HomeRepository @Inject constructor(
         return apiService.getMyPantry()
     }
 
-    suspend fun getMyShoppingList(): List<ShoppingListItemResponse> {
+    suspend fun getMyShoppingList(): List<com.onur.oleai_android.core.network.dto.MyShoppingListItemResponse> {
         return apiService.getMyShoppingList()
     }
 

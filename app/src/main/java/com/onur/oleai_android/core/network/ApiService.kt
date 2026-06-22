@@ -1,8 +1,7 @@
 package com.onur.oleai_android.core.network
 
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 import com.onur.oleai_android.core.network.dto.LoginCommand
 import com.onur.oleai_android.core.network.dto.RegisterCommand
 import com.onur.oleai_android.core.network.dto.ForgotPasswordCommand
@@ -129,12 +128,27 @@ interface ApiService {
     ): com.onur.oleai_android.core.network.dto.GenericMessageResponse
 
     @GET("/api/shopping-list")
-    suspend fun getMyShoppingList(): List<ShoppingListItemResponse>
+    suspend fun getMyShoppingList(): List<com.onur.oleai_android.core.network.dto.MyShoppingListItemResponse>
 
     @POST("/api/shopping-list")
     suspend fun addShoppingListItem(
         @Body request: com.onur.oleai_android.core.network.dto.AddShoppingListItemRequest
-    ): ShoppingListItemResponse
+    ): com.onur.oleai_android.core.network.dto.ShoppingListItemResponse
+
+    @POST("/api/shopping-list/bulk")
+    suspend fun addMultipleShoppingListItems(@Body request: com.onur.oleai_android.core.network.dto.AddMultipleShoppingListItemsRequest)
+
+    @PUT("/api/shopping-list/{id}")
+    suspend fun updateShoppingListItem(@Path("id") id: String, @Body request: com.onur.oleai_android.core.network.dto.UpdateShoppingListItemRequest)
+
+    @PATCH("/api/shopping-list/{id}/purchase")
+    suspend fun markAsPurchased(@Path("id") id: String)
+
+    @PATCH("/api/shopping-list/bulk-purchase")
+    suspend fun bulkMarkAsPurchased(@Body itemIds: List<String>)
+
+    @DELETE("/api/shopping-list/{id}")
+    suspend fun removeShoppingListItem(@Path("id") id: String)
 
     @GET("/api/RecipeTaxonomy/categories")
     suspend fun getRecipeCategories(): List<RecipeCategoryResponse>
