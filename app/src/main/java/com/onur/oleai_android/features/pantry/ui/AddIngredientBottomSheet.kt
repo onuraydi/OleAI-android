@@ -489,7 +489,7 @@ fun IngredientConfigView(
     var unitDropdownExpanded by remember { mutableStateOf(false) }
     
     val isCustom = ingredient.masterIngredientId.isBlank()
-    var selectedCategory by remember { mutableStateOf<com.onur.oleai_android.core.network.dto.IngredientCategoryResponse?>(null) }
+    var selectedCategory by remember { mutableStateOf<com.onur.oleai_android.core.network.dto.IngredientCategoryResponse?>(ingredientCategories.firstOrNull()) }
     var categoryDropdownExpanded by remember { mutableStateOf(false) }
 
     // Expiration Logic
@@ -739,7 +739,7 @@ fun IngredientConfigView(
             ),
             modifier = Modifier.fillMaxWidth().height(48.dp),
             shape = RoundedCornerShape(12.dp),
-            enabled = (expirationMode != 2 || (expirationMode == 2 && expirationDateStr.length == 8))
+            enabled = (expirationMode != 2 || (expirationMode == 2 && expirationDateStr.length == 8)) && (!isCustom || selectedCategory != null)
         ) {
             Icon(Icons.Default.Add, contentDescription = null)
             Spacer(modifier = Modifier.width(8.dp))

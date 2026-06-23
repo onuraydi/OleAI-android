@@ -39,6 +39,7 @@ sealed class Screen(val route: String) {
     object RecipeDetail : Screen("recipe_detail/{recipeId}") {
         fun createRoute(recipeId: String) = "recipe_detail/$recipeId"
     }
+    object CreateRecipe : Screen("create_recipe")
 }
 
 @Composable
@@ -132,6 +133,9 @@ fun AppNavigation() {
             HomeScreen(
                 onNavigateToRecipeDetail = { recipeId ->
                     navController.navigate(Screen.RecipeDetail.createRoute(recipeId))
+                },
+                onNavigateToCreateRecipe = {
+                    navController.navigate(Screen.CreateRecipe.route)
                 },
                 onLogout = {
                     navController.navigate(Screen.Login.route) {
@@ -253,6 +257,17 @@ fun AppNavigation() {
             val recipeId = backStackEntry.arguments?.getString("recipeId") ?: ""
             RecipeDetailScreen(
                 onNavigateBack = { navController.popBackStack() }
+            )
+        }
+        
+        composable(Screen.CreateRecipe.route) {
+            com.onur.oleai_android.features.createrecipe.ui.CreateRecipeScreen(
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToHome = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Home.route) { inclusive = true }
+                    }
+                }
             )
         }
     }

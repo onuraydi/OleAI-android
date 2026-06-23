@@ -34,6 +34,7 @@ fun ProfileScreen(
     modifier: Modifier = Modifier,
     viewModel: UserViewModel = hiltViewModel(),
     onNavigateToRecipeDetail: (String) -> Unit = {},
+    onNavigateToCreateRecipe: () -> Unit = {},
     onEditProfileClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {}
 ) {
@@ -105,7 +106,11 @@ fun ProfileScreen(
                 1 -> {
                     // Tariflerim
                     item {
-                        MyRecipesSection(listState = listState, onRecipeClick = onNavigateToRecipeDetail)
+                        MyRecipesSection(
+                            listState = listState,
+                            onRecipeClick = onNavigateToRecipeDetail,
+                            onCreateRecipeClick = onNavigateToCreateRecipe
+                        )
                     }
                 }
                 2 -> {

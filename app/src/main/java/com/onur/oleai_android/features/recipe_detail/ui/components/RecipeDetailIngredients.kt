@@ -201,8 +201,9 @@ fun RecipeDetailIngredients(
                     textDecoration = textDecoration
                 )
                 Spacer(modifier = Modifier.width(8.dp))
+                val displayName = ingredient.ingredientName ?: ingredient.ingredient?.name ?: "Bilinmeyen Malzeme"
                 Text(
-                    text = ingredient.ingredientName ?: "Bilinmeyen Malzeme",
+                    text = displayName,
                     color = nameColor,
                     fontSize = 14.sp,
                     textDecoration = textDecoration

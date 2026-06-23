@@ -88,6 +88,7 @@ data class BottomNavItem(
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToRecipeDetail: (String) -> Unit,
+    onNavigateToCreateRecipe: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -146,6 +147,16 @@ fun HomeScreen(
                     scrolledContainerColor = MaterialTheme.colorScheme.surface
                 )
             )
+        },
+        floatingActionButton = {
+            if (selectedTab == 0 || selectedTab == 1) {
+                androidx.compose.material3.ExtendedFloatingActionButton(
+                    onClick = onNavigateToCreateRecipe,
+                    containerColor = MaterialTheme.colorScheme.primary,
+                    icon = { Icon(Icons.Filled.Add, contentDescription = "Yeni Tarif Ekle", tint = MaterialTheme.colorScheme.onPrimary) },
+                    text = { Text("Tarif Ekle", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold) }
+                )
+            }
         },
         bottomBar = {
             NavigationBar(
@@ -218,6 +229,7 @@ fun HomeScreen(
                 viewModel = viewModel,
                 uiState = uiState,
                 onNavigateToRecipeDetail = onNavigateToRecipeDetail,
+                onNavigateToCreateRecipe = onNavigateToCreateRecipe,
                 modifier = Modifier.padding(innerPadding)
             )
             1 -> DiscoverScreen(
@@ -240,8 +252,9 @@ fun HomeScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .consumeWindowInsets(innerPadding),
+                onLogoutClick = onLogout,
                 onNavigateToRecipeDetail = onNavigateToRecipeDetail,
-                onLogoutClick = onLogout
+                onNavigateToCreateRecipe = onNavigateToCreateRecipe
             )
         }
     }
@@ -253,6 +266,7 @@ private fun HomeContent(
     viewModel: HomeViewModel,
     uiState: HomeUiState,
     onNavigateToRecipeDetail: (String) -> Unit,
+    onNavigateToCreateRecipe: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pagingRecipes = viewModel.personalizedRecipesPagingData.collectAsLazyPagingItems()
@@ -316,7 +330,7 @@ private fun HomeContent(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
                         item { QuickActionChip(icon = Icons.Default.AutoAwesome, text = "Bana Tarif Öner", isHighlighted = true) }
-                        item { QuickActionChip(icon = Icons.Default.Add, text = "Yeni Ekle", isHighlighted = false) }
+                        item { QuickActionChip(icon = Icons.Default.Add, text = "Tarif Ekle", isHighlighted = false, onClick = onNavigateToCreateRecipe) }
                         item { QuickActionChip(icon = Icons.Default.Bookmark, text = "Kaydedilenler", isHighlighted = false) }
                         item { QuickActionChip(icon = Icons.AutoMirrored.Filled.MenuBook, text = "Tarif Defterim", isHighlighted = false) }
                     }
@@ -500,7 +514,7 @@ private fun PlaceholderTab(
 }
 
 @Composable
-fun QuickActionChip(icon: ImageVector, text: String, isHighlighted: Boolean) {
+fun QuickActionChip(icon: ImageVector, text: String, isHighlighted: Boolean, onClick: () -> Unit = {}) {
     val bgColor = if (isHighlighted) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
     val contentColor = if (isHighlighted) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
 
@@ -509,7 +523,7 @@ fun QuickActionChip(icon: ImageVector, text: String, isHighlighted: Boolean) {
         modifier = Modifier
             .clip(RoundedCornerShape(100.dp))
             .background(bgColor)
-            .clickable { /* action */ }
+            .clickable { onClick() }
             .padding(horizontal = 20.dp, vertical = 14.dp)
     ) {
         Icon(imageVector = icon, contentDescription = null, tint = contentColor, modifier = Modifier.size(24.dp))
