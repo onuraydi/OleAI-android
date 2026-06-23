@@ -1,5 +1,6 @@
-﻿package com.onur.oleai_android.features.shoppinglist.ui.components
+package com.onur.oleai_android.features.shoppinglist.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -60,7 +61,7 @@ fun UpdateShoppingListItemDialog(
                 .fillMaxWidth(0.9f)
                 .wrapContentHeight(),
             shape = RoundedCornerShape(24.dp),
-            color = Color(0xFF1E1E1E)
+            color = MaterialTheme.colorScheme.surface
         ) {
             Column(
                 modifier = Modifier
@@ -71,7 +72,7 @@ fun UpdateShoppingListItemDialog(
                 Text(
                     text = "Listedeki Miktarı Güncelle",
                     style = MaterialTheme.typography.titleLarge.copy(
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold
                     )
                 )
@@ -79,7 +80,7 @@ fun UpdateShoppingListItemDialog(
                 Text(
                     text = item.ingredientName,
                     style = MaterialTheme.typography.bodyLarge.copy(
-                        color = Color(0xFF8DC63F),
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Medium
                     )
                 )
@@ -92,12 +93,12 @@ fun UpdateShoppingListItemDialog(
                 ) {
                     Button(
                         onClick = { if (quantity > 1.0) quantity -= 1.0 else if (quantity > 0.0) quantity = 0.0 },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2C2C2E)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
-                        Text("-", fontSize = 24.sp, color = Color.White)
+                        Text("-", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     Spacer(modifier = Modifier.width(24.dp))
@@ -118,10 +119,10 @@ fun UpdateShoppingListItemDialog(
                             },
                             textStyle = MaterialTheme.typography.displaySmall.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             ),
-                            cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White),
+                            cursorBrush = androidx.compose.ui.graphics.SolidColor(MaterialTheme.colorScheme.onBackground),
                             keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
                                 keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
                             ),
@@ -130,7 +131,7 @@ fun UpdateShoppingListItemDialog(
                         Text(
                             text = item.unit.ifEmpty { "Adet" },
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = Color.LightGray
+                                color = MaterialTheme.colorScheme.outlineVariant
                             )
                         )
                     }
@@ -139,12 +140,12 @@ fun UpdateShoppingListItemDialog(
 
                     Button(
                         onClick = { quantity += 1.0 },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2C2C2E)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
-                        Text("+", fontSize = 24.sp, color = Color.White)
+                        Text("+", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
 
@@ -166,20 +167,20 @@ fun UpdateShoppingListItemDialog(
                 ) {
                     Button(
                         onClick = onDismiss,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2C2C2E)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         modifier = Modifier.weight(1f).height(48.dp),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("İptal", color = Color.White, fontWeight = FontWeight.Bold)
+                        Text("İptal", color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
                     }
 
                     Button(
                         onClick = { onUpdate(quantity, unitId) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF8DC63F)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier.weight(1f).height(48.dp),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("Kaydet", color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text("Kaydet", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                     }
                 }
             }

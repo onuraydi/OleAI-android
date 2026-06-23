@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.pantry.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -56,20 +57,20 @@ fun PantryItemOptionsBottomSheet(
                         text = item.name,
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     )
                     Text(
                         text = "${item.quantity.toInt()} ${item.unit}",
                         style = MaterialTheme.typography.bodyMedium.copy(
-                            color = Color.Gray
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     )
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-            Divider(color = Color.DarkGray, thickness = 1.dp)
+            Divider(color = MaterialTheme.colorScheme.onSurfaceVariant, thickness = 1.dp)
             Spacer(modifier = Modifier.height(16.dp))
 
             // Options
@@ -133,7 +134,7 @@ private fun OptionRow(
             text = text,
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontWeight = FontWeight.SemiBold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
     }

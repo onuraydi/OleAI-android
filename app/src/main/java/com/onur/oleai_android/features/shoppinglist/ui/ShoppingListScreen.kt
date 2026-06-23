@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.shoppinglist.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -92,13 +93,13 @@ fun ShoppingListScreen(
                         text = "Alışveriş Listesi",
                         style = MaterialTheme.typography.headlineMedium.copy(
                             fontWeight = FontWeight.ExtraBold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     )
                     Text(
                         text = "Haftalık kiler ve mutfak alışverişini planla.",
                         style = MaterialTheme.typography.bodyMedium,
-                        color = Color.Gray
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
 
@@ -114,7 +115,7 @@ fun ShoppingListScreen(
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = "${completedItems}/${totalItems}",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 14.sp,
                             fontWeight = FontWeight.Bold
                         )
@@ -131,7 +132,7 @@ fun ShoppingListScreen(
                 placeholder = {
                     Text(
                         text = "Listede ara...",
-                        style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                        style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
                         maxLines = 1,
                         overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                     )
@@ -140,7 +141,7 @@ fun ShoppingListScreen(
                     Icon(
                         imageVector = Icons.Default.Search,
                         contentDescription = "Ara",
-                        tint = Color.Gray,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
                 },
@@ -150,8 +151,8 @@ fun ShoppingListScreen(
                     unfocusedBorderColor = MaterialTheme.colorScheme.surfaceVariant,
                     focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                     unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                    focusedTextColor = Color.White,
-                    unfocusedTextColor = Color.White
+                    focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                    unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                 ),
                 singleLine = true,
                 modifier = Modifier.fillMaxWidth()
@@ -183,7 +184,7 @@ fun ShoppingListScreen(
                             ) {
                                 Text(
                                     text = if (sortOption == 0) "Varsayılan" else "İsim (A-Z)",
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1
@@ -192,7 +193,7 @@ fun ShoppingListScreen(
                                 Icon(
                                     imageVector = Icons.Default.KeyboardArrowDown,
                                     contentDescription = null,
-                                    tint = Color.Gray,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
@@ -203,14 +204,14 @@ fun ShoppingListScreen(
                             modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Varsayılan", color = Color.White) },
+                                text = { Text("Varsayılan", color = MaterialTheme.colorScheme.onBackground) },
                                 onClick = {
                                     viewModel.setSortOption(0)
                                     sortExpanded = false
                                 }
                             )
                             DropdownMenuItem(
-                                text = { Text("İsim (A-Z)", color = Color.White) },
+                                text = { Text("İsim (A-Z)", color = MaterialTheme.colorScheme.onBackground) },
                                 onClick = {
                                     viewModel.setSortOption(1)
                                     sortExpanded = false
@@ -232,7 +233,7 @@ fun ShoppingListScreen(
                             ) {
                                 Text(
                                     text = if (filterOption == 0) "Tümü" else "Eksikler",
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     fontSize = 12.sp,
                                     fontWeight = FontWeight.Medium,
                                     maxLines = 1
@@ -241,7 +242,7 @@ fun ShoppingListScreen(
                                 Icon(
                                     imageVector = Icons.Default.KeyboardArrowDown,
                                     contentDescription = null,
-                                    tint = Color.Gray,
+                                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                                     modifier = Modifier.size(16.dp)
                                 )
                             }
@@ -252,14 +253,14 @@ fun ShoppingListScreen(
                             modifier = Modifier.background(MaterialTheme.colorScheme.surfaceVariant)
                         ) {
                             DropdownMenuItem(
-                                text = { Text("Tümü", color = Color.White) },
+                                text = { Text("Tümü", color = MaterialTheme.colorScheme.onBackground) },
                                 onClick = {
                                     viewModel.setFilterOption(0)
                                     filterExpanded = false
                                 }
                             )
                             DropdownMenuItem(
-                                text = { Text("Eksikler", color = Color.White) },
+                                text = { Text("Eksikler", color = MaterialTheme.colorScheme.onBackground) },
                                 onClick = {
                                     viewModel.setFilterOption(1)
                                     filterExpanded = false
@@ -278,11 +279,11 @@ fun ShoppingListScreen(
                 }
             } else if (shoppingListItems.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Alışveriş listeniz boş.", color = Color.Gray)
+                    Text("Alışveriş listeniz boş.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             } else if (groupedItems.isEmpty()) {
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    Text("Sonuç bulunamadı.", color = Color.Gray)
+                    Text("Sonuç bulunamadı.", color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             } else {
                 LazyColumn(
@@ -308,8 +309,8 @@ fun ShoppingListScreen(
         // Fixed FAB for Adding item - Placed at the bottom matching PantryScreen
         ExtendedFloatingActionButton(
             onClick = { viewModel.showAddBottomSheet() },
-            containerColor = Color(0xFF4A6532),
-            contentColor = Color.White,
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             modifier = Modifier
                 .align(Alignment.BottomEnd)
                 .padding(16.dp)
@@ -334,17 +335,17 @@ fun ShoppingListScreen(
                 Button(
                     onClick = { viewModel.bulkPurchaseSelected() },
                     modifier = Modifier.fillMaxWidth().height(56.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF4A6532)),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(12.dp)
                 ) {
                     Icon(
                         imageVector = Icons.Default.CheckCircle,
                         contentDescription = null,
-                        tint = Color.White,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         modifier = Modifier.size(20.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Alışverişi Tamamla (${selectedItemIds.size})", color = Color.White, fontWeight = FontWeight.Bold)
+                    Text("Alışverişi Tamamla (${selectedItemIds.size})", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -393,7 +394,7 @@ fun CategorySection(
             Text(
                 text = categoryName,
                 style = MaterialTheme.typography.titleMedium.copy(
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold
                 )
             )
@@ -405,7 +406,7 @@ fun CategorySection(
             ) {
                 Text(
                     text = itemCount.toString(),
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -414,7 +415,7 @@ fun CategorySection(
             Icon(
                 imageVector = if (expanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                 contentDescription = "Daralt/Genişlet",
-                tint = Color.Gray
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
 
@@ -459,7 +460,7 @@ fun ShoppingListItemCard(
             Icon(
                 imageVector = if (isSelected) Icons.Filled.CheckCircle else Icons.Outlined.Circle,
                 contentDescription = "Seç",
-                tint = if (isSelected) Color(0xFF8DC63F) else Color.Gray,
+                tint = if (isSelected) Color(0xFF8DC63F) else MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(24.dp)
             )
         }
@@ -470,13 +471,13 @@ fun ShoppingListItemCard(
             modifier = Modifier
                 .size(48.dp) // matched with PantryItemCard
                 .clip(RoundedCornerShape(12.dp))
-                .background(Color(0xFF2A3625)), // dark green shade matching PantryItemCard
+                .background(MaterialTheme.colorScheme.primary),
             contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = IconMapper.getIconByName(item.categoryIconName ?: "leaf"),
                 contentDescription = null,
-                tint = Color(0xFF8DC63F),
+                tint = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.size(24.dp).alpha(opacity)
             )
         }
@@ -486,7 +487,7 @@ fun ShoppingListItemCard(
         Column(modifier = Modifier.weight(1f).alpha(opacity)) {
             Text(
                 text = item.ingredientName,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
             )
             Row(verticalAlignment = Alignment.CenterVertically) {

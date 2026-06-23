@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.ai.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -41,21 +42,21 @@ fun AiScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .background(Color(0xFF121212)) // Dark background
+            .background(MaterialTheme.colorScheme.background) // Dark background
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         item {
             Text(
                 text = "Bir Sonraki Öğününü",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Black,
                 modifier = Modifier.fillMaxWidth()
             )
             Text(
                 text = "Keşfet",
-                color = Color(0xFF7CB342), // Green color from design
+                color = MaterialTheme.colorScheme.primary, // Green color from design
                 fontSize = 32.sp,
                 fontWeight = FontWeight.Black,
                 modifier = Modifier.fillMaxWidth()
@@ -63,7 +64,7 @@ fun AiScreen(
             Spacer(modifier = Modifier.height(8.dp))
             Text(
                 text = "Nasıl bir deneyim aradığını seç ve OleAI sana özel kusursuz bir lezzet serüveni hazırlasın.",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 14.sp,
                 modifier = Modifier.fillMaxWidth()
             )
@@ -76,37 +77,37 @@ fun AiScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color(0xFF1E1E1E))
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(16.dp)
             ) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-                    Text("KİŞİSEL BAĞLAM", color = Color(0xFF689F38), fontSize = 12.sp, fontWeight = FontWeight.Bold)
-                    Text("OleAI Aktif", color = Color.Gray, fontSize = 12.sp)
+                    Text("KİŞİSEL BAĞLAM", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text("OleAI Aktif", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Profil Özeti", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                Text("Zeka motoru sana özel öneriler sunarken şu parametreleri anlık olarak kullanır:", color = Color.Gray, fontSize = 12.sp)
+                Text("Profil Özeti", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text("Zeka motoru sana özel öneriler sunarken şu parametreleri anlık olarak kullanır:", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 Spacer(modifier = Modifier.height(16.dp))
                 
-                Row(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color(0xFF252525)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceVariant).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(modifier = Modifier.size(40.dp).clip(RoundedCornerShape(8.dp)).background(Color(0xFF1A237E)), contentAlignment = Alignment.Center) {
                         Icon(Icons.Default.Info, contentDescription = null, tint = Color(0xFF5C6BC0))
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
-                        Text("Dolap Stoğu", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                        Text("${uiState.pantryItemCount} malzeme tanımlı", color = Color.Gray, fontSize = 12.sp)
+                        Text("Dolap Stoğu", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text("${uiState.pantryItemCount} malzeme tanımlı", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                     }
                 }
                 Spacer(modifier = Modifier.height(8.dp))
-                Row(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color(0xFF252525)).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
+                Row(modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surfaceVariant).padding(12.dp), verticalAlignment = Alignment.CenterVertically) {
                     Box(modifier = Modifier.size(40.dp).clip(RoundedCornerShape(8.dp)).background(Color(0xFF1B5E20)), contentAlignment = Alignment.Center) {
                         Icon(Icons.Default.Info, contentDescription = null, tint = Color(0xFF66BB6A))
                     }
                     Spacer(modifier = Modifier.width(12.dp))
                     Column {
-                        Text("Diyetler", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                        Text(uiState.dietsText, color = Color.Gray, fontSize = 12.sp)
+                        Text("Diyetler", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text(uiState.dietsText, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                     }
                 }
             }
@@ -119,13 +120,13 @@ fun AiScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(16.dp))
-                    .background(Color(0xFF1E1E1E))
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(16.dp)
             ) {
-                Text("GELİŞMİŞ SEÇENEKLER", color = Color(0xFF689F38), fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                Text("GELİŞMİŞ SEÇENEKLER", color = MaterialTheme.colorScheme.primary, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 Spacer(modifier = Modifier.height(8.dp))
-                Text("Motor Ayarları", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 20.sp)
-                Text("Yapay zeka önerilerini oluştururken kullanılacak ek filtreleri buradan açıp kapatabilirsiniz.", color = Color.Gray, fontSize = 12.sp)
+                Text("Motor Ayarları", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 20.sp)
+                Text("Yapay zeka önerilerini oluştururken kullanılacak ek filtreleri buradan açıp kapatabilirsiniz.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 Spacer(modifier = Modifier.height(16.dp))
                 
                 AiToggleRow(title = "İsrafı Önle", checked = uiState.preventWaste, onCheckedChange = { viewModel.togglePreventWaste(it) })
@@ -139,9 +140,9 @@ fun AiScreen(
         item {
             // Analiz Modu
             Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                Icon(Icons.Default.Info, contentDescription = null, tint = Color.White, modifier = Modifier.size(20.dp))
+                Icon(Icons.Default.Info, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground, modifier = Modifier.size(20.dp))
                 Spacer(modifier = Modifier.width(8.dp))
-                Text("Analiz Modu", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                Text("Analiz Modu", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 16.sp)
             }
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -151,14 +152,14 @@ fun AiScreen(
                     .fillMaxWidth()
                     .height(56.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF1E1E1E))
+                    .background(MaterialTheme.colorScheme.surface)
                     .clickable { expanded = true }
                     .padding(horizontal = 16.dp),
                 contentAlignment = Alignment.CenterStart
             ) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically) {
-                    Text(text = uiState.analysisMode.label, color = Color.White, fontWeight = FontWeight.Bold)
-                    Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = Color.Gray)
+                    Text(text = uiState.analysisMode.label, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
+                    Icon(Icons.Default.ArrowDropDown, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }) {
                     com.onur.oleai_android.features.ai.viewmodel.availableAnalysisModes.forEach { mode ->
@@ -178,15 +179,15 @@ fun AiScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF1E1E1E))
+                    .background(MaterialTheme.colorScheme.surface)
                     .padding(16.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Icon(Icons.Default.Info, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(24.dp))
+                Icon(Icons.Default.Info, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(24.dp))
                 Spacer(modifier = Modifier.width(16.dp))
                 Column {
-                    Text("${uiState.analysisMode.label} MODU", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
-                    Text(uiState.analysisMode.description, color = Color.Gray, fontSize = 12.sp)
+                    Text("${uiState.analysisMode.label} MODU", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                    Text(uiState.analysisMode.description, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 }
             }
             Spacer(modifier = Modifier.height(16.dp))
@@ -198,13 +199,13 @@ fun AiScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF689F38)), // Green
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary), // Green
                 shape = RoundedCornerShape(16.dp)
             ) {
                 if (uiState.isLoadingRecommendations) {
-                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(24.dp))
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.size(24.dp))
                 } else {
-                    Text("Önerileri Getir", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                    Text("Önerileri Getir", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                 }
             }
             Spacer(modifier = Modifier.height(24.dp))
@@ -212,25 +213,25 @@ fun AiScreen(
 
         if (uiState.recommendationsFetched) {
             item {
-                Text("Senin İçin Seçtiklerimiz", color = Color.White, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-                Text("Zeka Motoru profilini analiz etti ve en uygun ${uiState.recommendations.size} tarifi buldu.", color = Color.Gray, fontSize = 12.sp, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                Text("Senin İçin Seçtiklerimiz", color = MaterialTheme.colorScheme.onBackground, fontSize = 24.sp, fontWeight = FontWeight.Bold, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                Text("Zeka Motoru profilini analiz etti ve en uygun ${uiState.recommendations.size} tarifi buldu.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, modifier = Modifier.fillMaxWidth(), textAlign = androidx.compose.ui.text.style.TextAlign.Center)
                 Spacer(modifier = Modifier.height(16.dp))
 
                 if (!uiState.hasPerfectMatch) {
                     Row(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .border(1.dp, Color(0xFF333333), RoundedCornerShape(12.dp))
-                            .background(Color(0xFF1A1A1A))
+                            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.surface)
                             .padding(16.dp),
                         verticalAlignment = Alignment.Top
                     ) {
-                        Icon(Icons.Default.Info, contentDescription = null, tint = Color(0xFF689F38), modifier = Modifier.size(20.dp))
+                        Icon(Icons.Default.Info, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
                         Spacer(modifier = Modifier.width(12.dp))
                         Column {
-                            Text("Daha Fazla Etkileşime İhtiyacımız Var", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                            Text("Daha Fazla Etkileşime İhtiyacımız Var", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                             Spacer(modifier = Modifier.height(4.dp))
-                            Text("Sistemimiz şu anda sizi tam olarak tanımadığı veya elinizdeki malzemelerle uygun eşleşme bulamadığı için size platformdaki en popüler trend tarifleri gösteriyor. Size özel kusursuz öneriler sunabilmemiz için bol bol tarif beğenmeniz veya kaydetmeniz gerekiyor!", color = Color.Gray, fontSize = 12.sp)
+                            Text("Sistemimiz şu anda sizi tam olarak tanımadığı veya elinizdeki malzemelerle uygun eşleşme bulamadığı için size platformdaki en popüler trend tarifleri gösteriyor. Size özel kusursuz öneriler sunabilmemiz için bol bol tarif beğenmeniz veya kaydetmeniz gerekiyor!", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                         }
                     }
                     Spacer(modifier = Modifier.height(16.dp))
@@ -269,18 +270,18 @@ fun AiToggleRow(title: String, checked: Boolean, onCheckedChange: (Boolean) -> U
         verticalAlignment = Alignment.CenterVertically
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(Icons.Default.Info, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(20.dp))
+            Icon(Icons.Default.Info, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(12.dp))
-            Text(title, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+            Text(title, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp, fontWeight = FontWeight.Medium)
         }
         Switch(
             checked = checked,
             onCheckedChange = onCheckedChange,
             colors = SwitchDefaults.colors(
-                checkedThumbColor = Color.White,
-                checkedTrackColor = Color(0xFF689F38),
-                uncheckedThumbColor = Color.White,
-                uncheckedTrackColor = Color(0xFF424242)
+                checkedThumbColor = MaterialTheme.colorScheme.onBackground,
+                checkedTrackColor = MaterialTheme.colorScheme.primary,
+                uncheckedThumbColor = MaterialTheme.colorScheme.onBackground,
+                uncheckedTrackColor = MaterialTheme.colorScheme.outlineVariant
             )
         )
     }
@@ -292,7 +293,7 @@ fun AiRecipeCard(response: com.onur.oleai_android.core.network.dto.AiRecommendat
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF1E1E1E))
+            .background(MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
     ) {
         Column {
@@ -301,7 +302,7 @@ fun AiRecipeCard(response: com.onur.oleai_android.core.network.dto.AiRecommendat
                 modifier = Modifier
                     .fillMaxWidth()
                     .aspectRatio(1f)
-                    .background(Color.DarkGray)
+                    .background(MaterialTheme.colorScheme.onSurfaceVariant)
             ) {
                 // Top Right Badge
                 Box(
@@ -313,13 +314,13 @@ fun AiRecipeCard(response: com.onur.oleai_android.core.network.dto.AiRecommendat
                         .padding(horizontal = 8.dp, vertical = 4.dp)
                 ) {
                     val percentage = (response.matchScore * 100).toInt()
-                    Text("%${percentage} Eşleşme", color = Color.White, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                    Text("%${percentage} Eşleşme", color = MaterialTheme.colorScheme.onBackground, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                 }
             }
             Column(modifier = Modifier.padding(12.dp)) {
-                Text(response.recipe.title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                Text(response.recipe.title, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(response.recipe.description ?: "", color = Color.Gray, fontSize = 10.sp, maxLines = 2)
+                Text(response.recipe.description ?: "", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, maxLines = 2)
             }
         }
     }

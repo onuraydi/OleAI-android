@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.pantry.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -44,7 +45,7 @@ fun AddPantryItemToShoppingListDialog(
         Surface(
             shape = RoundedCornerShape(24.dp),
             color = Color(0xFF141911), // Dark theme background matching screenshot
-            contentColor = Color.White,
+            contentColor = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -70,7 +71,7 @@ fun AddPantryItemToShoppingListDialog(
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Kapat",
-                            tint = Color.Gray
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -84,12 +85,12 @@ fun AddPantryItemToShoppingListDialog(
                     // Decrease Button
                     Button(
                         onClick = { if (quantity > 1) quantity -= 1 },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A3625)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
-                        Text("-", fontSize = 24.sp, color = Color.White)
+                        Text("-", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     
                     Spacer(modifier = Modifier.width(24.dp))
@@ -108,10 +109,10 @@ fun AddPantryItemToShoppingListDialog(
                             },
                             textStyle = MaterialTheme.typography.displaySmall.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             ),
-                            cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White),
+                            cursorBrush = androidx.compose.ui.graphics.SolidColor(MaterialTheme.colorScheme.onBackground),
                             keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
                                 keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
                             ),
@@ -120,7 +121,7 @@ fun AddPantryItemToShoppingListDialog(
                         Text(
                             text = item.unit.ifEmpty { "Adet" },
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = Color.LightGray
+                                color = MaterialTheme.colorScheme.outlineVariant
                             )
                         )
                     }
@@ -130,12 +131,12 @@ fun AddPantryItemToShoppingListDialog(
                     // Increase Button
                     Button(
                         onClick = { quantity += 1 },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A3625)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
-                        Text("+", fontSize = 24.sp, color = Color.White)
+                        Text("+", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
 
@@ -147,7 +148,7 @@ fun AddPantryItemToShoppingListDialog(
                 ) {
                     Button(
                         onClick = onDismiss,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A3625)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp),
@@ -155,22 +156,22 @@ fun AddPantryItemToShoppingListDialog(
                     ) {
                         Text(
                             "İptal",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontWeight = FontWeight.Bold
                         )
                     }
                     
                     Button(
                         onClick = { onAdd(quantity, unitId) },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF3B82F6)), // Blue button for add to list
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text(
-                            "Ekle",
-                            color = Color.White,
+                            "Listeye Ekle",
+                            color = MaterialTheme.colorScheme.onPrimary,
                             fontWeight = FontWeight.Bold
                         )
                     }

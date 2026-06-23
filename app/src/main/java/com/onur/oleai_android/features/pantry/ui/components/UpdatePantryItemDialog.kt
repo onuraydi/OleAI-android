@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.pantry.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -101,7 +102,7 @@ fun UpdatePantryItemDialog(
         Surface(
             shape = RoundedCornerShape(24.dp),
             color = Color(0xFF141911), // Dark theme background matching screenshot
-            contentColor = Color.White,
+            contentColor = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -127,7 +128,7 @@ fun UpdatePantryItemDialog(
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Kapat",
-                            tint = Color.Gray
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -141,12 +142,12 @@ fun UpdatePantryItemDialog(
                     // Decrease Button
                     Button(
                         onClick = { if (quantity > 1) quantity -= 1 },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A3625)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
-                        Text("-", fontSize = 24.sp, color = Color.White)
+                        Text("-", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     
                     Spacer(modifier = Modifier.width(24.dp))
@@ -165,10 +166,10 @@ fun UpdatePantryItemDialog(
                             },
                             textStyle = MaterialTheme.typography.displaySmall.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 textAlign = androidx.compose.ui.text.style.TextAlign.Center
                             ),
-                            cursorBrush = androidx.compose.ui.graphics.SolidColor(Color.White),
+                            cursorBrush = androidx.compose.ui.graphics.SolidColor(MaterialTheme.colorScheme.onBackground),
                             keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
                                 keyboardType = androidx.compose.ui.text.input.KeyboardType.Number
                             ),
@@ -177,7 +178,7 @@ fun UpdatePantryItemDialog(
                         Text(
                             text = item.unit.ifEmpty { "Adet" },
                             style = MaterialTheme.typography.bodyMedium.copy(
-                                color = Color.LightGray
+                                color = MaterialTheme.colorScheme.outlineVariant
                             )
                         )
                     }
@@ -187,12 +188,12 @@ fun UpdatePantryItemDialog(
                     // Increase Button
                     Button(
                         onClick = { quantity += 1 },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A3625)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         shape = RoundedCornerShape(12.dp),
                         contentPadding = PaddingValues(0.dp),
                         modifier = Modifier.size(48.dp)
                     ) {
-                        Text("+", fontSize = 24.sp, color = Color.White)
+                        Text("+", fontSize = 24.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
 
@@ -201,7 +202,7 @@ fun UpdatePantryItemDialog(
                 Column(modifier = Modifier.fillMaxWidth()) {
                     Text(
                         text = "Son Kullanma Tarihi (Gün.Ay.Yıl)",
-                        style = MaterialTheme.typography.labelMedium.copy(color = Color.LightGray),
+                        style = MaterialTheme.typography.labelMedium.copy(color = MaterialTheme.colorScheme.outlineVariant),
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
                     OutlinedTextField(
@@ -239,17 +240,17 @@ fun UpdatePantryItemDialog(
                                 Icon(
                                     imageVector = Icons.Default.DateRange,
                                     contentDescription = "Tarih Seç",
-                                    tint = Color.LightGray
+                                    tint = MaterialTheme.colorScheme.outlineVariant
                                 )
                             }
                         },
                         colors = OutlinedTextFieldDefaults.colors(
-                            unfocusedContainerColor = Color(0xFF1E2619),
-                            focusedContainerColor = Color(0xFF1E2619),
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
+                            focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                             unfocusedBorderColor = Color.Transparent,
                             focusedBorderColor = Color.Transparent,
-                            unfocusedTextColor = Color.White,
-                            focusedTextColor = Color.White
+                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            focusedTextColor = MaterialTheme.colorScheme.onBackground
                         ),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.fillMaxWidth()
@@ -264,7 +265,7 @@ fun UpdatePantryItemDialog(
                 ) {
                     Button(
                         onClick = onDismiss,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2A3625)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.surfaceVariant),
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp),
@@ -272,7 +273,7 @@ fun UpdatePantryItemDialog(
                     ) {
                         Text(
                             "İptal",
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             fontWeight = FontWeight.Bold
                         )
                     }
@@ -298,8 +299,8 @@ fun UpdatePantryItemDialog(
                         },
                         enabled = expirationDate.isEmpty() || expirationDate.length == 8,
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color(0xFF4A5D23), // Greenish button
-                            disabledContainerColor = Color(0xFF2A3625) // Darker green when disabled
+                            containerColor = MaterialTheme.colorScheme.primary, // Greenish button
+                            disabledContainerColor = MaterialTheme.colorScheme.surfaceVariant // Darker green when disabled
                         ),
                         modifier = Modifier
                             .weight(1f)
@@ -308,7 +309,7 @@ fun UpdatePantryItemDialog(
                     ) {
                         Text(
                             "Kaydet",
-                            color = if (expirationDate.isEmpty() || expirationDate.length == 8) Color.White else Color.Gray,
+                            color = if (expirationDate.isEmpty() || expirationDate.length == 8) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                             fontWeight = FontWeight.Bold
                         )
                     }

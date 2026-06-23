@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.pantry.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -69,7 +70,7 @@ fun PantryScreen(
             text = "Mutfak Dolabım",
             style = MaterialTheme.typography.headlineMedium.copy(
                 fontWeight = FontWeight.ExtraBold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             )
         )
         
@@ -82,7 +83,7 @@ fun PantryScreen(
             placeholder = {
                 Text(
                     text = "Dolabındaki malzemelerde ara...",
-                    style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                    style = MaterialTheme.typography.bodyMedium.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
                     maxLines = 1,
                     overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
                 )
@@ -91,7 +92,7 @@ fun PantryScreen(
                 Icon(
                     imageVector = Icons.Default.Search,
                     contentDescription = "Ara",
-                    tint = Color.Gray,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(20.dp)
                 )
             },
@@ -142,7 +143,7 @@ fun PantryScreen(
                     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                         Text(
                             text = if (localSearchQuery.isNotEmpty()) "Sonuç bulunamadı." else "Dolabınız şu an boş.\nYeni malzeme ekleyerek başlayabilirsiniz.",
-                            color = Color.Gray,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                             style = MaterialTheme.typography.bodyLarge,
                             textAlign = androidx.compose.ui.text.style.TextAlign.Center
                         )
@@ -172,8 +173,8 @@ fun PantryScreen(
     // FAB
     ExtendedFloatingActionButton(
         onClick = { viewModel.setBottomSheetVisible(true) },
-        containerColor = Color(0xFF4A6532),
-        contentColor = Color.White,
+        containerColor = MaterialTheme.colorScheme.primary,
+        contentColor = MaterialTheme.colorScheme.onPrimary,
         modifier = Modifier
             .align(Alignment.BottomEnd)
             .padding(16.dp)
@@ -267,7 +268,7 @@ fun PantryScreen(
     }
 
     if (operationLoading) {
-        Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
+        Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
             CircularProgressIndicator(color = Color(0xFF8DC63F))
         }
     }
@@ -297,7 +298,7 @@ fun CategorySection(
             Icon(
                 imageVector = IconMapper.getIconByName(iconName),
                 contentDescription = null,
-                tint = Color(0xFF8DC63F),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(20.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -305,7 +306,7 @@ fun CategorySection(
                 text = categoryName,
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             )
             Spacer(modifier = Modifier.width(8.dp))
@@ -313,13 +314,13 @@ fun CategorySection(
             Box(
                 modifier = Modifier
                     .size(20.dp)
-                    .background(Color(0xFF2A3625), shape = CircleShape),
+                    .background(MaterialTheme.colorScheme.primary, shape = CircleShape),
                 contentAlignment = Alignment.Center
             ) {
                 Text(
                     text = items.size.toString(),
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onPrimary,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -331,7 +332,7 @@ fun CategorySection(
             Icon(
                 imageVector = if (isExpanded) Icons.Default.KeyboardArrowUp else Icons.Default.KeyboardArrowDown,
                 contentDescription = if (isExpanded) "Daralt" else "Genişlet",
-                tint = Color.Gray
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
         

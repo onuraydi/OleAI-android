@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import android.app.DatePickerDialog
 import android.net.Uri
 import android.widget.DatePicker
@@ -89,14 +90,14 @@ fun EditProfileSection(
         modifier = modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(24.dp))
-            .background(Color(0xFF161815))
+            .background(MaterialTheme.colorScheme.surface)
             .padding(24.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
         // Header
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-            Icon(imageVector = Icons.Outlined.Person, contentDescription = null, tint = Color(0xFF7CB342))
-            Text("Ki\u015fisel Bilgiler", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+            Icon(imageVector = Icons.Outlined.Person, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+            Text("Ki\u015fisel Bilgiler", color = MaterialTheme.colorScheme.onBackground, fontSize = 18.sp, fontWeight = FontWeight.Bold)
         }
 
         // Profile Photo Section
@@ -128,7 +129,7 @@ fun EditProfileSection(
                 } else {
                     Text(
                         text = state.firstName.take(1).uppercase(),
-                        color = Color(0xFF7CB342),
+                        color = MaterialTheme.colorScheme.primary,
                         fontSize = 32.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -136,11 +137,11 @@ fun EditProfileSection(
             }
 
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
-                Text("Profil Foto\u011fraf\u0131", color = Color.White, fontWeight = FontWeight.Bold)
-                Text("JPG, PNG veya GIF \u00b7 Maks. 5MB", color = Color.Gray, fontSize = 12.sp)
+                Text("Profil Foto\u011fraf\u0131", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
+                Text("JPG, PNG veya GIF \u00b7 Maks. 5MB", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                 Text(
                     text = "Foto\u011fraf De\u011fi\u015ftir",
-                    color = Color(0xFF7CB342),
+                    color = MaterialTheme.colorScheme.primary,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier
@@ -162,10 +163,10 @@ fun EditProfileSection(
                 label = { Text("Ad") },
                 modifier = Modifier.weight(1f),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF7CB342),
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color(0xFF2E332A),
-                    focusedContainerColor = Color(0xFF1E211D),
-                    unfocusedContainerColor = Color(0xFF1E211D)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
                 ),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -176,10 +177,10 @@ fun EditProfileSection(
                 label = { Text("Soyad") },
                 modifier = Modifier.weight(1f),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF7CB342),
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color(0xFF2E332A),
-                    focusedContainerColor = Color(0xFF1E211D),
-                    unfocusedContainerColor = Color(0xFF1E211D)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
                 ),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -192,10 +193,10 @@ fun EditProfileSection(
                 label = { Text("Kullan\u0131c\u0131 Ad\u0131") },
                 modifier = Modifier.weight(1f),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF7CB342),
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color(0xFF2E332A),
-                    focusedContainerColor = Color(0xFF1E211D),
-                    unfocusedContainerColor = Color(0xFF1E211D)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
                 ),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -222,10 +223,10 @@ fun EditProfileSection(
                 },
                 modifier = Modifier.weight(1f),
                 colors = OutlinedTextFieldDefaults.colors(
-                    focusedBorderColor = Color(0xFF7CB342),
+                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                     unfocusedBorderColor = Color(0xFF2E332A),
-                    focusedContainerColor = Color(0xFF1E211D),
-                    unfocusedContainerColor = Color(0xFF1E211D)
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
                 ),
                 shape = RoundedCornerShape(12.dp)
             )
@@ -243,7 +244,7 @@ fun EditProfileSection(
         if (state.isSuccess) {
             Text(
                 text = "Profil ba\u015far\u0131yla g\u00fcncellendi!",
-                color = Color(0xFF7CB342),
+                color = MaterialTheme.colorScheme.primary,
                 fontSize = 14.sp
             )
         }
@@ -257,9 +258,9 @@ fun EditProfileSection(
                 enabled = !state.isLoading
             ) {
                 if (state.isLoading) {
-                    CircularProgressIndicator(color = Color.White, modifier = Modifier.size(20.dp))
+                    CircularProgressIndicator(color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.size(20.dp))
                 } else {
-                    Text("De\u011fi\u015fiklikleri Kaydet", color = Color(0xFF7CB342), fontWeight = FontWeight.Bold)
+                    Text("De\u011fi\u015fiklikleri Kaydet", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                 }
             }
         }

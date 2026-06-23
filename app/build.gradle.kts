@@ -37,7 +37,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "BASE_URL", "\"https://192.168.1.62:7190\"")
+        buildConfigField("String", "BASE_URL", "\"https://api.oleai.com.tr/api/\"")
     }
 
     buildTypes {

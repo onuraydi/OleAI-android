@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,7 +29,7 @@ import com.onur.oleai_android.features.recipe_detail.ui.components.RecipeDetailC
 import android.annotation.SuppressLint
 import kotlinx.coroutines.launch
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecipeDetailScreen(
@@ -43,7 +44,7 @@ fun RecipeDetailScreen(
     val coroutineScope = rememberCoroutineScope()
 
     Scaffold(
-        containerColor = Color(0xFF121212)
+        containerColor = MaterialTheme.colorScheme.background
     ) { paddingValues ->
         if (uiState.isLoading) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -158,7 +159,7 @@ fun RecipeDetailScreen(
                                     modifier = Modifier
                                         .padding(horizontal = 16.dp)
                                         .fillMaxWidth()
-                                        .background(Color(0xFF1E1E1E))
+                                        .background(MaterialTheme.colorScheme.surface)
                                 ) {
                                     com.onur.oleai_android.features.recipe_detail.ui.components.CommentItem(
                                         comment = comment,
@@ -184,7 +185,7 @@ fun RecipeDetailScreen(
                             Box(modifier = Modifier
                                 .padding(horizontal = 16.dp)
                                 .fillMaxWidth()
-                                .background(Color(0xFF1E1E1E), RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
+                                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(bottomStart = 16.dp, bottomEnd = 16.dp))
                             ) {
                                 if (commentsPagingItems.loadState.append is androidx.paging.LoadState.Loading) {
                                     Box(modifier = Modifier.fillMaxWidth().padding(16.dp), contentAlignment = Alignment.Center) {
@@ -211,13 +212,13 @@ fun RecipeDetailScreen(
                             androidx.compose.ui.graphics.Brush.verticalGradient(
                                 colors = listOf(
                                     Color.Transparent,
-                                    Color(0xFF111111).copy(alpha = 0.8f),
-                                    Color(0xFF111111),
-                                    Color(0xFF111111)
+                                    MaterialTheme.colorScheme.background.copy(alpha = 0.8f),
+                                    MaterialTheme.colorScheme.background,
+                                    MaterialTheme.colorScheme.background
                                 )
                             )
                         )
-                        .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                        .padding(top = 32.dp, start = 16.dp, end = 16.dp, bottom = 16.dp + paddingValues.calculateBottomPadding()),
                     contentAlignment = Alignment.Center
                 ) {
                     Button(
@@ -225,9 +226,9 @@ fun RecipeDetailScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF90B551))
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                     ) {
-                        Text("Tarifi Yap", color = Color.Black, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
+                        Text("Tarifi Yap", color = MaterialTheme.colorScheme.onPrimary, fontWeight = androidx.compose.ui.text.font.FontWeight.Bold)
                     }
                 }
             } // Close Box wrapper
@@ -251,7 +252,7 @@ fun RecipeDetailScreen(
     // Handle Cooking Flow Dialogs
     when (uiState.cookingFlowState) {
         CookingFlowState.CheckingMissing -> {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = Color(0xFF90B551))
             }
         }
@@ -265,7 +266,7 @@ fun RecipeDetailScreen(
             )
         }
         CookingFlowState.StartingCooking -> {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Black.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
+            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f)), contentAlignment = Alignment.Center) {
                 CircularProgressIndicator(color = Color(0xFF90B551))
             }
         }

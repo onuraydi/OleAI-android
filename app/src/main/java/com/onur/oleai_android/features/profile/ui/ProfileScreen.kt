@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -132,7 +133,7 @@ fun ProfileScreen(
                             NutritionSection(userProfile = it)
                         } ?: run {
                             Box(modifier = Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(color = Color(0xFF7CB342))
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                             }
                         }
                     }
@@ -161,7 +162,7 @@ fun ProfileScreen(
                             )
                         } ?: run {
                             Box(modifier = Modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
-                                CircularProgressIndicator(color = Color(0xFF7CB342))
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
                             }
                         }
                     }
@@ -243,7 +244,7 @@ fun ProfileHeader(
                 } else {
                     Text(
                         text = name.firstOrNull()?.toString() ?: "S",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 48.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -268,7 +269,7 @@ fun ProfileHeader(
                 )
                 Text(
                     text = username,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 14.sp
                 )
             }
@@ -277,14 +278,14 @@ fun ProfileHeader(
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 if (email.isNotEmpty()) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Icon(Icons.Outlined.Email, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(14.dp))
-                        Text(email, color = Color.Gray, fontSize = 11.sp, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                        Icon(Icons.Outlined.Email, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(14.dp))
+                        Text(email, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
                     }
                 }
                 if (memberSince.isNotEmpty()) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
-                        Icon(Icons.Outlined.Schedule, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(14.dp))
-                        Text(memberSince, color = Color.Gray, fontSize = 11.sp, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
+                        Icon(Icons.Outlined.Schedule, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(14.dp))
+                        Text(memberSince, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 11.sp, maxLines = 1, overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis)
                     }
                 }
             }
@@ -318,7 +319,7 @@ fun ProfileHeader(
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.onBackground
                     ),
-                    border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(Color.DarkGray))
+                    border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(MaterialTheme.colorScheme.onSurfaceVariant))
                 ) {
                     Text("Düzenle", fontWeight = FontWeight.SemiBold, fontSize = 9.sp)
                 }
@@ -347,7 +348,7 @@ fun ProfileTabs(
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState())
             .clip(RoundedCornerShape(24.dp))
-            .background(Color(0xFF1E211D))
+            .background(MaterialTheme.colorScheme.surface)
             .padding(4.dp),
         horizontalArrangement = Arrangement.spacedBy(4.dp)
     ) {
@@ -356,7 +357,7 @@ fun ProfileTabs(
             Row(
                 modifier = Modifier
                     .clip(RoundedCornerShape(20.dp))
-                    .background(if (isSelected) Color(0xFF7CB342) else Color.Transparent)
+                    .background(if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
                     .clickable {
                         onTabSelected(index)
                     }
@@ -367,12 +368,12 @@ fun ProfileTabs(
                 Icon(
                     imageVector = tab.second,
                     contentDescription = tab.first,
-                    tint = if (isSelected) Color.Black else Color.LightGray,
+                    tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(16.dp)
                 )
                 Text(
                     text = tab.first,
-                    color = if (isSelected) Color.Black else Color.LightGray,
+                    color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                     fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                     fontSize = 12.sp
                 )
@@ -392,7 +393,7 @@ fun ActivityStatsSection(userStats: GetUserStatisticsResponse?) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(bottom = 12.dp)) {
-            Icon(Icons.Filled.BarChart, contentDescription = null, tint = Color(0xFF7CB342), modifier = Modifier.size(20.dp))
+            Icon(Icons.Filled.BarChart, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(8.dp))
             Text("Aktivite İstatistikleri", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 16.sp)
         }
@@ -415,25 +416,25 @@ fun StatCard(stat: Triple<String, Int, ImageVector>, modifier: Modifier = Modifi
     Card(
         modifier = modifier,
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1B1E1A))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.primary)
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Icon(
                 imageVector = stat.third,
                 contentDescription = null,
-                tint = Color(0xFF7CB342),
+                tint = MaterialTheme.colorScheme.onPrimary,
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
                 text = stat.second.toString(),
-                color = Color(0xFF7CB342),
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontSize = 32.sp,
                 fontWeight = FontWeight.ExtraBold
             )
             Text(
                 text = stat.first,
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.8f),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Medium
             )
@@ -482,7 +483,7 @@ fun PreferenceCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color(0xFF1B1E1A))
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)
     ) {
         Column(modifier = Modifier.padding(20.dp)) {
             Row(
@@ -493,18 +494,18 @@ fun PreferenceCard(
                 Icon(
                     imageVector = icon,
                     contentDescription = null,
-                    tint = Color.Gray,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.size(24.dp)
                 )
                 
                 Surface(
-                    color = Color.DarkGray.copy(alpha = 0.3f),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
                     shape = RoundedCornerShape(16.dp),
                     modifier = Modifier.clickable { onEditClick() }
                 ) {
                     Text(
                         text = "Düzenle",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 10.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp)
@@ -516,7 +517,7 @@ fun PreferenceCard(
             
             Text(
                 text = title,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.Bold,
                 fontSize = 16.sp
             )
@@ -526,7 +527,7 @@ fun PreferenceCard(
             if (items.isEmpty()) {
                 Text(
                     text = emptyMessage,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.sp
                 )
             } else {
@@ -537,12 +538,12 @@ fun PreferenceCard(
                 ) {
                     items.forEach { item ->
                         Surface(
-                            color = Color(0xFF2C332A),
+                            color = MaterialTheme.colorScheme.primaryContainer,
                             shape = RoundedCornerShape(8.dp)
                         ) {
                             Text(
                                 text = item,
-                                color = Color(0xFF7CB342),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
                                 fontSize = 12.sp,
                                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
                                 fontWeight = FontWeight.Medium

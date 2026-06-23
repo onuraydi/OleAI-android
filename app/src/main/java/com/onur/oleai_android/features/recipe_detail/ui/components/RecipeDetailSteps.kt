@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,12 +23,12 @@ fun RecipeDetailSteps(
         modifier = modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .background(Color(0xFF1E1E1E), RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(16.dp))
             .padding(16.dp)
     ) {
         Text(
             text = "Hazırlanışı",
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             fontSize = 20.sp,
             fontWeight = FontWeight.Bold,
             modifier = Modifier.padding(bottom = 16.dp)
@@ -48,7 +49,7 @@ fun RecipeDetailSteps(
                 ) {
                     Text(
                         text = step.stepNumber.toString(),
-                        color = Color.Black,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp
                     )
@@ -56,7 +57,7 @@ fun RecipeDetailSteps(
                 Spacer(modifier = Modifier.width(16.dp))
                 Text(
                     text = step.instruction,
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 14.sp,
                     modifier = Modifier.padding(top = 4.dp)
                 )

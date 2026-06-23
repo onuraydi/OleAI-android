@@ -114,7 +114,7 @@ fun CategoryDistributionCard(total: Int, topCategories: List<CategoryStat>) {
                             modifier = Modifier
                                 .weight(stat.percentage.toFloat())
                                 .fillMaxHeight()
-                                .background(colors.getOrElse(index) { Color.Gray })
+                                .background(colors.getOrElse(index) { MaterialTheme.colorScheme.onSurfaceVariant })
                         )
                         totalWeight += stat.percentage
                     }
@@ -138,7 +138,7 @@ fun CategoryDistributionCard(total: Int, topCategories: List<CategoryStat>) {
                             modifier = Modifier
                                 .size(8.dp)
                                 .clip(CircleShape)
-                                .background(colors.getOrElse(index) { Color.Gray })
+                                .background(colors.getOrElse(index) { MaterialTheme.colorScheme.onSurfaceVariant })
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(

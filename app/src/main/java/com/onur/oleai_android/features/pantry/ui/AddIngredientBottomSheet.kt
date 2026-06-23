@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.pantry.ui
 
+import androidx.compose.material3.MaterialTheme
 import android.widget.Toast
 
 import androidx.compose.animation.AnimatedVisibility
@@ -150,12 +151,12 @@ fun AddIngredientBottomSheet(
                             text = "Dolaba Malzeme Ekle",
                             style = MaterialTheme.typography.titleLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onBackground
                             )
                         )
                         Text(
                             text = "Arayın, detaylandırın ve sepetinize atın.",
-                            style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray)
+                            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )
                     }
                     IconButton(onClick = onDismissRequest) {
@@ -250,7 +251,7 @@ fun AddIngredientBottomSheet(
                         ) {
                             if (isAddLoading) {
                                 CircularProgressIndicator(
-                                    color = Color.White,
+                                    color = MaterialTheme.colorScheme.onBackground,
                                     modifier = Modifier.size(24.dp),
                                     strokeWidth = 2.dp
                                 )
@@ -259,13 +260,13 @@ fun AddIngredientBottomSheet(
                                     text = "${cartItems.size} Ürünü Dolaba Ekle",
                                     style = MaterialTheme.typography.titleMedium.copy(
                                         fontWeight = FontWeight.Bold,
-                                        color = Color.White
+                                        color = MaterialTheme.colorScheme.onBackground
                                     )
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = Color.White
+                                    tint = MaterialTheme.colorScheme.onBackground
                                 )
                             }
                         }
@@ -296,7 +297,7 @@ fun PopularCategorySection(
                 text = category.categoryName ?: "Kategori",
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             )
         }
@@ -347,7 +348,7 @@ fun IngredientChip(
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodySmall.copy(
-                    color = if (isInCart) Color(0xFF8DC63F) else Color.White,
+                    color = if (isInCart) Color(0xFF8DC63F) else MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Medium
                 )
             )
@@ -388,12 +389,12 @@ fun SearchResultItem(
         Column(modifier = Modifier.weight(1f)) {
             Text(
                 text = item.displayName,
-                style = MaterialTheme.typography.bodyLarge.copy(color = Color.White)
+                style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.onBackground)
             )
             if (item.categoryName != null) {
                 Text(
                     text = item.categoryName,
-                    style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray)
+                    style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 )
             }
         }
@@ -435,13 +436,13 @@ fun CustomIngredientSearchResultItem(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFF2A3625)),
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = Icons.Default.Add,
                         contentDescription = null,
-                        tint = Color(0xFF8DC63F),
+                        tint = MaterialTheme.colorScheme.primary,
                         modifier = Modifier.size(24.dp)
                     )
                 }
@@ -456,7 +457,7 @@ fun CustomIngredientSearchResultItem(
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
                     text = "Bunu özel malzeme olarak dolabınıza ekleyebilirsiniz.",
-                    style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray),
+                    style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant),
                     textAlign = TextAlign.Center
                 )
             }
@@ -516,13 +517,13 @@ fun IngredientConfigView(
                     modifier = Modifier
                         .size(40.dp)
                         .clip(CircleShape)
-                        .background(Color(0xFF2A3625)),
+                        .background(MaterialTheme.colorScheme.surfaceVariant),
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
                         imageVector = IconMapper.getIconByName(ingredient.categoryIconName ?: "leaf"),
                         contentDescription = null,
-                        tint = Color(0xFF8DC63F)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
@@ -531,12 +532,12 @@ fun IngredientConfigView(
                         text = ingredient.displayName,
                         style = MaterialTheme.typography.titleLarge.copy(
                             fontWeight = FontWeight.Bold,
-                            color = Color.White
+                            color = MaterialTheme.colorScheme.onBackground
                         )
                     )
                     Text(
                         text = if (isCustom) "Özel Malzeme" else (ingredient.categoryName ?: "Bilinmeyen Kategori"),
-                        style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray)
+                        style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                     )
                 }
             }
@@ -547,7 +548,7 @@ fun IngredientConfigView(
         if (isCustom) {
             Text(
                 text = "KATEGORİ (OPSİYONEL)",
-                style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray)
+                style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
             )
             Spacer(modifier = Modifier.height(8.dp))
             ExposedDropdownMenuBox(
@@ -588,7 +589,7 @@ fun IngredientConfigView(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "MİKTAR",
-                    style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray)
+                    style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
@@ -607,7 +608,7 @@ fun IngredientConfigView(
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = "BİRİM",
-                    style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray)
+                    style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 ExposedDropdownMenuBox(
@@ -649,7 +650,7 @@ fun IngredientConfigView(
         // Expiration Section
         Text(
             text = "RAF ÖMRÜ & SKT",
-            style = MaterialTheme.typography.labelSmall.copy(color = Color.Gray)
+            style = MaterialTheme.typography.labelSmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
         )
         Spacer(modifier = Modifier.height(8.dp))
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -661,7 +662,7 @@ fun IngredientConfigView(
                         .weight(1f)
                         .clickable { expirationMode = index },
                     shape = RoundedCornerShape(8.dp),
-                    color = if (isSelected) Color(0xFF8DC63F) else Color(0xFF2A3625)
+                    color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant
                 ) {
                     Text(
                         text = modeText,
@@ -669,7 +670,7 @@ fun IngredientConfigView(
                         textAlign = TextAlign.Center,
                         style = MaterialTheme.typography.bodySmall.copy(
                             fontWeight = FontWeight.Bold,
-                            color = if (isSelected) Color.Black else Color.White
+                            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     )
                 }
@@ -734,8 +735,8 @@ fun IngredientConfigView(
                 onAddToCart(qty, selectedUnit.first, selectedCategory?.id, finalDate, finalDays)
             },
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color.White,
-                contentColor = Color.Black
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = MaterialTheme.colorScheme.onPrimary
             ),
             modifier = Modifier.fillMaxWidth().height(48.dp),
             shape = RoundedCornerShape(12.dp),
@@ -775,7 +776,7 @@ fun CartReviewView(
                 text = "Sepeti Onayla",
                 style = MaterialTheme.typography.titleLarge.copy(
                     fontWeight = FontWeight.Bold,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onBackground
                 )
             )
         }
@@ -816,12 +817,12 @@ fun CartReviewView(
                             text = item.displayName,
                             style = MaterialTheme.typography.bodyLarge.copy(
                                 fontWeight = FontWeight.Bold,
-                                color = Color.White
+                                color = MaterialTheme.colorScheme.onBackground
                             )
                         )
                         Text(
                             text = "${item.quantity} " + getUnitName(item.unit),
-                            style = MaterialTheme.typography.bodySmall.copy(color = Color.Gray)
+                            style = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         )
                     }
                     
@@ -829,7 +830,7 @@ fun CartReviewView(
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = "Kaldır",
-                            tint = Color.Gray
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -843,7 +844,7 @@ fun CartReviewView(
             enabled = cartItems.isNotEmpty() && !isAddLoading,
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFF4A6532),
-                contentColor = Color.White
+                contentColor = MaterialTheme.colorScheme.onBackground
             ),
             modifier = Modifier
                 .fillMaxWidth()
@@ -852,7 +853,7 @@ fun CartReviewView(
         ) {
             if (isAddLoading) {
                 CircularProgressIndicator(
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     modifier = Modifier.size(24.dp),
                     strokeWidth = 2.dp
                 )

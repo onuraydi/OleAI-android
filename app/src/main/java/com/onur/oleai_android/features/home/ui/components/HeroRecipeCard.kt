@@ -56,8 +56,8 @@ fun HeroRecipeCard(
                         Brush.verticalGradient(
                             colors = listOf(
                                 Color.Transparent,
-                                Color.Black.copy(alpha = 0.3f),
-                                Color.Black.copy(alpha = 0.8f)
+                                Color.Black.copy(alpha = 0.5f),
+                                Color.Black.copy(alpha = 0.9f)
                             ),
                             startY = 0f,
                             endY = Float.POSITIVE_INFINITY
@@ -112,13 +112,13 @@ fun HeroRecipeCard(
                             Icon(
                                 imageVector = Icons.Filled.Star,
                                 contentDescription = "Rating",
-                                tint = Color.White,
+                                tint = Color.Black,
                                 modifier = Modifier.size(14.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 text = String.format("%.1f", recipe.averageRating),
-                                color = Color.White,
+                                color = Color.Black,
                                 style = MaterialTheme.typography.labelSmall,
                                 fontWeight = FontWeight.Bold
                             )

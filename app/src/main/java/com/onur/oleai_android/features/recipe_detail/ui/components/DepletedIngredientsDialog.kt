@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -102,7 +103,7 @@ fun DepletedIngredientsDialog(
                         Column {
                             Text(
                                 text = "Biten Malzemeler",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
@@ -115,7 +116,7 @@ fun DepletedIngredientsDialog(
                     }
 
                     IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = "Kapat", tint = Color.Gray)
+                        Icon(Icons.Default.Close, contentDescription = "Kapat", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
 
@@ -125,7 +126,7 @@ fun DepletedIngredientsDialog(
 
                 Text(
                     text = "Bu tarifi pişirdikten sonra dolabınızdaki bazı malzemelerin stokları sıfırlandı. Miktarlarını dilediğiniz gibi düzenleyerek alışveriş listenize ekleyebilirsiniz.",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 14.sp
                 )
 
@@ -148,7 +149,7 @@ fun DepletedIngredientsDialog(
                             }
                         )
                         if (index < stateList.size - 1) {
-                            Divider(color = Color(0xFF252525), thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
+                            Divider(color = MaterialTheme.colorScheme.surfaceVariant, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
                         }
                     }
                 }
@@ -164,11 +165,11 @@ fun DepletedIngredientsDialog(
                     Button(
                         onClick = onDismiss,
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                        border = border(1.dp, Color.Gray, RoundedCornerShape(12.dp)),
+                        border = border(1.dp, MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(12.dp)),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.padding(end = 12.dp)
                     ) {
-                        Text("Atla", color = Color.White)
+                        Text("Atla", color = MaterialTheme.colorScheme.onBackground)
                     }
 
                     Button(
@@ -189,7 +190,7 @@ fun DepletedIngredientsDialog(
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF90B551)),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("Listeye Ekle", color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text("Listeye Ekle", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -227,13 +228,13 @@ fun DepletedIngredientItemRow(
                 contentAlignment = Alignment.Center
             ) {
                 if (state.isSelected) {
-                    Icon(Icons.Default.Check, contentDescription = null, tint = Color.Black, modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.Check, contentDescription = null, tint = MaterialTheme.colorScheme.onBackground, modifier = Modifier.size(16.dp))
                 }
             }
             Spacer(modifier = Modifier.width(12.dp))
             Text(
                 text = state.name,
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontWeight = FontWeight.SemiBold,
                 fontSize = 16.sp,
                 maxLines = 1,
@@ -248,22 +249,22 @@ fun DepletedIngredientItemRow(
                 BasicTextField(
                     value = state.editableQuantity,
                     onValueChange = onQuantityChanged,
-                    textStyle = TextStyle(color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
+                    textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     cursorBrush = SolidColor(Color(0xFF90B551)),
                     modifier = Modifier
                         .width(55.dp)
                         .background(Color(0xFF222222), RoundedCornerShape(8.dp))
-                        .border(1.dp, Color(0xFF333333), RoundedCornerShape(8.dp))
+                        .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                         .padding(vertical = 6.dp)
                 )
                 if (state.displayUnit.isNotBlank()) {
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = state.displayUnit, color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                    Text(text = state.displayUnit, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 }
             }
         } else {
-            Text(text = "${state.editableQuantity} ${state.displayUnit}", color = Color(0xFF666666), fontSize = 14.sp)
+            Text(text = "${state.editableQuantity} ${state.displayUnit}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
         }
     }
 }

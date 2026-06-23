@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -47,7 +48,7 @@ fun RecipeDetailComments(
             .padding(top = 16.dp)
             .fillMaxWidth()
             .background(
-                Color(0xFF1E1E1E),
+                MaterialTheme.colorScheme.surface,
                 if (isExpanded) RoundedCornerShape(topStart = 16.dp, topEnd = 16.dp) else RoundedCornerShape(16.dp)
             )
             .padding(16.dp)
@@ -60,16 +61,16 @@ fun RecipeDetailComments(
                 .clickable { onToggleExpand() }
                 .padding(vertical = 8.dp)
         ) {
-            Icon(Icons.Filled.ChatBubbleOutline, contentDescription = "Yorumlar", tint = Color.White)
+            Icon(Icons.Filled.ChatBubbleOutline, contentDescription = "Yorumlar", tint = MaterialTheme.colorScheme.onBackground)
             Spacer(modifier = Modifier.width(8.dp))
             Column(modifier = Modifier.weight(1f)) {
-                Text("Yorumlar", color = Color.White, fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Text("$totalComments yorum yapıldı", color = Color.Gray, fontSize = 12.sp)
+                Text("Yorumlar", color = MaterialTheme.colorScheme.onBackground, fontSize = 20.sp, fontWeight = FontWeight.Bold)
+                Text("$totalComments yorum yapıldı", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
             }
             Icon(
                 imageVector = if (isExpanded) Icons.Filled.KeyboardArrowUp else Icons.Filled.KeyboardArrowDown,
                 contentDescription = if (isExpanded) "Daralt" else "Genişlet",
-                tint = Color.Gray
+                tint = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
 
@@ -91,7 +92,7 @@ fun RecipeDetailComments(
                     Spacer(Modifier.width(8.dp))
                     Text("Yorumu düzenliyorsunuz", color = Color(0xFF90B551), fontSize = 12.sp, modifier = Modifier.weight(1f))
                     IconButton(onClick = onCancelEdit, modifier = Modifier.size(24.dp)) {
-                        Icon(Icons.Filled.Close, contentDescription = "İptal", tint = Color.Gray, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Filled.Close, contentDescription = "İptal", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                     }
                 }
                 Spacer(modifier = Modifier.height(12.dp))
@@ -138,18 +139,18 @@ fun RecipeDetailComments(
                 TextField(
                     value = newCommentText,
                     onValueChange = { newCommentText = it },
-                    placeholder = { Text("Düşüncelerini paylaş veya soru sor...", color = Color.Gray, fontSize = 14.sp) },
+                    placeholder = { Text("Düşüncelerini paylaş veya soru sor...", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) },
                     modifier = Modifier
                         .fillMaxWidth()
                         .heightIn(min = 90.dp),
                     colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color(0xFF121212),
-                        unfocusedContainerColor = Color(0xFF121212),
+                        focusedContainerColor = MaterialTheme.colorScheme.background,
+                        unfocusedContainerColor = MaterialTheme.colorScheme.background,
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                         cursorColor = Color(0xFF90B551),
-                        focusedTextColor = Color.White,
-                        unfocusedTextColor = Color.White
+                        focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                        unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                     ),
                     shape = RoundedCornerShape(12.dp)
                 )
@@ -165,20 +166,19 @@ fun RecipeDetailComments(
                     enabled = newCommentText.isNotBlank() && !isSubmitting,
                     modifier = Modifier.align(Alignment.End),
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF90B551),
-                        disabledContainerColor = Color(0xFF3A4A2A)
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary
                     ),
                     shape = RoundedCornerShape(8.dp)
                 ) {
                     if (isSubmitting) {
-                        CircularProgressIndicator(color = Color.Black, modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
+                        CircularProgressIndicator(modifier = Modifier.size(16.dp), strokeWidth = 2.dp)
                     } else {
-                        Icon(Icons.Filled.Send, contentDescription = "Gönder", modifier = Modifier.size(16.dp), tint = Color.Black)
+                        Icon(Icons.Filled.Send, contentDescription = "Gönder", modifier = Modifier.size(16.dp))
                     }
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         if (isEditing) "Güncelle" else "Yorum Yap",
-                        color = Color.Black,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -211,12 +211,12 @@ fun CommentItem(
         Box(
             modifier = Modifier
                 .size(40.dp)
-                .background(Color(0xFF2A2A2A), CircleShape),
+                .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
             contentAlignment = Alignment.Center
         ) {
             Text(
                 comment.username.firstOrNull()?.toString()?.uppercase() ?: "?",
-                color = Color(0xFF90B551),
+                color = MaterialTheme.colorScheme.onPrimaryContainer,
                 fontWeight = FontWeight.Bold
             )
         }
@@ -228,12 +228,12 @@ fun CommentItem(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(comment.username, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                        Text(comment.username, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                         if (comment.rating != null && comment.rating > 0) {
                             Spacer(modifier = Modifier.width(8.dp))
                             Row(
                                 modifier = Modifier
-                                    .background(Color(0xFF2A2A2A), RoundedCornerShape(4.dp))
+                                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(4.dp))
                                     .padding(horizontal = 5.dp, vertical = 2.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
@@ -243,11 +243,11 @@ fun CommentItem(
                             }
                         }
                     }
-                    Text(comment.createdDate, color = Color.Gray, fontSize = 10.sp)
+                    Text(comment.createdDate, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp)
                 }
             }
             Spacer(modifier = Modifier.height(6.dp))
-            Text(comment.content, color = Color.LightGray, fontSize = 14.sp)
+            Text(comment.content, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
             Spacer(modifier = Modifier.height(8.dp))
 
             // Action row below content
@@ -275,7 +275,7 @@ fun CommentItem(
                     Box(
                         modifier = Modifier
                             .background(
-                                if (isReplying) Color(0xFF90B551).copy(alpha = 0.2f) else Color(0xFF2A2A2A),
+                                if (isReplying) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surfaceVariant,
                                 RoundedCornerShape(16.dp)
                             )
                             .clickable { if (isReplying) onCancelReply() else onReplyClick(comment) }
@@ -285,13 +285,13 @@ fun CommentItem(
                             Icon(
                                 Icons.Filled.Reply,
                                 contentDescription = "Cevapla",
-                                tint = if (isReplying) Color(0xFF90B551) else Color.White,
+                                tint = if (isReplying) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                                 modifier = Modifier.size(12.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
                                 if (isReplying) "İptal" else "Cevapla",
-                                color = if (isReplying) Color(0xFF90B551) else Color.White,
+                                color = if (isReplying) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 11.sp
                             )
                         }
@@ -305,7 +305,7 @@ fun CommentItem(
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .background(Color(0xFF161616), RoundedCornerShape(12.dp))
+                        .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(12.dp))
                         .padding(horizontal = 12.dp, vertical = 8.dp)
                 ) {
                     TextField(
@@ -314,7 +314,7 @@ fun CommentItem(
                         placeholder = {
                             Text(
                                 "${comment.username} kullanıcısına cevap ver...",
-                                color = Color(0xFF555555),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 fontSize = 13.sp
                             )
                         },
@@ -325,8 +325,8 @@ fun CommentItem(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
                             cursorColor = Color(0xFF90B551),
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White
+                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                         ),
                         maxLines = 4
                     )
@@ -336,7 +336,7 @@ fun CommentItem(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         TextButton(onClick = onCancelReply) {
-                            Text("İptal", color = Color.Gray, fontSize = 12.sp)
+                            Text("İptal", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                         }
                         Spacer(Modifier.width(4.dp))
                         Button(
@@ -355,12 +355,12 @@ fun CommentItem(
                             contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
                         ) {
                             if (isSubmittingReply) {
-                                CircularProgressIndicator(color = Color.Black, modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
+                                CircularProgressIndicator(color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.size(14.dp), strokeWidth = 2.dp)
                             } else {
-                                Icon(Icons.Filled.Reply, contentDescription = "Gönder", modifier = Modifier.size(14.dp), tint = Color.Black)
+                                Icon(Icons.Filled.Reply, contentDescription = "Gönder", modifier = Modifier.size(14.dp), tint = MaterialTheme.colorScheme.onBackground)
                             }
                             Spacer(Modifier.width(4.dp))
-                            Text("Cevapla", color = Color.Black, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                            Text("Cevapla", color = MaterialTheme.colorScheme.onBackground, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -406,14 +406,14 @@ fun DeleteCommentDialog(
 ) {
     AlertDialog(
         onDismissRequest = onDismiss,
-        containerColor = Color(0xFF1E1E1E),
+        containerColor = MaterialTheme.colorScheme.surface,
         title = {
-            Text("Yorumu Sil", color = Color.White, fontWeight = FontWeight.Bold)
+            Text("Yorumu Sil", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
         },
         text = {
             Text(
                 "Bu yorumu silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 14.sp
             )
         },
@@ -423,12 +423,12 @@ fun DeleteCommentDialog(
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFE53935)),
                 shape = RoundedCornerShape(8.dp)
             ) {
-                Text("Sil", color = Color.White, fontWeight = FontWeight.Bold)
+                Text("Sil", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
             }
         },
         dismissButton = {
             TextButton(onClick = onDismiss) {
-                Text("İptal", color = Color.Gray)
+                Text("İptal", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         }
     )

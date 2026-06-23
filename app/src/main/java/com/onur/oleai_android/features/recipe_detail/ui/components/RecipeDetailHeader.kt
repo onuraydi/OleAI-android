@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -66,7 +67,7 @@ fun RecipeDetailHeader(
                     horizontalArrangement = Arrangement.Center
                 ) {
                     repeat(images.size) { iteration ->
-                        val color = if (pagerState.currentPage == iteration) Color(0xFF90B551) else Color.LightGray.copy(alpha = 0.5f)
+                        val color = if (pagerState.currentPage == iteration) Color(0xFF90B551) else MaterialTheme.colorScheme.outlineVariant.copy(alpha = 0.5f)
                         val width = if (pagerState.currentPage == iteration) 24.dp else 8.dp
                         Box(
                             modifier = Modifier
@@ -83,7 +84,7 @@ fun RecipeDetailHeader(
             Box(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color.DarkGray)
+                    .background(MaterialTheme.colorScheme.onSurfaceVariant)
             )
         }
 
@@ -94,12 +95,12 @@ fun RecipeDetailHeader(
                 .statusBarsPadding()
                 .padding(16.dp)
                 .align(Alignment.TopStart)
-                .background(Color.Black.copy(alpha = 0.5f), shape = CircleShape)
+                .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f), shape = CircleShape)
         ) {
             Icon(
                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                 contentDescription = "Geri",
-                tint = Color.White
+                tint = MaterialTheme.colorScheme.onBackground
             )
         }
 
@@ -110,12 +111,12 @@ fun RecipeDetailHeader(
                     .statusBarsPadding()
                     .padding(16.dp)
                     .align(Alignment.TopEnd)
-                    .background(Color.Black.copy(alpha = 0.5f), shape = CircleShape)
+                    .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f), shape = CircleShape)
             ) {
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Düzenle",
-                    tint = Color.White
+                    tint = MaterialTheme.colorScheme.onBackground
                 )
             }
         }
@@ -126,7 +127,7 @@ fun RecipeDetailHeader(
             onDismissRequest = { showFullScreenImage = null },
             properties = DialogProperties(usePlatformDefaultWidth = false, decorFitsSystemWindows = false)
         ) {
-            Box(modifier = Modifier.fillMaxSize().background(Color.Black)) {
+            Box(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.onBackground)) {
                 val fullScreenPagerState = rememberPagerState(
                     initialPage = showFullScreenImage ?: 0,
                     pageCount = { images.size }
@@ -151,9 +152,9 @@ fun RecipeDetailHeader(
                         .statusBarsPadding()
                         .padding(16.dp)
                         .align(Alignment.TopEnd)
-                        .background(Color.Black.copy(alpha = 0.5f), shape = CircleShape)
+                        .background(MaterialTheme.colorScheme.onBackground.copy(alpha = 0.5f), shape = CircleShape)
                 ) {
-                    Icon(Icons.Filled.Close, contentDescription = "Kapat", tint = Color.White)
+                    Icon(Icons.Filled.Close, contentDescription = "Kapat", tint = MaterialTheme.colorScheme.onBackground)
                 }
                 
                 // Indicators for Full Screen
@@ -165,7 +166,7 @@ fun RecipeDetailHeader(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         repeat(images.size) { iteration ->
-                            val color = if (fullScreenPagerState.currentPage == iteration) Color(0xFF90B551) else Color.Gray
+                            val color = if (fullScreenPagerState.currentPage == iteration) Color(0xFF90B551) else MaterialTheme.colorScheme.onSurfaceVariant
                             val width = if (fullScreenPagerState.currentPage == iteration) 24.dp else 8.dp
                             Box(
                                 modifier = Modifier

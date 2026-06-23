@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -112,7 +113,7 @@ fun MissingIngredientsDialog(
                         Column {
                             Text(
                                 text = "Eksik Malzemeler",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 18.sp
                             )
@@ -125,7 +126,7 @@ fun MissingIngredientsDialog(
                     }
 
                     IconButton(onClick = onDismiss) {
-                        Icon(Icons.Default.Close, contentDescription = "Kapat", tint = Color.Gray)
+                        Icon(Icons.Default.Close, contentDescription = "Kapat", tint = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                 }
 
@@ -135,7 +136,7 @@ fun MissingIngredientsDialog(
 
                 Text(
                     text = "Aşağıdaki malzemeler dijital dolabınızda bulunamadı. Lütfen eksik ürünler için bir aksiyon seçin:",
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontSize = 14.sp
                 )
 
@@ -158,7 +159,7 @@ fun MissingIngredientsDialog(
                             }
                         )
                         if (index < stateList.size - 1) {
-                            Divider(color = Color(0xFF252525), thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
+                            Divider(color = MaterialTheme.colorScheme.surfaceVariant, thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
                         }
                     }
                 }
@@ -174,11 +175,11 @@ fun MissingIngredientsDialog(
                     Button(
                         onClick = onDismiss,
                         colors = ButtonDefaults.buttonColors(containerColor = Color.Transparent),
-                        border = border(1.dp, Color.Gray, RoundedCornerShape(12.dp)),
+                        border = border(1.dp, MaterialTheme.colorScheme.onSurfaceVariant, RoundedCornerShape(12.dp)),
                         shape = RoundedCornerShape(12.dp),
                         modifier = Modifier.padding(end = 12.dp)
                     ) {
-                        Text("İptal", color = Color.White)
+                        Text("İptal", color = MaterialTheme.colorScheme.onBackground)
                     }
 
                     Button(
@@ -213,9 +214,9 @@ fun MissingIngredientsDialog(
                         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF90B551)),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Icon(Icons.Default.RestaurantMenu, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Black)
+                        Icon(Icons.Default.RestaurantMenu, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onBackground)
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Devam Et", color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text("Devam Et", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
                     }
                 }
             }
@@ -241,7 +242,7 @@ fun MissingIngredientItemRow(
         ) {
             Text(
                 text = state.name, 
-                color = Color.White, 
+                color = MaterialTheme.colorScheme.onBackground, 
                 fontWeight = FontWeight.SemiBold, 
                 fontSize = 16.sp,
                 modifier = Modifier.weight(1f)
@@ -251,23 +252,23 @@ fun MissingIngredientItemRow(
             
             // Quantity editor right next to title
             if (state.selectedAction == MissingIngredientAction.IGNORE) {
-                Text(text = "${state.editableQuantity} ${state.originalUnit}", color = Color(0xFF666666), fontSize = 14.sp)
+                Text(text = "${state.editableQuantity} ${state.originalUnit}", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
             } else {
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     BasicTextField(
                         value = state.editableQuantity,
                         onValueChange = onQuantityChanged,
-                        textStyle = TextStyle(color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
+                        textStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground, fontSize = 16.sp, fontWeight = FontWeight.Bold, textAlign = androidx.compose.ui.text.style.TextAlign.Center),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         cursorBrush = SolidColor(Color(0xFF90B551)),
                         modifier = Modifier
                             .width(55.dp)
                             .background(Color(0xFF222222), RoundedCornerShape(8.dp))
-                            .border(1.dp, Color(0xFF333333), RoundedCornerShape(8.dp))
+                            .border(1.dp, MaterialTheme.colorScheme.outline, RoundedCornerShape(8.dp))
                             .padding(vertical = 6.dp)
                     )
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text(text = state.originalUnit, color = Color.Gray, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                    Text(text = state.originalUnit, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 }
             }
         }
@@ -280,7 +281,7 @@ fun MissingIngredientItemRow(
                 .fillMaxWidth()
                 .height(52.dp)
                 .background(Color(0xFF161616), RoundedCornerShape(12.dp))
-                .border(1.dp, Color(0xFF252525), RoundedCornerShape(12.dp))
+                .border(1.dp, MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(12.dp))
                 .padding(4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -318,7 +319,7 @@ fun SegmentedButton(
     modifier: Modifier = Modifier
 ) {
     val backgroundColor = if (isSelected) selectedColor.copy(alpha = 0.15f) else Color.Transparent
-    val contentColor = if (isSelected) selectedColor else Color.Gray
+    val contentColor = if (isSelected) selectedColor else MaterialTheme.colorScheme.onSurfaceVariant
     val borderColor = if (isSelected) selectedColor.copy(alpha = 0.4f) else Color.Transparent
 
     Box(

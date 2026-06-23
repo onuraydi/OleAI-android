@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -75,7 +76,7 @@ fun MyCommentsSection(
                 text = "Yorumlarım (${state.totalComments})",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
-                color = Color.White
+                color = MaterialTheme.colorScheme.onBackground
             )
         }
 
@@ -89,9 +90,9 @@ fun MyCommentsSection(
             OutlinedTextField(
                 value = state.searchQuery,
                 onValueChange = { viewModel.onSearchQueryChanged(it) },
-                placeholder = { Text("Yorumlarda ara...", color = Color.Gray, fontSize = 14.sp) },
+                placeholder = { Text("Yorumlarda ara...", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) },
                 leadingIcon = {
-                    Icon(Icons.Default.Search, contentDescription = "Ara", tint = Color.Gray, modifier = Modifier.size(20.dp))
+                    Icon(Icons.Default.Search, contentDescription = "Ara", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(20.dp))
                 },
                 modifier = Modifier
                     .weight(1f)
@@ -100,8 +101,8 @@ fun MyCommentsSection(
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFF8BC34A),
                     unfocusedBorderColor = Color(0xFF2A2D28),
-                    focusedContainerColor = Color(0xFF1E211D),
-                    unfocusedContainerColor = Color(0xFF1E211D),
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
                     cursorColor = Color(0xFF8BC34A)
                 ),
                 singleLine = true,
@@ -117,7 +118,7 @@ fun MyCommentsSection(
             // Sort Dropdown
             Box {
                 Surface(
-                    color = Color(0xFF1E211D),
+                    color = MaterialTheme.colorScheme.surface,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.height(50.dp)
                 ) {
@@ -128,19 +129,19 @@ fun MyCommentsSection(
                             .clickable { isSortDropdownOpen = true }
                             .padding(horizontal = 16.dp)
                     ) {
-                        Text(state.sortBy, color = Color.LightGray, fontSize = 14.sp, fontWeight = FontWeight.Medium)
-                        Icon(Icons.Outlined.KeyboardArrowDown, contentDescription = "Sırala", tint = Color.LightGray, modifier = Modifier.size(18.dp))
+                        Text(state.sortBy, color = MaterialTheme.colorScheme.outlineVariant, fontSize = 14.sp, fontWeight = FontWeight.Medium)
+                        Icon(Icons.Outlined.KeyboardArrowDown, contentDescription = "Sırala", tint = MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.size(18.dp))
                     }
                 }
                 DropdownMenu(
                     expanded = isSortDropdownOpen,
                     onDismissRequest = { isSortDropdownOpen = false },
-                    modifier = Modifier.background(Color(0xFF1E211D))
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                 ) {
                     val sortOptions = listOf("En Yeni", "En Eski", "En Yüksek Puan", "En Düşük Puan")
                     sortOptions.forEach { option ->
                         DropdownMenuItem(
-                            text = { Text(option, color = if (option == state.sortBy) Color(0xFF81B8EF) else Color.White) },
+                            text = { Text(option, color = if (option == state.sortBy) Color(0xFF81B8EF) else MaterialTheme.colorScheme.onBackground) },
                             onClick = {
                                 isSortDropdownOpen = false
                                 viewModel.applySort(option)
@@ -169,7 +170,7 @@ fun MyCommentsSection(
                     .padding(vertical = 32.dp),
                 contentAlignment = Alignment.Center
             ) {
-                Text("Henüz yorumunuz bulunmuyor.", color = Color.Gray)
+                Text("Henüz yorumunuz bulunmuyor.", color = MaterialTheme.colorScheme.onSurfaceVariant)
             }
         } else {
             Column(
@@ -212,7 +213,7 @@ fun CommentCard(
         modifier = Modifier.fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF161815) // Sleek dark card background
+            containerColor = MaterialTheme.colorScheme.surface // Sleek dark card background
         )
     ) {
         Row(
@@ -244,7 +245,7 @@ fun CommentCard(
                     Text(
                         text = comment.recipeName ?: "Bilinmeyen Tarif",
                         fontWeight = FontWeight.SemiBold,
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 16.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis,
@@ -257,7 +258,7 @@ fun CommentCard(
                         Icon(
                             imageVector = Icons.Outlined.Edit,
                             contentDescription = "Düzenle",
-                            tint = Color.Gray,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
                                 .size(18.dp)
                                 .clickable { onEditClick() }
@@ -265,7 +266,7 @@ fun CommentCard(
                         Icon(
                             imageVector = Icons.Outlined.Delete,
                             contentDescription = "Sil",
-                            tint = Color.Gray,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier
                                 .size(18.dp)
                                 .clickable { onDeleteClick() }
@@ -283,12 +284,12 @@ fun CommentCard(
                     Icon(
                         imageVector = Icons.Outlined.AccessTime,
                         contentDescription = "Tarih",
-                        tint = Color.Gray,
+                        tint = MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(14.dp)
                     )
                     Text(
                         text = formatCommentDate(comment.createdDate),
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 12.sp
                     )
                 }

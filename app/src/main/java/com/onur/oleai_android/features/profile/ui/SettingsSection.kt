@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -37,7 +38,7 @@ fun SettingsSection(
         // Hesap Bilgileri Card
         Card(
             shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF161815)),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -51,11 +52,11 @@ fun SettingsSection(
                     Icon(
                         Icons.Outlined.Settings,
                         contentDescription = null,
-                        tint = Color(0xFF7CB342)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         "Hesap Bilgileri",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -94,13 +95,13 @@ fun SettingsSection(
                         Icon(
                             Icons.Outlined.VerifiedUser,
                             contentDescription = null,
-                            tint = Color.Gray,
+                            tint = MaterialTheme.colorScheme.onSurfaceVariant,
                             modifier = Modifier.size(20.dp)
                         )
-                        Text("E-posta Doğrulama", color = Color.Gray, fontSize = 14.sp)
+                        Text("E-posta Doğrulama", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
                     }
                     if (userProfile.isEmailVerified) {
-                        Text("Doğrulandı ✔", color = Color(0xFF7CB342), fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                        Text("Doğrulandı ✔", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.Bold)
                     } else {
                         Text("Doğrulanmadı", color = Color(0xFFEF5350), fontSize = 14.sp, fontWeight = FontWeight.Bold)
                     }
@@ -111,7 +112,7 @@ fun SettingsSection(
         // Şifre Değiştir Card
         Card(
             shape = RoundedCornerShape(24.dp),
-            colors = CardDefaults.cardColors(containerColor = Color(0xFF161815)),
+            colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
             modifier = Modifier.fillMaxWidth()
         ) {
             Column(
@@ -125,11 +126,11 @@ fun SettingsSection(
                     Icon(
                         Icons.Outlined.Key,
                         contentDescription = null,
-                        tint = Color(0xFF7CB342)
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Text(
                         "Şifre Değiştir",
-                        color = Color.White,
+                        color = MaterialTheme.colorScheme.onBackground,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
@@ -186,10 +187,10 @@ fun SettingsSection(
                     },
                     enabled = isButtonEnabled,
                     colors = ButtonDefaults.buttonColors(
-                        containerColor = Color(0xFF7CB342),
+                        containerColor = MaterialTheme.colorScheme.primary,
                         disabledContainerColor = Color(0xFF3C4D2A),
-                        contentColor = Color.Black,
-                        disabledContentColor = Color.Gray
+                        contentColor = MaterialTheme.colorScheme.onBackground,
+                        disabledContentColor = MaterialTheme.colorScheme.onSurfaceVariant
                     ),
                     modifier = Modifier.align(Alignment.End)
                 ) {
@@ -208,11 +209,11 @@ fun SettingsSection(
             Icon(
                 Icons.Outlined.Logout,
                 contentDescription = null,
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 modifier = Modifier.size(24.dp)
             )
             Spacer(modifier = Modifier.width(8.dp))
-            Text("Çıkış Yap", color = Color.White, fontSize = 16.sp, fontWeight = FontWeight.Bold)
+            Text("Çıkış Yap", color = MaterialTheme.colorScheme.onBackground, fontSize = 16.sp, fontWeight = FontWeight.Bold)
         }
     }
 }
@@ -231,12 +232,12 @@ private fun AccountInfoRow(icon: androidx.compose.ui.graphics.vector.ImageVector
             Icon(
                 icon,
                 contentDescription = null,
-                tint = Color.Gray,
+                tint = MaterialTheme.colorScheme.onSurfaceVariant,
                 modifier = Modifier.size(20.dp)
             )
-            Text(label, color = Color.Gray, fontSize = 14.sp)
+            Text(label, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
         }
-        Text(value, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+        Text(value, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp, fontWeight = FontWeight.Bold)
     }
 }
 
@@ -253,36 +254,36 @@ private fun PasswordTextField(
     errorMessage: String? = null
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-        Text(label, color = Color.White, fontSize = 14.sp, fontWeight = FontWeight.Bold)
+        Text(label, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp, fontWeight = FontWeight.Bold)
         OutlinedTextField(
             value = value,
             onValueChange = onValueChange,
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             isError = isError,
-            placeholder = { Text(placeholder, color = Color.Gray, fontSize = 14.sp) },
+            placeholder = { Text(placeholder, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) },
             leadingIcon = {
-                Icon(Icons.Outlined.VpnKey, contentDescription = null, tint = if (isError) MaterialTheme.colorScheme.error else Color.Gray, modifier = Modifier.size(20.dp))
+                Icon(Icons.Outlined.VpnKey, contentDescription = null, tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(20.dp))
             },
             trailingIcon = {
                 IconButton(onClick = { onVisibilityChange(!isVisible) }) {
                     Icon(
                         if (isVisible) Icons.Outlined.VisibilityOff else Icons.Outlined.Visibility,
                         contentDescription = null,
-                        tint = if (isError) MaterialTheme.colorScheme.error else Color.Gray,
+                        tint = if (isError) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(20.dp)
                     )
                 }
             },
             visualTransformation = if (isVisible) VisualTransformation.None else PasswordVisualTransformation(),
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFF7CB342),
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
                 unfocusedBorderColor = Color(0xFF2E332A),
-                focusedContainerColor = Color(0xFF1E211D),
-                unfocusedContainerColor = Color(0xFF1E211D),
-                focusedTextColor = Color.White,
-                unfocusedTextColor = Color.White,
-                cursorColor = Color(0xFF7CB342),
+                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                cursorColor = MaterialTheme.colorScheme.primary,
                 errorBorderColor = MaterialTheme.colorScheme.error,
                 errorCursorColor = MaterialTheme.colorScheme.error,
                 errorLeadingIconColor = MaterialTheme.colorScheme.error,

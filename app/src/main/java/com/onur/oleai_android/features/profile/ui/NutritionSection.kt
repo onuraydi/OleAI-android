@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -62,7 +63,7 @@ fun NutritionSection(
 
     if (state.isLoading) {
         Box(modifier = modifier.fillMaxWidth().height(200.dp), contentAlignment = Alignment.Center) {
-            CircularProgressIndicator(color = Color(0xFF7CB342))
+            CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
         }
         return
     }
@@ -75,7 +76,7 @@ fun NutritionSection(
             // Dietary Preferences
                 Card(
                     shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF161815)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -83,10 +84,10 @@ fun NutritionSection(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Icon(Icons.Outlined.Eco, contentDescription = null, tint = Color(0xFF7CB342))
-                            Text("Beslenme Tercihleri", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            Icon(Icons.Outlined.Eco, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                            Text("Beslenme Tercihleri", color = MaterialTheme.colorScheme.onBackground, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         }
-                        Text("Beslenme tarzını seç. Seçimlerin tarif önerilerini kişiselleştirir.", color = Color.Gray, fontSize = 12.sp)
+                        Text("Beslenme tarzını seç. Seçimlerin tarif önerilerini kişiselleştirir.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
 
                         FlowRow(
                             modifier = Modifier.fillMaxWidth(),
@@ -105,16 +106,16 @@ fun NutritionSection(
 
                         Button(
                             onClick = { viewModel.onEvent(NutritionEvent.SaveDietaryPreferences) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CB342)),
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                             modifier = Modifier.align(Alignment.End),
                             enabled = !state.isDietaryPreferencesSaving
                         ) {
                             if (state.isDietaryPreferencesSaving) {
-                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color.Black, strokeWidth = 2.dp)
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.dp)
                             } else {
-                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Black)
+                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onPrimary)
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Tercihleri Kaydet", color = Color.Black, fontWeight = FontWeight.Bold)
+                                Text("Tercihleri Kaydet", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -122,7 +123,7 @@ fun NutritionSection(
             // Allergies
                 Card(
                     shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF161815)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -130,10 +131,10 @@ fun NutritionSection(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Icon(Icons.Outlined.WarningAmber, contentDescription = null, tint = Color(0xFF7CB342))
-                            Text("Alerji ve Gıda Kısıtlamaları", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            Icon(Icons.Outlined.WarningAmber, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                            Text("Alerji ve Gıda Kısıtlamaları", color = MaterialTheme.colorScheme.onBackground, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         }
-                        Text("Alerjilerini ve gıda kısıtlamalarını işaretle. Bu bilgiler tariflerden otomatik olarak filtrelenir.", color = Color.Gray, fontSize = 12.sp)
+                        Text("Alerjilerini ve gıda kısıtlamalarını işaretle. Bu bilgiler tariflerden otomatik olarak filtrelenir.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
 
                         FlowRow(
                             modifier = Modifier.fillMaxWidth(),
@@ -152,16 +153,16 @@ fun NutritionSection(
 
                         Button(
                             onClick = { viewModel.onEvent(NutritionEvent.SaveAllergies) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CB342)),
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                             modifier = Modifier.align(Alignment.End),
                             enabled = !state.isAllergiesSaving
                         ) {
                             if (state.isAllergiesSaving) {
-                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color.Black, strokeWidth = 2.dp)
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.dp)
                             } else {
-                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Black)
+                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onPrimary)
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Alerjileri Kaydet", color = Color.Black, fontWeight = FontWeight.Bold)
+                                Text("Alerjileri Kaydet", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -169,7 +170,7 @@ fun NutritionSection(
             // Disliked Ingredients
                 Card(
                     shape = RoundedCornerShape(24.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF161815)),
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     Column(
@@ -177,10 +178,10 @@ fun NutritionSection(
                         verticalArrangement = Arrangement.spacedBy(16.dp)
                     ) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Icon(Icons.Outlined.ThumbDown, contentDescription = null, tint = Color(0xFF7CB342))
-                            Text("Sevilmeyen Malzemeler", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                            Icon(Icons.Outlined.ThumbDown, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
+                            Text("Sevilmeyen Malzemeler", color = MaterialTheme.colorScheme.onBackground, fontSize = 18.sp, fontWeight = FontWeight.Bold)
                         }
-                        Text("Hoşlanmadığın malzemeleri seç. Yapay zeka tarif önerirken bu malzemeleri kullanmamaya özen gösterir.", color = Color.Gray, fontSize = 12.sp)
+                        Text("Hoşlanmadığın malzemeleri seç. Yapay zeka tarif önerirken bu malzemeleri kullanmamaya özen gösterir.", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
 
                         // Selected Chips
                         if (state.selectedDislikedIngredients.isNotEmpty()) {
@@ -207,18 +208,18 @@ fun NutritionSection(
                                 },
                                 modifier = Modifier.fillMaxWidth(),
                                 singleLine = true,
-                                placeholder = { Text("Malzeme ara... (örn: Soğan)", color = Color.Gray) },
-                                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null, tint = Color.Gray) },
+                                placeholder = { Text("Malzeme ara... (örn: Soğan)", color = MaterialTheme.colorScheme.onSurfaceVariant) },
+                                leadingIcon = { Icon(Icons.Outlined.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant) },
                                 trailingIcon = {
                                     if (state.isSearching) {
-                                        CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color(0xFF7CB342), strokeWidth = 2.dp)
+                                        CircularProgressIndicator(modifier = Modifier.size(20.dp), color = MaterialTheme.colorScheme.primary, strokeWidth = 2.dp)
                                     }
                                 },
                                 colors = OutlinedTextFieldDefaults.colors(
-                                    focusedBorderColor = Color(0xFF7CB342),
+                                    focusedBorderColor = MaterialTheme.colorScheme.primary,
                                     unfocusedBorderColor = Color(0xFF2E332A),
-                                    focusedContainerColor = Color(0xFF1E211D),
-                                    unfocusedContainerColor = Color(0xFF1E211D)
+                                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                                    unfocusedContainerColor = MaterialTheme.colorScheme.surface
                                 ),
                                 shape = RoundedCornerShape(12.dp)
                             )
@@ -226,7 +227,7 @@ fun NutritionSection(
                             if (state.searchResults.isNotEmpty()) {
                                 Card(
                                     shape = RoundedCornerShape(12.dp),
-                                    colors = CardDefaults.cardColors(containerColor = Color(0xFF1E211D)),
+                                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
                                     modifier = Modifier.fillMaxWidth()
                                 ) {
                                     Column(modifier = Modifier.fillMaxWidth()) {
@@ -255,14 +256,14 @@ fun NutritionSection(
                                                 Icon(
                                                     imageVector = imageVector ?: Icons.Outlined.Eco,
                                                     contentDescription = null,
-                                                    tint = Color(0xFF7CB342),
+                                                    tint = MaterialTheme.colorScheme.primary,
                                                     modifier = Modifier.size(20.dp)
                                                 )
                                                 
                                                 Column {
-                                                    Text(result.displayName, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                                                    Text(result.displayName, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                                                     if (!result.categoryName.isNullOrEmpty()) {
-                                                        Text(result.categoryName, color = Color.Gray, fontSize = 12.sp)
+                                                        Text(result.categoryName, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                                                     }
                                                 }
                                             }
@@ -274,16 +275,16 @@ fun NutritionSection(
 
                         Button(
                             onClick = { viewModel.onEvent(NutritionEvent.SaveDislikedIngredients) },
-                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CB342)),
+                            colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                             modifier = Modifier.align(Alignment.End),
                             enabled = !state.isDislikedIngredientsSaving
                         ) {
                             if (state.isDislikedIngredientsSaving) {
-                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = Color.Black, strokeWidth = 2.dp)
+                                CircularProgressIndicator(modifier = Modifier.size(20.dp), color = MaterialTheme.colorScheme.onPrimary, strokeWidth = 2.dp)
                             } else {
-                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Black)
+                                Icon(Icons.Default.Check, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onPrimary)
                                 Spacer(modifier = Modifier.width(4.dp))
-                                Text("Malzemeleri Kaydet", color = Color.Black, fontWeight = FontWeight.Bold)
+                                Text("Malzemeleri Kaydet", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                             }
                         }
                     }
@@ -298,9 +299,9 @@ fun SelectionChip(
     isSelected: Boolean,
     onClick: () -> Unit
 ) {
-    val backgroundColor = if (isSelected) Color(0xFF1B2A10) else Color(0xFF1E211D)
-    val borderColor = if (isSelected) Color(0xFF7CB342) else Color(0xFF2E332A)
-    val textColor = if (isSelected) Color(0xFF7CB342) else Color.White
+    val backgroundColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface
+    val borderColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant
+    val textColor = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onBackground
 
     Row(
         modifier = Modifier
@@ -314,7 +315,7 @@ fun SelectionChip(
     ) {
         Text(text, color = textColor, fontSize = 14.sp, fontWeight = FontWeight.SemiBold)
         if (isSelected) {
-            Icon(Icons.Default.Check, contentDescription = null, tint = Color(0xFF7CB342), modifier = Modifier.size(16.dp))
+            Icon(Icons.Default.Check, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(16.dp))
         }
     }
 }
@@ -328,16 +329,16 @@ fun DislikedIngredientChip(
         modifier = Modifier
             .border(1.dp, Color(0xFF2E332A), RoundedCornerShape(12.dp))
             .clip(RoundedCornerShape(12.dp))
-            .background(Color(0xFF1E211D))
+            .background(MaterialTheme.colorScheme.surface)
             .padding(horizontal = 12.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(text, color = Color.White, fontSize = 14.sp)
+        Text(text, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
         Icon(
             Icons.Default.Close,
             contentDescription = "Remove",
-            tint = Color.Gray,
+            tint = MaterialTheme.colorScheme.onSurfaceVariant,
             modifier = Modifier
                 .size(16.dp)
                 .clickable { onRemove() }

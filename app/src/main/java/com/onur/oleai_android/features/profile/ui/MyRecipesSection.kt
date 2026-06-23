@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -77,7 +78,7 @@ fun MyRecipesSection(
             Icon(
                 imageVector = Icons.Outlined.MenuBook,
                 contentDescription = null,
-                tint = Color(0xFF7CB342),
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier.size(24.dp)
             )
             Text(
@@ -94,7 +95,7 @@ fun MyRecipesSection(
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
                 .clip(RoundedCornerShape(16.dp))
-                .background(Color(0xFF1E211D))
+                .background(MaterialTheme.colorScheme.surface)
                 .padding(4.dp),
             horizontalArrangement = Arrangement.spacedBy(4.dp)
         ) {
@@ -110,7 +111,7 @@ fun MyRecipesSection(
                 Row(
                     modifier = Modifier
                         .clip(RoundedCornerShape(12.dp))
-                        .background(if (isSelected) Color(0xFF7CB342) else Color.Transparent)
+                        .background(if (isSelected) MaterialTheme.colorScheme.primary else Color.Transparent)
                         .clickable { viewModel.onTabSelected(tabEnum) }
                         .padding(horizontal = 12.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically,
@@ -119,13 +120,13 @@ fun MyRecipesSection(
                     Icon(
                         imageVector = icon,
                         contentDescription = null,
-                        tint = if (isSelected) Color.Black else Color.LightGray,
+                        tint = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                         modifier = Modifier.size(14.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
                     Text(
                         text = title,
-                        color = if (isSelected) Color.Black else Color.LightGray,
+                        color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 11.sp,
                         fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
                         maxLines = 1
@@ -147,9 +148,9 @@ fun MyRecipesSection(
                 modifier = Modifier
                     .weight(1f)
                     .height(48.dp),
-                placeholder = { Text("Tarif ara...", color = Color.Gray, fontSize = 12.sp) },
+                placeholder = { Text("Tarif ara...", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp) },
                 leadingIcon = {
-                    Icon(Icons.Filled.Search, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Filled.Search, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(18.dp))
                 },
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
@@ -159,8 +160,8 @@ fun MyRecipesSection(
                     }
                 ),
                 colors = TextFieldDefaults.colors(
-                    focusedContainerColor = Color(0xFF1E211D),
-                    unfocusedContainerColor = Color(0xFF1E211D),
+                    focusedContainerColor = MaterialTheme.colorScheme.surface,
+                    unfocusedContainerColor = MaterialTheme.colorScheme.surface,
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
@@ -170,7 +171,7 @@ fun MyRecipesSection(
 
             // Filter Button
             Surface(
-                color = if (isFilterOpen) Color(0xFF7CB342) else Color(0xFF1E211D),
+                color = if (isFilterOpen) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface,
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier.height(48.dp)
             ) {
@@ -184,12 +185,12 @@ fun MyRecipesSection(
                     Icon(
                         Icons.Outlined.Tune, 
                         contentDescription = "Filtreler", 
-                        tint = if (isFilterOpen) Color.Black else Color.LightGray, 
+                        tint = if (isFilterOpen) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, 
                         modifier = Modifier.size(16.dp)
                     )
                     Text(
                         "Filtreler", 
-                        color = if (isFilterOpen) Color.Black else Color.LightGray, 
+                        color = if (isFilterOpen) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, 
                         fontSize = 12.sp, 
                         fontWeight = FontWeight.Medium
                     )
@@ -199,7 +200,7 @@ fun MyRecipesSection(
             // Sort Dropdown
             Box {
                 Surface(
-                    color = Color(0xFF1E211D),
+                    color = MaterialTheme.colorScheme.surface,
                     shape = RoundedCornerShape(12.dp),
                     modifier = Modifier.height(48.dp)
                 ) {
@@ -210,19 +211,19 @@ fun MyRecipesSection(
                             .clickable { isSortDropdownOpen = true }
                             .padding(horizontal = 12.dp)
                     ) {
-                        Text(state.sortBy, color = Color.LightGray, fontSize = 12.sp, fontWeight = FontWeight.Medium)
-                        Icon(Icons.Outlined.KeyboardArrowDown, contentDescription = "Sırala", tint = Color.LightGray, modifier = Modifier.size(16.dp))
+                        Text(state.sortBy, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+                        Icon(Icons.Outlined.KeyboardArrowDown, contentDescription = "Sırala", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                     }
                 }
                 DropdownMenu(
                     expanded = isSortDropdownOpen,
                     onDismissRequest = { isSortDropdownOpen = false },
-                    modifier = Modifier.background(Color(0xFF1E211D))
+                    modifier = Modifier.background(MaterialTheme.colorScheme.surface)
                 ) {
                     val sortOptions = listOf("En Yeni", "Popüler", "En Çok Oylanan", "En Hızlı")
                     sortOptions.forEach { option ->
                         DropdownMenuItem(
-                            text = { Text(option, color = if (option == state.sortBy) Color(0xFF81B8EF) else Color.White) },
+                            text = { Text(option, color = if (option == state.sortBy) Color(0xFF81B8EF) else MaterialTheme.colorScheme.onBackground) },
                             onClick = {
                                 isSortDropdownOpen = false
                                 viewModel.applySort(option)
@@ -249,13 +250,13 @@ fun MyRecipesSection(
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(16.dp))
-                        .background(if (isAllSelected) Color(0xFF7CB342) else Color(0xFF1E211D))
+                        .background(if (isAllSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                         .clickable { viewModel.onTagSelected(null) }
                         .padding(horizontal = 16.dp, vertical = 6.dp)
                 ) {
                     Text(
                         "Tümü", 
-                        color = if (isAllSelected) Color.Black else Color.LightGray, 
+                        color = if (isAllSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, 
                         fontSize = 12.sp, 
                         fontWeight = if (isAllSelected) FontWeight.SemiBold else FontWeight.Normal
                     )
@@ -266,13 +267,13 @@ fun MyRecipesSection(
                     Box(
                         modifier = Modifier
                             .clip(RoundedCornerShape(16.dp))
-                            .background(if (isSelected) Color(0xFF7CB342) else Color(0xFF1E211D))
+                            .background(if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.surface)
                             .clickable { viewModel.onTagSelected(tag.id) }
                             .padding(horizontal = 16.dp, vertical = 6.dp)
                     ) {
                         Text(
                             tag.name, 
-                            color = if (isSelected) Color.Black else Color.LightGray, 
+                            color = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, 
                             fontSize = 12.sp,
                             fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
                         )
@@ -288,12 +289,12 @@ fun MyRecipesSection(
             modifier = Modifier
                 .fillMaxWidth()
                 .clip(RoundedCornerShape(24.dp))
-                .background(Color(0xFF161815)) // slightly darker than 1E211D
+                .background(MaterialTheme.colorScheme.surface) // slightly darker than 1E211D
                 .padding(32.dp),
             contentAlignment = Alignment.Center
         ) {
             if (state.isLoading) {
-                CircularProgressIndicator(color = Color(0xFF7CB342))
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             } else if (state.recipes.isEmpty()) {
                 // Empty State
                 Column(
@@ -304,13 +305,13 @@ fun MyRecipesSection(
                         modifier = Modifier
                             .size(64.dp)
                             .clip(RoundedCornerShape(16.dp))
-                            .background(Color(0xFF1E211D)),
+                            .background(MaterialTheme.colorScheme.surface),
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
                             imageVector = Icons.Outlined.AutoAwesome,
                             contentDescription = null,
-                            tint = Color(0xFF7CB342),
+                            tint = MaterialTheme.colorScheme.primary,
                             modifier = Modifier.size(32.dp)
                         )
                     }
@@ -324,7 +325,7 @@ fun MyRecipesSection(
                     
                     Text(
                         text = "Henüz kendi tarifini oluşturmadın. Yapay zeka ile hemen yaratıcı tarifler oluşturmaya başla!",
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 14.sp,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(horizontal = 16.dp)
@@ -332,10 +333,10 @@ fun MyRecipesSection(
                     
                     Button(
                         onClick = onCreateRecipeClick,
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CB342)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("İlk Tarifini Oluştur", color = Color.Black, fontWeight = FontWeight.Bold)
+                        Text("İlk Tarifini Oluştur", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
                     }
                 }
             } else {
@@ -372,7 +373,7 @@ fun MyRecipesSection(
                             contentAlignment = Alignment.Center
                         ) {
                             CircularProgressIndicator(
-                                color = Color(0xFF7CB342),
+                                color = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(24.dp)
                             )
                         }

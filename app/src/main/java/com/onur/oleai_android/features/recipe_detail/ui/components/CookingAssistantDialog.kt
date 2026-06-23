@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -50,7 +51,7 @@ fun CookingAssistantDialog(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFF1E1E1E), shape = RoundedCornerShape(24.dp))
+                    .background(MaterialTheme.colorScheme.surface, shape = RoundedCornerShape(24.dp))
                     .border(1.dp, Color(0xFF2C2C2C), shape = RoundedCornerShape(24.dp))
                     .padding(24.dp)
             ) {
@@ -78,7 +79,7 @@ fun CookingAssistantDialog(
                         Column {
                             Text(
                                 text = "Pişirme Asistanı",
-                                color = Color.White,
+                                color = MaterialTheme.colorScheme.onBackground,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 16.sp
                             )
@@ -99,7 +100,7 @@ fun CookingAssistantDialog(
                         Icon(
                             Icons.Default.Close,
                             contentDescription = "Kapat",
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.onBackground,
                             modifier = Modifier.size(16.dp)
                         )
                     }
@@ -131,7 +132,7 @@ fun CookingAssistantDialog(
 
                         Text(
                             text = step.instruction,
-                            color = Color.White,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Medium,
                             textAlign = TextAlign.Center,
@@ -152,7 +153,7 @@ fun CookingAssistantDialog(
                         }
                     }
                 } else {
-                    Text("Adım bulunamadı.", color = Color.White)
+                    Text("Adım bulunamadı.", color = MaterialTheme.colorScheme.onBackground)
                 }
 
                 Spacer(modifier = Modifier.height(48.dp))
@@ -171,7 +172,7 @@ fun CookingAssistantDialog(
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
-                        Text("< Geri", color = if (currentStepIndex > 0) Color.White else Color.Gray)
+                        Text("< Geri", color = if (currentStepIndex > 0) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant)
                     }
 
                     Button(
@@ -183,13 +184,13 @@ fun CookingAssistantDialog(
                             }
                         },
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.onBackground
                         ),
                         shape = RoundedCornerShape(12.dp)
                     ) {
                         Text(
                             if (currentStepIndex < steps.size - 1) "İleri >" else "Bitir",
-                            color = Color.Black,
+                            color = MaterialTheme.colorScheme.onBackground,
                             fontWeight = FontWeight.Bold
                         )
                     }

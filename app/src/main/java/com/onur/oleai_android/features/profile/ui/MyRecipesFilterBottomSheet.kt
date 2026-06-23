@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -189,7 +190,7 @@ fun MyRecipesFilterBottomSheet(
                     colors = ButtonDefaults.outlinedButtonColors(
                         contentColor = MaterialTheme.colorScheme.onSurface
                     ),
-                    border = androidx.compose.foundation.BorderStroke(1.dp, Color.Gray)
+                    border = androidx.compose.foundation.BorderStroke(1.dp, MaterialTheme.colorScheme.onSurfaceVariant)
                 ) {
                     Text("Temizle", fontWeight = FontWeight.Bold)
                 }
@@ -208,7 +209,7 @@ fun MyRecipesFilterBottomSheet(
                     modifier = Modifier.weight(1f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color(0xFF8BC34A),
-                        contentColor = Color.Black
+                        contentColor = MaterialTheme.colorScheme.onBackground
                     )
                 ) {
                     Text("Uygula", fontWeight = FontWeight.Bold)
@@ -236,14 +237,14 @@ private fun FilterChipOption(label: String, isSelected: Boolean, onClick: () -> 
     Box(
         modifier = Modifier
             .clip(RoundedCornerShape(8.dp))
-            .background(if (isSelected) Color(0xFF2E3D24) else Color(0xFF1E211D))
+            .background(if (isSelected) Color(0xFF2E3D24) else MaterialTheme.colorScheme.surface)
             .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center
     ) {
         Text(
             text = label,
-            color = if (isSelected) Color(0xFF8BC34A) else Color.LightGray,
+            color = if (isSelected) Color(0xFF8BC34A) else MaterialTheme.colorScheme.outlineVariant,
             fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
             fontSize = 14.sp
         )

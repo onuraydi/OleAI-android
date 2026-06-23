@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyRow
@@ -65,7 +66,7 @@ fun RecipeDetailInfo(
             text = title,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            color = Color.White,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
@@ -76,10 +77,10 @@ fun RecipeDetailInfo(
                 items(allChips) { chipText ->
                     Box(
                         modifier = Modifier
-                            .background(Color(0xFF1E1E1E), RoundedCornerShape(12.dp))
+                            .background(MaterialTheme.colorScheme.primaryContainer, RoundedCornerShape(12.dp))
                             .padding(horizontal = 12.dp, vertical = 6.dp)
                     ) {
-                        Text(text = chipText, color = Color(0xFF90B551), fontSize = 12.sp)
+                        Text(text = chipText, color = MaterialTheme.colorScheme.onPrimaryContainer, fontSize = 12.sp)
                     }
                 }
             }
@@ -97,19 +98,19 @@ fun RecipeDetailInfo(
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .background(Color(0xFF2A2A2A), CircleShape),
+                        .background(MaterialTheme.colorScheme.primaryContainer, CircleShape),
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = author?.username?.firstOrNull()?.toString()?.uppercase() ?: "?",
-                        color = Color(0xFF90B551),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer,
                         fontWeight = FontWeight.Bold
                     )
                 }
                 Spacer(modifier = Modifier.width(12.dp))
                 Column {
-                    Text(text = "TARİF SAHİBİ", fontSize = 10.sp, color = Color.Gray)
-                    Text(text = author?.username ?: "Bilinmiyor", fontSize = 14.sp, color = Color.White, fontWeight = FontWeight.Bold)
+                    Text(text = "TARİF SAHİBİ", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(text = author?.username ?: "Bilinmiyor", fontSize = 14.sp, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
                 }
             }
 
@@ -117,14 +118,14 @@ fun RecipeDetailInfo(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .background(Color(0xFF2A2A2A), RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surfaceVariant, RoundedCornerShape(16.dp))
                     .padding(horizontal = 12.dp, vertical = 6.dp)
             ) {
                 Icon(Icons.Filled.Star, contentDescription = "Star", tint = Color(0xFFFFB800), modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
                 Text(
                     text = "${statistics.averageRating} (${statistics.totalRatings} Değerlendirme)",
-                    color = Color(0xFFFFB800),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -141,15 +142,15 @@ fun RecipeDetailInfo(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .background(Color(0xFF1E1E1E), RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(16.dp))
                     .padding(16.dp)
                     .animateContentSize()
             ) {
-                Text(text = "Tarif Hakkında", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 14.sp)
+                Text(text = "Tarif Hakkında", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 14.sp)
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = description, 
-                    color = Color.LightGray, 
+                    color = MaterialTheme.colorScheme.onBackground, 
                     fontSize = 14.sp,
                     maxLines = if (isExpanded) Int.MAX_VALUE else 3,
                     overflow = TextOverflow.Ellipsis,
@@ -184,7 +185,7 @@ fun RecipeDetailInfo(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color(0xFF1E1E1E), RoundedCornerShape(12.dp))
+                .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp))
                 .padding(vertical = 12.dp, horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
@@ -208,31 +209,31 @@ fun RecipeDetailInfo(
             ActionButton(
                 icon = if (isLiked) Icons.Filled.ThumbUp else Icons.Outlined.ThumbUp,
                 label = statistics.totalLikes.toString(),
-                tint = if (isLiked) Color(0xFF90B551) else Color.White,
+                tint = if (isLiked) Color(0xFF90B551) else MaterialTheme.colorScheme.onBackground,
                 onClick = onLikeClick
             )
             ActionButton(
                 icon = if (isDisliked) Icons.Filled.ThumbDown else Icons.Outlined.ThumbDown,
                 label = statistics.totalDislikes.toString(),
-                tint = if (isDisliked) Color(0xFF90B551) else Color.White,
+                tint = if (isDisliked) Color(0xFF90B551) else MaterialTheme.colorScheme.onBackground,
                 onClick = onDislikeClick
             )
             ActionButton(
                 icon = Icons.Filled.ChatBubbleOutline,
                 label = statistics.totalComments.toString(),
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 onClick = onCommentClick
             )
             ActionButton(
                 icon = if (isSaved) Icons.Filled.Bookmark else Icons.Filled.BookmarkBorder,
                 label = "Kaydet",
-                tint = if (isSaved) Color(0xFF90B551) else Color.White,
+                tint = if (isSaved) Color(0xFF90B551) else MaterialTheme.colorScheme.onBackground,
                 onClick = onSaveClick
             )
             ActionButton(
                 icon = Icons.Filled.Share,
                 label = "Paylaş",
-                tint = Color.White,
+                tint = MaterialTheme.colorScheme.onBackground,
                 onClick = onShareClick
             )
         }
@@ -245,9 +246,9 @@ fun StatCard(title: String, value: String, modifier: Modifier = Modifier) {
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = title, color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+        Text(text = title, color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = value, color = Color.White, fontSize = 13.sp, fontWeight = FontWeight.Bold)
+        Text(text = value, color = MaterialTheme.colorScheme.onBackground, fontSize = 13.sp, fontWeight = FontWeight.Bold)
     }
 }
 

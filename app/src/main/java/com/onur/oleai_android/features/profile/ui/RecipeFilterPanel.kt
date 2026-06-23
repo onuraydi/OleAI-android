@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.profile.ui
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -26,7 +27,7 @@ fun RecipeFilterPanel(
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(16.dp))
-            .background(Color(0xFF1E211D))
+            .background(MaterialTheme.colorScheme.surface)
             .padding(16.dp)
     ) {
         Column {
@@ -66,7 +67,7 @@ fun RecipeFilterPanel(
                 
                 // Diyet / Etiket
                 Column {
-                    Text("Diyet / Etiket", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                    Text("Diyet / Etiket", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                     Spacer(modifier = Modifier.height(12.dp))
                     Column(
                         modifier = Modifier
@@ -92,7 +93,7 @@ fun RecipeFilterPanel(
             ) {
                 Text(
                     text = "Temizle",
-                    color = Color.LightGray,
+                    color = MaterialTheme.colorScheme.outlineVariant,
                     fontSize = 12.sp,
                     fontWeight = FontWeight.Medium,
                     modifier = Modifier
@@ -102,10 +103,10 @@ fun RecipeFilterPanel(
                 
                 Button(
                     onClick = onApply,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CB342)),
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                     shape = RoundedCornerShape(12.dp)
                 ) {
-                    Text("Filtreleri Uygula", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                    Text("Filtreleri Uygula", color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                 }
             }
         }
@@ -121,7 +122,7 @@ private fun FilterColumn(
     onOptionSelected: (String) -> Unit = {}
 ) {
     Column {
-        Text(title, color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+        Text(title, color = MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 12.sp)
         Spacer(modifier = Modifier.height(12.dp))
         FlowRow(
             modifier = Modifier.width(140.dp), // Force wrapping
@@ -150,7 +151,7 @@ private fun FilterChip(text: String, isSelected: Boolean, onClick: () -> Unit) {
     ) {
         Text(
             text = text,
-            color = if (isSelected) Color(0xFF7CB342) else Color.LightGray,
+            color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outlineVariant,
             fontSize = 11.sp,
             fontWeight = if (isSelected) FontWeight.Medium else FontWeight.Normal
         )

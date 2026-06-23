@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.pantry.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -43,7 +44,7 @@ fun PantryItemCard(
                 modifier = Modifier
                     .size(48.dp)
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFF2A3625)), // Using a dark green shade commonly found in the app
+                    .background(MaterialTheme.colorScheme.primary),
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
@@ -51,7 +52,7 @@ fun PantryItemCard(
                         item.categoryIconName.ifEmpty { "leaf" }
                     ),
                     contentDescription = item.categoryName,
-                    tint = Color(0xFF8DC63F), // Green tint
+                    tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier.size(24.dp)
                 )
             }
@@ -63,7 +64,7 @@ fun PantryItemCard(
                     text = item.name,
                     style = MaterialTheme.typography.bodyLarge.copy(
                         fontWeight = FontWeight.Bold,
-                        color = Color.White
+                        color = MaterialTheme.colorScheme.onBackground
                     ),
                     maxLines = 1,
                     overflow = androidx.compose.ui.text.style.TextOverflow.Ellipsis
@@ -72,7 +73,7 @@ fun PantryItemCard(
                 Text(
                     text = "${item.quantity.toInt()} ${item.unit}",
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 12.sp
                     ),
                     maxLines = 1,
@@ -94,7 +95,7 @@ fun PantryItemCard(
                 Text(
                     text = formattedExpirationDate,
                     style = MaterialTheme.typography.bodySmall.copy(
-                        color = Color.Gray,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         fontSize = 10.sp
                     ),
                     maxLines = 1,

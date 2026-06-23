@@ -64,11 +64,11 @@ fun RecipeCard(
                             .padding(horizontal = 6.dp, vertical = 2.dp),
                         verticalAlignment = Alignment.CenterVertically
                     ) {
-                        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.White, modifier = Modifier.size(12.dp))
+                        Icon(Icons.Filled.Star, contentDescription = null, tint = Color.Black, modifier = Modifier.size(12.dp))
                         Spacer(modifier = Modifier.width(2.dp))
                         Text(
                             text = String.format("%.1f", recipe.averageRating),
-                            color = Color.White,
+                            color = Color.Black,
                             style = MaterialTheme.typography.labelSmall,
                             fontWeight = FontWeight.Bold
                         )

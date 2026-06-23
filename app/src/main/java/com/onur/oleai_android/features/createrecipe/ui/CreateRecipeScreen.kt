@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.createrecipe.ui
 
+import androidx.compose.material3.MaterialTheme
 import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -62,10 +63,10 @@ fun CreateRecipeScreen(
             text = { Text(state.error ?: "") },
             confirmButton = {
                 TextButton(onClick = { viewModel.dismissError() }) {
-                    Text("Tamam", color = Color(0xFF7CB342))
+                    Text("Tamam", color = MaterialTheme.colorScheme.primary)
                 }
             },
-            containerColor = Color(0xFF1E211D)
+            containerColor = MaterialTheme.colorScheme.surface
         )
     }
 
@@ -81,28 +82,28 @@ fun CreateRecipeScreen(
                 actions = {
                     Button(
                         onClick = { viewModel.submitRecipe() },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7CB342)),
+                        colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary),
                         shape = RoundedCornerShape(8.dp),
                         modifier = Modifier.padding(end = 16.dp),
                         enabled = !state.isLoading
                     ) {
                         if (state.isLoading) {
-                            CircularProgressIndicator(color = Color.Black, modifier = Modifier.size(16.dp))
+                            CircularProgressIndicator(color = MaterialTheme.colorScheme.onBackground, modifier = Modifier.size(16.dp))
                         } else {
-                            Icon(Icons.Outlined.Save, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Black)
+                            Icon(Icons.Outlined.Save, contentDescription = null, modifier = Modifier.size(16.dp), tint = MaterialTheme.colorScheme.onPrimary)
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text(if (state.isEditMode) "Değişiklikleri Kaydet" else "Tarifi Paylaş", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                            Text(if (state.isEditMode) "Değişiklikleri Kaydet" else "Tarifi Paylaş", color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         }
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xFF0D0F0C),
-                    titleContentColor = Color.White,
-                    navigationIconContentColor = Color.White
+                    containerColor = MaterialTheme.colorScheme.background,
+                    titleContentColor = MaterialTheme.colorScheme.onBackground,
+                    navigationIconContentColor = MaterialTheme.colorScheme.onBackground
                 )
             )
         },
-        containerColor = Color(0xFF0D0F0C)
+        containerColor = MaterialTheme.colorScheme.background
     ) { innerPadding ->
         LazyColumn(
             modifier = Modifier
@@ -119,7 +120,7 @@ fun CreateRecipeScreen(
                     OutlinedTextField(
                         value = state.title,
                         onValueChange = { viewModel.updateTitle(it) },
-                        placeholder = { Text("Tarif Adı", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = if (hasTitleError) Color.Red.copy(alpha = 0.5f) else Color.DarkGray) },
+                        placeholder = { Text("Tarif Adı", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = if (hasTitleError) Color.Red.copy(alpha = 0.5f) else MaterialTheme.colorScheme.onSurfaceVariant) },
                         isError = hasTitleError,
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color.Transparent,
@@ -129,7 +130,7 @@ fun CreateRecipeScreen(
                             unfocusedContainerColor = Color.Transparent,
                             errorContainerColor = Color.Transparent
                         ),
-                        textStyle = LocalTextStyle.current.copy(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = Color.White),
+                        textStyle = LocalTextStyle.current.copy(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = MaterialTheme.colorScheme.onBackground),
                         modifier = Modifier.fillMaxWidth()
                     )
 
@@ -137,18 +138,18 @@ fun CreateRecipeScreen(
                     OutlinedTextField(
                         value = state.description,
                         onValueChange = { viewModel.updateDescription(it) },
-                        label = { Text("AÇIKLAMA", fontSize = 10.sp, color = if (hasDescError) Color.Red else Color.Gray, fontWeight = FontWeight.Bold) },
+                        label = { Text("AÇIKLAMA", fontSize = 10.sp, color = if (hasDescError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold) },
                         placeholder = { Text("Bu yemeğin hikayesini anlatın... (Örn. 'Büyükannemden bana kalan...')") },
                         isError = hasDescError,
                         modifier = Modifier.fillMaxWidth().height(120.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF7CB342),
-                            unfocusedBorderColor = if (hasDescError) Color.Red else Color.DarkGray,
+                            focusedBorderColor = MaterialTheme.colorScheme.primary,
+                            unfocusedBorderColor = if (hasDescError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant,
                             errorBorderColor = Color.Red,
-                            focusedContainerColor = Color(0xFF161815),
-                            unfocusedContainerColor = Color(0xFF161815),
-                            errorContainerColor = Color(0xFF161815)
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            errorContainerColor = MaterialTheme.colorScheme.surface
                         ),
                         maxLines = 4
                     )
@@ -166,7 +167,7 @@ fun CreateRecipeScreen(
                         .fillMaxWidth()
                         .height(200.dp)
                         .clip(RoundedCornerShape(16.dp))
-                        .background(Color(0xFF161815))
+                        .background(MaterialTheme.colorScheme.surface)
                         .then(
                             if (hasImageError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(16.dp)) else Modifier
                         )
@@ -182,9 +183,9 @@ fun CreateRecipeScreen(
                         )
                     } else {
                         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = if (hasImageError) Color.Red else Color.LightGray, modifier = Modifier.size(32.dp))
-                            Text("Kapak Fotoğrafı Yükle", color = if (hasImageError) Color.Red else Color.White, fontWeight = FontWeight.Bold)
-                            Text("PNG, JPG (Maks 10MB)", color = if (hasImageError) Color.Red.copy(alpha = 0.7f) else Color.Gray, fontSize = 12.sp)
+                            Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = if (hasImageError) Color.Red else MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.size(32.dp))
+                            Text("Kapak Fotoğrafı Yükle", color = if (hasImageError) Color.Red else MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold)
+                            Text("PNG, JPG (Maks 10MB)", color = if (hasImageError) Color.Red.copy(alpha = 0.7f) else MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                         }
                     }
                 }
@@ -209,25 +210,25 @@ fun CreateRecipeScreen(
                             value = displayDifficulty,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("ZORLUK DERECESİ", fontSize = 10.sp, color = Color.Gray, maxLines = 1) },
+                            label = { Text("ZORLUK DERECESİ", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1) },
                             trailingIcon = { Icon(Icons.Filled.ArrowDropDown, null) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFF7CB342),
-                                unfocusedBorderColor = Color.DarkGray,
-                                focusedContainerColor = Color(0xFF161815),
-                                unfocusedContainerColor = Color(0xFF161815),
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White
+                                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                                unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                             ),
                             shape = RoundedCornerShape(12.dp),
                             singleLine = true
                         )
                         Spacer(modifier = Modifier.matchParentSize().background(Color.Transparent).clickable { expanded = true })
-                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(Color(0xFF1E211D))) {
+                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
                             listOf("Easy" to "Kolay", "Medium" to "Orta", "Hard" to "Zor").forEach { (key, label) ->
                                 DropdownMenuItem(
-                                    text = { Text(label, color = Color.White) },
+                                    text = { Text(label, color = MaterialTheme.colorScheme.onBackground) },
                                     onClick = { viewModel.updateDifficulty(key); expanded = false }
                                 )
                             }
@@ -246,25 +247,25 @@ fun CreateRecipeScreen(
                             value = displayVisibility,
                             onValueChange = {},
                             readOnly = true,
-                            label = { Text("GÖRÜNÜRLÜK", fontSize = 10.sp, color = Color.Gray, maxLines = 1) },
+                            label = { Text("GÖRÜNÜRLÜK", fontSize = 10.sp, color = MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1) },
                             trailingIcon = { Icon(Icons.Filled.ArrowDropDown, null) },
                             modifier = Modifier.fillMaxWidth(),
                             colors = OutlinedTextFieldDefaults.colors(
-                                focusedBorderColor = Color(0xFF7CB342),
-                                unfocusedBorderColor = Color.DarkGray,
-                                focusedContainerColor = Color(0xFF161815),
-                                unfocusedContainerColor = Color(0xFF161815),
-                                focusedTextColor = Color.White,
-                                unfocusedTextColor = Color.White
+                                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                                unfocusedBorderColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                                focusedContainerColor = MaterialTheme.colorScheme.surface,
+                                unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                                unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                             ),
                             shape = RoundedCornerShape(12.dp),
                             singleLine = true
                         )
                         Spacer(modifier = Modifier.matchParentSize().background(Color.Transparent).clickable { expanded = true })
-                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(Color(0xFF1E211D))) {
+                        DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
                             listOf("Public" to "Herkese Açık", "Private" to "Sadece Ben").forEach { (key, label) ->
                                 DropdownMenuItem(
-                                    text = { Text(label, color = Color.White) },
+                                    text = { Text(label, color = MaterialTheme.colorScheme.onBackground) },
                                     onClick = { viewModel.updateVisibility(key); expanded = false }
                                 )
                             }
@@ -280,22 +281,22 @@ fun CreateRecipeScreen(
                     OutlinedTextField(
                         value = state.servings,
                         onValueChange = { viewModel.updateServings(it) },
-                        label = { Text("PORSİYON", fontSize = 10.sp, color = if (hasServingsError) Color.Red else Color.Gray, maxLines = 1) },
+                        label = { Text("PORSİYON", fontSize = 10.sp, color = if (hasServingsError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1) },
                         isError = hasServingsError,
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF7CB342), 
-                            unfocusedBorderColor = if (hasServingsError) Color.Red else Color.DarkGray, 
+                            focusedBorderColor = MaterialTheme.colorScheme.primary, 
+                            unfocusedBorderColor = if (hasServingsError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, 
                             errorBorderColor = Color.Red,
-                            focusedContainerColor = Color(0xFF161815),
-                            unfocusedContainerColor = Color(0xFF161815),
-                            errorContainerColor = Color(0xFF161815),
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            errorContainerColor = MaterialTheme.colorScheme.surface,
+                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                         ),
                         shape = RoundedCornerShape(12.dp),
-                        suffix = { Text("Kişilik", fontSize = 12.sp, color = if (hasServingsError) Color.Red else Color.Gray) },
+                        suffix = { Text("Kişilik", fontSize = 12.sp, color = if (hasServingsError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant) },
                         singleLine = true
                     )
                     
@@ -303,22 +304,22 @@ fun CreateRecipeScreen(
                     OutlinedTextField(
                         value = state.prepTime,
                         onValueChange = { viewModel.updatePrepTime(it) },
-                        label = { Text("HAZIRLIK", fontSize = 10.sp, color = if (hasPrepError) Color.Red else Color.Gray, maxLines = 1) },
+                        label = { Text("HAZIRLIK", fontSize = 10.sp, color = if (hasPrepError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1) },
                         isError = hasPrepError,
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF7CB342), 
-                            unfocusedBorderColor = if (hasPrepError) Color.Red else Color.DarkGray, 
+                            focusedBorderColor = MaterialTheme.colorScheme.primary, 
+                            unfocusedBorderColor = if (hasPrepError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, 
                             errorBorderColor = Color.Red,
-                            focusedContainerColor = Color(0xFF161815),
-                            unfocusedContainerColor = Color(0xFF161815),
-                            errorContainerColor = Color(0xFF161815),
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            errorContainerColor = MaterialTheme.colorScheme.surface,
+                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                         ),
                         shape = RoundedCornerShape(12.dp),
-                        suffix = { Text("Dk", fontSize = 12.sp, color = if (hasPrepError) Color.Red else Color.Gray) },
+                        suffix = { Text("Dk", fontSize = 12.sp, color = if (hasPrepError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant) },
                         singleLine = true
                     )
                     
@@ -326,22 +327,22 @@ fun CreateRecipeScreen(
                     OutlinedTextField(
                         value = state.cookTime,
                         onValueChange = { viewModel.updateCookTime(it) },
-                        label = { Text("PİŞİRME", fontSize = 10.sp, color = if (hasCookError) Color.Red else Color.Gray, maxLines = 1) },
+                        label = { Text("PİŞİRME", fontSize = 10.sp, color = if (hasCookError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, maxLines = 1) },
                         isError = hasCookError,
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
-                            focusedBorderColor = Color(0xFF7CB342), 
-                            unfocusedBorderColor = if (hasCookError) Color.Red else Color.DarkGray, 
+                            focusedBorderColor = MaterialTheme.colorScheme.primary, 
+                            unfocusedBorderColor = if (hasCookError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, 
                             errorBorderColor = Color.Red,
-                            focusedContainerColor = Color(0xFF161815),
-                            unfocusedContainerColor = Color(0xFF161815),
-                            errorContainerColor = Color(0xFF161815),
-                            focusedTextColor = Color.White,
-                            unfocusedTextColor = Color.White
+                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                            unfocusedContainerColor = MaterialTheme.colorScheme.surface,
+                            errorContainerColor = MaterialTheme.colorScheme.surface,
+                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                         ),
                         shape = RoundedCornerShape(12.dp),
-                        suffix = { Text("Dk", fontSize = 12.sp, color = if (hasCookError) Color.Red else Color.Gray) },
+                        suffix = { Text("Dk", fontSize = 12.sp, color = if (hasCookError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant) },
                         singleLine = true
                     )
                 }
@@ -359,15 +360,15 @@ fun CreateRecipeScreen(
                         if (hasIngredientsError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(16.dp)) else Modifier
                     ),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF111310))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Icon(Icons.Outlined.Scale, contentDescription = null, tint = if (hasIngredientsError) Color.Red else Color.LightGray, modifier = Modifier.size(20.dp))
-                                Text("Malzemeler", color = if (hasIngredientsError) Color.Red else Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Icon(Icons.Outlined.Scale, contentDescription = null, tint = if (hasIngredientsError) Color.Red else MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.size(20.dp))
+                                Text("Malzemeler", color = if (hasIngredientsError) Color.Red else MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             }
-                            Text("${state.ingredients.size} ADET", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                            Text("${state.ingredients.size} ADET", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                         }
                         if (hasIngredientsError) {
                             Text(text = state.validationErrors["ingredients"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
@@ -376,19 +377,19 @@ fun CreateRecipeScreen(
 
                         // Column Header
                         Row(modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp, start = 32.dp)) {
-                            Text("MİKTAR", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.2f))
-                            Text("BİRİM", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.3f))
-                            Text("MALZEME", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.5f))
+                            Text("MİKTAR", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.2f))
+                            Text("BİRİM", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.3f))
+                            Text("MALZEME", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, fontWeight = FontWeight.Bold, modifier = Modifier.weight(0.5f))
                         }
 
                         // Ingredients List
                         state.ingredients.forEach { ingredient ->
                             Row(
-                                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clip(RoundedCornerShape(8.dp)).background(Color(0xFF161815)).padding(8.dp),
+                                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp).clip(RoundedCornerShape(8.dp)).background(MaterialTheme.colorScheme.surface).padding(8.dp),
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
                                 IconButton(onClick = { viewModel.removeIngredient(ingredient.id) }, modifier = Modifier.size(24.dp)) {
-                                    Icon(Icons.Filled.Close, contentDescription = "Sil", tint = Color.Gray, modifier = Modifier.size(16.dp))
+                                    Icon(Icons.Filled.Close, contentDescription = "Sil", tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                                 }
                                 Spacer(modifier = Modifier.width(8.dp))
                                 
@@ -405,8 +406,8 @@ fun CreateRecipeScreen(
                                         unfocusedBorderColor = Color.Transparent,
                                         focusedContainerColor = Color.Transparent,
                                         unfocusedContainerColor = Color.Transparent,
-                                        focusedTextColor = Color.White,
-                                        unfocusedTextColor = Color.White
+                                        focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                                        unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                                     ),
                                     singleLine = true
                                 )
@@ -429,10 +430,10 @@ fun CreateRecipeScreen(
                                     
                                     val canChangeUnit = ingredient.unitFamilyStr != null
                                     Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable(enabled = canChangeUnit) { expanded = true }.padding(vertical = 12.dp)) {
-                                        Text(unitLabel, color = if (canChangeUnit) Color.White else Color.DarkGray, fontSize = 14.sp)
-                                        Icon(Icons.Filled.ArrowDropDown, null, tint = if (canChangeUnit) Color.Gray else Color.DarkGray)
+                                        Text(unitLabel, color = if (canChangeUnit) MaterialTheme.colorScheme.onBackground else MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp)
+                                        Icon(Icons.Filled.ArrowDropDown, null, tint = if (canChangeUnit) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onSurfaceVariant)
                                     }
-                                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(Color(0xFF1E211D))) {
+                                    DropdownMenu(expanded = expanded, onDismissRequest = { expanded = false }, modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
                                         val availableUnits = when(ingredient.unitFamilyStr) {
                                             "Weight" -> listOf(2 to "Kg", 3 to "Gr")
                                             "Volume" -> listOf(4 to "L", 5 to "Ml")
@@ -441,7 +442,7 @@ fun CreateRecipeScreen(
                                         }
                                         availableUnits.forEach { (id, label) ->
                                             DropdownMenuItem(
-                                                text = { Text(label, color = Color.White) },
+                                                text = { Text(label, color = MaterialTheme.colorScheme.onBackground) },
                                                 onClick = { viewModel.updateIngredient(ingredient.id, ingredient.copy(unitId = id)); expanded = false }
                                             )
                                         }
@@ -458,14 +459,14 @@ fun CreateRecipeScreen(
                                             isDropdownExpanded = true
                                         },
                                         modifier = Modifier.fillMaxWidth(),
-                                        placeholder = { Text("Malzeme ara...", color = Color.Gray, fontSize = 14.sp) },
+                                        placeholder = { Text("Malzeme ara...", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 14.sp) },
                                         colors = OutlinedTextFieldDefaults.colors(
                                             focusedBorderColor = Color.Transparent,
                                             unfocusedBorderColor = Color.Transparent,
                                             focusedContainerColor = Color.Transparent,
                                             unfocusedContainerColor = Color.Transparent,
-                                            focusedTextColor = Color.White,
-                                            unfocusedTextColor = Color.White
+                                            focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                                            unfocusedTextColor = MaterialTheme.colorScheme.onBackground
                                         ),
                                         singleLine = true
                                     )
@@ -474,7 +475,7 @@ fun CreateRecipeScreen(
                                         DropdownMenu(
                                             expanded = isDropdownExpanded,
                                             onDismissRequest = { isDropdownExpanded = false },
-                                            modifier = Modifier.background(Color(0xFF1E211D)).fillMaxWidth(0.6f).heightIn(max = 250.dp),
+                                            modifier = Modifier.background(MaterialTheme.colorScheme.surface).fillMaxWidth(0.6f).heightIn(max = 250.dp),
                                             properties = PopupProperties(focusable = false)
                                         ) {
                                             state.ingredientSearchResults.forEach { result ->
@@ -484,11 +485,11 @@ fun CreateRecipeScreen(
                                                             Icon(
                                                                 imageVector = IconMapper.getIconByName(result.categoryIconName ?: "leaf"),
                                                                 contentDescription = null,
-                                                                tint = Color(0xFF7CB342),
+                                                                tint = MaterialTheme.colorScheme.primary,
                                                                 modifier = Modifier.size(24.dp)
                                                             )
                                                             Spacer(modifier = Modifier.width(12.dp))
-                                                            Text(result.displayName, color = Color.White, fontSize = 14.sp)
+                                                            Text(result.displayName, color = MaterialTheme.colorScheme.onBackground, fontSize = 14.sp)
                                                         }
                                                     },
                                                     onClick = {
@@ -530,9 +531,9 @@ fun CreateRecipeScreen(
                         }
 
                         TextButton(onClick = { viewModel.addIngredient() }) {
-                            Icon(Icons.Filled.Add, contentDescription = null, tint = Color(0xFF7CB342), modifier = Modifier.size(16.dp))
+                            Icon(Icons.Filled.Add, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Malzeme Ekle", color = Color(0xFF7CB342), fontWeight = FontWeight.Bold)
+                            Text("Malzeme Ekle", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -546,15 +547,15 @@ fun CreateRecipeScreen(
                         if (hasStepsError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(16.dp)) else Modifier
                     ),
                     shape = RoundedCornerShape(16.dp),
-                    colors = CardDefaults.cardColors(containerColor = Color(0xFF111310))
+                    colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surfaceVariant)
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Icon(Icons.Outlined.Book, contentDescription = null, tint = if (hasStepsError) Color.Red else Color.LightGray, modifier = Modifier.size(20.dp))
-                                Text("Hazırlanışı", color = if (hasStepsError) Color.Red else Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Icon(Icons.Outlined.Book, contentDescription = null, tint = if (hasStepsError) Color.Red else MaterialTheme.colorScheme.outlineVariant, modifier = Modifier.size(20.dp))
+                                Text("Hazırlanışı", color = if (hasStepsError) Color.Red else MaterialTheme.colorScheme.onBackground, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             }
-                            Text("${state.steps.size} ADIM", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                            Text("${state.steps.size} ADIM", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                         }
                         if (hasStepsError) {
                             Text(text = state.validationErrors["steps"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
@@ -569,10 +570,10 @@ fun CreateRecipeScreen(
                             Row(modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp), verticalAlignment = Alignment.Top) {
                                 // Number Badge
                                 Box(
-                                    modifier = Modifier.size(32.dp).clip(RoundedCornerShape(16.dp)).background(Color(0xFF7CB342)),
+                                    modifier = Modifier.size(32.dp).clip(RoundedCornerShape(16.dp)).background(MaterialTheme.colorScheme.primary),
                                     contentAlignment = Alignment.Center
                                 ) {
-                                    Text((index + 1).toString(), color = Color.Black, fontWeight = FontWeight.Bold)
+                                    Text((index + 1).toString(), color = MaterialTheme.colorScheme.onPrimary, fontWeight = FontWeight.Bold)
                                 }
                                 Spacer(modifier = Modifier.width(16.dp))
                                 
@@ -583,10 +584,10 @@ fun CreateRecipeScreen(
                                         placeholder = { Text("Bu adımda ne yapılması gerektiğini açıklayın...") },
                                         modifier = Modifier.fillMaxWidth().height(100.dp),
                                         colors = OutlinedTextFieldDefaults.colors(
-                                            focusedBorderColor = Color(0xFF7CB342),
+                                            focusedBorderColor = MaterialTheme.colorScheme.primary,
                                             unfocusedBorderColor = Color.Transparent,
-                                            focusedContainerColor = Color(0xFF161815),
-                                            unfocusedContainerColor = Color(0xFF161815)
+                                            focusedContainerColor = MaterialTheme.colorScheme.surface,
+                                            unfocusedContainerColor = MaterialTheme.colorScheme.surface
                                         ),
                                         shape = RoundedCornerShape(12.dp),
                                         maxLines = 4
@@ -596,10 +597,10 @@ fun CreateRecipeScreen(
                                     
                                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                                         TextButton(onClick = { launcher.launch("image/*") }) {
-                                            Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
+                                            Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                                             Spacer(modifier = Modifier.width(4.dp))
                                             val hasImage = step.imageUri != null || step.existingImageUrl != null
-                                            Text(if (hasImage) "Fotoğraf Seçildi" else "Fotoğraf Ekle (İsteğe Bağlı)", color = Color.Gray, fontSize = 12.sp)
+                                            Text(if (hasImage) "Fotoğraf Seçildi" else "Fotoğraf Ekle (İsteğe Bağlı)", color = MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp)
                                         }
                                         
                                         if (state.steps.size > 1) {
@@ -612,10 +613,10 @@ fun CreateRecipeScreen(
                             }
                         }
 
-                        TextButton(onClick = { viewModel.addStep() }, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(Color(0xFF161815))) {
-                            Icon(Icons.Filled.Add, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
+                        TextButton(onClick = { viewModel.addStep() }, modifier = Modifier.fillMaxWidth().clip(RoundedCornerShape(12.dp)).background(MaterialTheme.colorScheme.surface)) {
+                            Icon(Icons.Filled.Add, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Adım Ekle", color = Color.Gray, fontWeight = FontWeight.Bold)
+                            Text("Adım Ekle", color = MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold)
                         }
                     }
                 }
@@ -625,7 +626,7 @@ fun CreateRecipeScreen(
             item {
                 val hasCatError = state.validationErrors.containsKey("categories")
                 Column(modifier = Modifier.fillMaxWidth().then(if (hasCatError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(12.dp)).padding(8.dp) else Modifier)) {
-                    Text("KATEGORİLER", fontSize = 10.sp, color = if (hasCatError) Color.Red else Color.Gray, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                    Text("KATEGORİLER", fontSize = 10.sp, color = if (hasCatError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
                     if (hasCatError) {
                         Text(text = state.validationErrors["categories"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(bottom = 8.dp))
                     }
@@ -635,11 +636,11 @@ fun CreateRecipeScreen(
                             Box(
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
-                                    .background(if (isSelected) Color(0xFF7CB342).copy(alpha = 0.2f) else Color(0xFF161815))
+                                    .background(if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else MaterialTheme.colorScheme.surface)
                                     .clickable { viewModel.toggleCategory(category.id) }
                                     .padding(horizontal = 16.dp, vertical = 8.dp)
                             ) {
-                                Text(category.name, color = if (isSelected) Color(0xFF7CB342) else Color.LightGray, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+                                Text(category.name, color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Medium)
                             }
                         }
                     }
@@ -650,7 +651,7 @@ fun CreateRecipeScreen(
             item {
                 val hasTagError = state.validationErrors.containsKey("tags")
                 Column(modifier = Modifier.fillMaxWidth().then(if (hasTagError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(12.dp)).padding(8.dp) else Modifier)) {
-                    Text("ETİKETLER", fontSize = 10.sp, color = if (hasTagError) Color.Red else Color.Gray, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                    Text("ETİKETLER", fontSize = 10.sp, color = if (hasTagError) Color.Red else MaterialTheme.colorScheme.onSurfaceVariant, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
                     if (hasTagError) {
                         Text(text = state.validationErrors["tags"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(bottom = 8.dp))
                     }
@@ -660,11 +661,11 @@ fun CreateRecipeScreen(
                             Box(
                                 modifier = Modifier
                                     .clip(RoundedCornerShape(16.dp))
-                                    .background(if (isSelected) Color(0xFF7CB342).copy(alpha = 0.2f) else Color(0xFF161815))
+                                    .background(if (isSelected) MaterialTheme.colorScheme.primary.copy(alpha = 0.2f) else MaterialTheme.colorScheme.surface)
                                     .clickable { viewModel.toggleTag(tag.id) }
                                     .padding(horizontal = 16.dp, vertical = 8.dp)
                             ) {
-                                Text(tag.name, color = if (isSelected) Color(0xFF7CB342) else Color.LightGray, fontSize = 12.sp, fontWeight = FontWeight.Medium)
+                                Text(tag.name, color = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Medium)
                             }
                         }
                     }

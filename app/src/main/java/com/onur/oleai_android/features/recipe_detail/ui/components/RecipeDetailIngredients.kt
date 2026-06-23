@@ -1,5 +1,6 @@
 package com.onur.oleai_android.features.recipe_detail.ui.components
 
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -40,7 +41,7 @@ fun RecipeDetailIngredients(
         modifier = modifier
             .padding(16.dp)
             .fillMaxWidth()
-            .background(Color(0xFF1E1E1E), RoundedCornerShape(16.dp))
+            .background(MaterialTheme.colorScheme.surface, RoundedCornerShape(16.dp))
             .padding(16.dp)
     ) {
         // Header Row
@@ -51,7 +52,7 @@ fun RecipeDetailIngredients(
         ) {
             Text(
                 text = "Malzemeler",
-                color = Color.White,
+                color = MaterialTheme.colorScheme.onBackground,
                 fontSize = 20.sp,
                 fontWeight = FontWeight.Bold
             )
@@ -59,25 +60,25 @@ fun RecipeDetailIngredients(
             // Metric/Imperial Toggle
             Row(
                 modifier = Modifier
-                    .background(Color(0xFF121212), RoundedCornerShape(12.dp))
+                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(12.dp))
             ) {
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(topStart = 12.dp, bottomStart = 12.dp))
-                        .background(if (isMetric) Color(0xFF2A2A2A) else Color.Transparent)
+                        .background(if (isMetric) MaterialTheme.colorScheme.primary else Color.Transparent)
                         .clickable { if (!isMetric) onMetricToggle() }
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Text(text = "Metrik", color = if (isMetric) Color.White else Color.Gray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "Metrik", color = if (isMetric) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
                 Box(
                     modifier = Modifier
                         .clip(RoundedCornerShape(topEnd = 12.dp, bottomEnd = 12.dp))
-                        .background(if (!isMetric) Color(0xFF2A2A2A) else Color.Transparent)
+                        .background(if (!isMetric) MaterialTheme.colorScheme.primary else Color.Transparent)
                         .clickable { if (isMetric) onMetricToggle() }
                         .padding(horizontal = 12.dp, vertical = 6.dp)
                 ) {
-                    Text(text = "İngiliz", color = if (!isMetric) Color.White else Color.Gray, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                    Text(text = "İngiliz", color = if (!isMetric) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSurfaceVariant, fontSize = 12.sp, fontWeight = FontWeight.Bold)
                 }
             }
         }
@@ -92,7 +93,7 @@ fun RecipeDetailIngredients(
         ) {
             Text(
                 text = "Porsiyon",
-                color = Color.LightGray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontSize = 14.sp
             )
             
@@ -100,27 +101,27 @@ fun RecipeDetailIngredients(
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 modifier = Modifier
-                    .background(Color(0xFF121212), RoundedCornerShape(16.dp))
+                    .background(MaterialTheme.colorScheme.background, RoundedCornerShape(16.dp))
                     .padding(horizontal = 8.dp, vertical = 4.dp)
             ) {
                 Icon(
                     imageVector = Icons.Filled.Remove,
                     contentDescription = "Decrease",
-                    tint = Color.Gray,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier
                         .size(24.dp)
                         .clickable { onServingsChange(servings - 1) }
                 )
                 Text(
                     text = servings.toString(),
-                    color = Color.White,
+                    color = MaterialTheme.colorScheme.onBackground,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
                 Icon(
                     imageVector = Icons.Filled.Add,
                     contentDescription = "Increase",
-                    tint = Color.Gray,
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier
                         .size(24.dp)
                         .clickable { onServingsChange(servings + 1) }
@@ -154,8 +155,8 @@ fun RecipeDetailIngredients(
             val amountText = if (unitStr.isEmpty()) formattedAmount else "$formattedAmount $unitStr".trim()
             
             val textDecoration = if (isChecked) TextDecoration.LineThrough else null
-            val textColor = if (isChecked) Color.DarkGray else Color.White
-            val nameColor = if (isChecked) Color.DarkGray else Color.LightGray
+            val textColor = if (isChecked) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onBackground
+            val nameColor = if (isChecked) MaterialTheme.colorScheme.onSurfaceVariant else MaterialTheme.colorScheme.onBackground
 
             Row(
                 modifier = Modifier
@@ -174,10 +175,10 @@ fun RecipeDetailIngredients(
                     modifier = Modifier
                         .size(20.dp)
                         .clip(CircleShape)
-                        .background(if (isChecked) Color(0xFF4CAF50) else Color.Transparent)
+                        .background(if (isChecked) MaterialTheme.colorScheme.primary else Color.Transparent)
                         .border(
                             width = 2.dp,
-                            color = if (isChecked) Color(0xFF4CAF50) else Color(0xFF2A2A2A),
+                            color = if (isChecked) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline,
                             shape = CircleShape
                         ),
                     contentAlignment = Alignment.Center
@@ -186,7 +187,7 @@ fun RecipeDetailIngredients(
                         Icon(
                             imageVector = Icons.Default.Check,
                             contentDescription = "Checked",
-                            tint = Color.White,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                             modifier = Modifier.size(14.dp)
                         )
                     }
