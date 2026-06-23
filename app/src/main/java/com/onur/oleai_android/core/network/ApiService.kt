@@ -8,6 +8,13 @@ import com.onur.oleai_android.core.network.dto.ForgotPasswordCommand
 import com.onur.oleai_android.core.network.dto.ResetPasswordCommand
 import com.onur.oleai_android.core.network.dto.VerifyEmailCommand
 import com.onur.oleai_android.core.network.dto.ResendOtpCommand
+import com.onur.oleai_android.core.network.dto.RecipeDetailResponse
+import com.onur.oleai_android.core.network.dto.RecipeCommentResponse
+import com.onur.oleai_android.core.network.dto.ToggleInteractionResponse
+import com.onur.oleai_android.core.network.dto.AddCommentRequest
+import com.onur.oleai_android.core.network.dto.UpdateCommentRequest
+import com.onur.oleai_android.core.network.dto.StartCookingRequest
+import com.onur.oleai_android.core.network.dto.IngredientResponse
 import com.onur.oleai_android.core.network.dto.AuthResponse
 import com.onur.oleai_android.core.network.dto.UserProfileResponse
 import com.onur.oleai_android.core.network.dto.GetUserStatisticsResponse
@@ -100,6 +107,49 @@ interface ApiService {
 
     @PUT("/api/users/me/dietary-preferences")
     suspend fun updateDietaryPreferences(@Body request: UpdateUserPreferencesRequest): UpdateProfileResponse
+
+    // Recipe Details & Interactions
+    @GET("/api/Recipes/{id}")
+    suspend fun getRecipeDetail(@Path("id") id: String): RecipeDetailResponse
+
+    @POST("/api/Recipes/{id}/like")
+    suspend fun toggleLike(@Path("id") id: String): ToggleInteractionResponse
+
+    @POST("/api/Recipes/{id}/dislike")
+    suspend fun toggleDislike(@Path("id") id: String): ToggleInteractionResponse
+
+    @POST("/api/Recipes/{id}/save")
+    suspend fun toggleSave(@Path("id") id: String): ToggleInteractionResponse
+
+    @GET("/api/Recipes/{id}/comments")
+    suspend fun getRecipeComments(
+        @Path("id") id: String,
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 10
+    ): PaginatedResponse<RecipeCommentResponse>
+
+    @POST("/api/Recipes/{id}/comments")
+    suspend fun addComment(
+        @Path("id") id: String,
+        @Body request: AddCommentRequest
+    ): ToggleInteractionResponse
+
+    @PUT("/api/Recipes/comments/{commentId}")
+    suspend fun updateComment(
+        @Path("commentId") commentId: String,
+        @Body request: UpdateCommentRequest
+    ): ToggleInteractionResponse
+
+
+    // Cooking Flow
+    @GET("/api/Recipes/{id}/missing-ingredients")
+    suspend fun getMissingIngredients(@Path("id") id: String): List<IngredientResponse>
+
+    @POST("/api/Recipes/{id}/start-cooking")
+    suspend fun startCooking(
+        @Path("id") id: String,
+        @Body request: StartCookingRequest
+    ): List<IngredientResponse>
 
     @PUT("/api/users/me/allergies")
     suspend fun updateAllergies(@Body request: UpdateUserAllergiesRequest): UpdateProfileResponse

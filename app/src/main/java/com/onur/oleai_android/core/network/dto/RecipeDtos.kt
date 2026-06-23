@@ -23,13 +23,19 @@ data class TagDto(
 
 @Serializable
 data class PaginatedResponse<T>(
-    val items: List<T>,
-    val pageNumber: Int,
-    val pageSize: Int,
-    val totalItems: Int,
-    val totalPages: Int,
-    val hasPreviousPage: Boolean,
-    val hasNextPage: Boolean
+    val items: List<T> = emptyList(),
+    val pageNumber: Int = 0,
+    val pageSize: Int = 10,
+    val totalItems: Int = 0,
+    val totalPages: Int = 0,
+    val hasPreviousPage: Boolean = false,
+    val hasNextPage: Boolean = false,
+    val index: Int = 0,
+    val size: Int = 10,
+    val count: Int = 0,
+    val pages: Int = 0,
+    val hasPrevious: Boolean = false,
+    val hasNext: Boolean = false
 )
 
 @Serializable
