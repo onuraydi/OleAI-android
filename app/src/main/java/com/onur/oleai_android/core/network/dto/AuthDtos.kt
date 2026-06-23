@@ -61,6 +61,12 @@ data class VerifyEmailRequest(
 )
 
 @Serializable
+data class ChangePasswordRequest(
+    val oldPassword: String,
+    val newPassword: String
+)
+
+@Serializable
 data class VerifyEmailCommand(
     val request: VerifyEmailRequest
 )

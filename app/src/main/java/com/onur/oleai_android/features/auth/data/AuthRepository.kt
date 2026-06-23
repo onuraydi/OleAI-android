@@ -19,9 +19,12 @@ import org.json.JSONObject
 import javax.inject.Inject
 import javax.inject.Singleton
 
+import com.onur.oleai_android.core.network.cookie.AppCookieJar
+
 @Singleton
 class AuthRepository @Inject constructor(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val cookieJar: AppCookieJar
 ) {
     suspend fun login(request: LoginRequest): Result<AuthResponse> {
         return try {
@@ -29,6 +32,16 @@ class AuthRepository @Inject constructor(
             Result.success(response)
         } catch (e: Exception) {
             Result.failure(handleException(e))
+        }
+    }
+
+    suspend fun logout() {
+        try {
+            apiService.logout()
+        } catch (e: Exception) {
+            // Log or ignore, we still want to clear local cookies
+        } finally {
+            cookieJar.clearCookies()
         }
     }
 

@@ -10,6 +10,7 @@ import com.onur.oleai_android.core.network.dto.VerifyEmailCommand
 import com.onur.oleai_android.core.network.dto.ResendOtpCommand
 import com.onur.oleai_android.core.network.dto.AuthResponse
 import com.onur.oleai_android.core.network.dto.UserProfileResponse
+import com.onur.oleai_android.core.network.dto.GetUserStatisticsResponse
 import com.onur.oleai_android.core.network.dto.UpdateProfileResponse
 import com.onur.oleai_android.core.network.dto.DietaryPreferenceListResponse
 import com.onur.oleai_android.core.network.dto.AllergyRestrictionListResponse
@@ -28,6 +29,7 @@ import com.onur.oleai_android.core.network.dto.AddMultipleUserIngredientsRequest
 import com.onur.oleai_android.core.network.dto.AddedUserIngredientResponse
 import com.onur.oleai_android.core.network.dto.MyPantryItemResponse
 import com.onur.oleai_android.core.network.dto.ShoppingListItemResponse
+import com.onur.oleai_android.core.network.dto.MyCommentDto
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.GET
@@ -49,14 +51,23 @@ interface ApiService {
     @POST("/api/Auth/reset-password")
     suspend fun resetPassword(@Body command: ResetPasswordCommand): AuthResponse
 
+    @POST("/api/Auth/change-password")
+    suspend fun changePassword(@Body request: com.onur.oleai_android.core.network.dto.ChangePasswordRequest): AuthResponse
+
     @POST("/api/Auth/verify-email")
     suspend fun verifyEmail(@Body command: VerifyEmailCommand): AuthResponse
 
     @POST("/api/Auth/resend-otp")
     suspend fun resendOtp(@Body command: ResendOtpCommand): AuthResponse
 
+    @POST("/api/Auth/logout")
+    suspend fun logout()
+
     @GET("/api/users/me")
     suspend fun getUserProfile(): UserProfileResponse
+
+    @GET("/api/users/me/statistics")
+    suspend fun getUserStatistics(): GetUserStatisticsResponse
 
     @Multipart
     @PUT("/api/users/me")
@@ -108,6 +119,75 @@ interface ApiService {
         @Query("tagId") tagId: Int? = null,
         @Query("sortBy") sortBy: String? = null,
         @Query("isForYou") isForYou: Boolean? = null
+    ): PaginatedResponse<RecipeListItemResponse>
+
+    @GET("/api/recipes/my-recipes")
+    suspend fun getMyRecipes(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("searchTerm") searchTerm: String? = null,
+        @Query("categoryId") categoryId: Int? = null,
+        @Query("difficulty") difficulty: Int? = null,
+        @Query("maxTotalTime") maxTotalTime: Int? = null,
+        @Query("tagId") tagId: Int? = null,
+        @Query("minRating") minRating: Double? = null,
+        @Query("visibility") visibility: String? = null,
+        @Query("sortBy") sortBy: String? = null
+    ): PaginatedResponse<RecipeListItemResponse>
+
+    @GET("/api/recipes/me/saved-recipes")
+    suspend fun getSavedRecipes(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("searchTerm") searchTerm: String? = null,
+        @Query("categoryId") categoryId: Int? = null,
+        @Query("difficulty") difficulty: Int? = null,
+        @Query("maxTotalTime") maxTotalTime: Int? = null,
+        @Query("tagId") tagId: Int? = null,
+        @Query("minRating") minRating: Double? = null,
+        @Query("visibility") visibility: String? = null,
+        @Query("sortBy") sortBy: String? = null
+    ): PaginatedResponse<RecipeListItemResponse>
+
+    @GET("/api/recipes/me/liked-recipes")
+    suspend fun getLikedRecipes(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("searchTerm") searchTerm: String? = null,
+        @Query("categoryId") categoryId: Int? = null,
+        @Query("difficulty") difficulty: Int? = null,
+        @Query("maxTotalTime") maxTotalTime: Int? = null,
+        @Query("tagId") tagId: Int? = null,
+        @Query("minRating") minRating: Double? = null,
+        @Query("visibility") visibility: String? = null,
+        @Query("sortBy") sortBy: String? = null
+    ): PaginatedResponse<RecipeListItemResponse>
+
+    @GET("/api/Recipes/my-comments")
+    suspend fun getMyComments(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("searchTerm") searchTerm: String? = null,
+        @Query("sortBy") sortBy: String? = null
+    ): PaginatedResponse<MyCommentDto>
+
+    @DELETE("/api/Recipes/comments/{commentId}")
+    suspend fun deleteComment(
+        @Path("commentId") commentId: String
+    ): retrofit2.Response<Unit>
+
+    @GET("/api/recipes/me/disliked-recipes")
+    suspend fun getDislikedRecipes(
+        @Query("page") page: Int? = null,
+        @Query("size") size: Int? = null,
+        @Query("searchTerm") searchTerm: String? = null,
+        @Query("categoryId") categoryId: Int? = null,
+        @Query("difficulty") difficulty: Int? = null,
+        @Query("maxTotalTime") maxTotalTime: Int? = null,
+        @Query("tagId") tagId: Int? = null,
+        @Query("minRating") minRating: Double? = null,
+        @Query("visibility") visibility: String? = null,
+        @Query("sortBy") sortBy: String? = null
     ): PaginatedResponse<RecipeListItemResponse>
 
     @GET("/api/pantry")
