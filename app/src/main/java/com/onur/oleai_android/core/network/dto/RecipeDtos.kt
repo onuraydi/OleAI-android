@@ -1,6 +1,7 @@
 package com.onur.oleai_android.core.network.dto
 
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.SerialName
 
 @Serializable
 data class RecipeListItemResponse(
@@ -43,4 +44,19 @@ data class RecipeCategoryResponse(
     val id: Int,
     val name: String,
     val iconName: String
+)
+
+@Serializable
+data class CreateRecipeIngredientRequest(
+    @SerialName("IngredientId") val ingredientId: String? = null,
+    @SerialName("RequestedName") val requestedName: String? = null,
+    @SerialName("SuggestedCategoryId") val suggestedCategoryId: String? = null,
+    @SerialName("Amount") val amount: Double,
+    @SerialName("UnitId") val unitId: Int
+)
+
+@Serializable
+data class CreateRecipeStepRequest(
+    @SerialName("StepNumber") val stepNumber: Int,
+    @SerialName("Instruction") val instruction: String
 )
