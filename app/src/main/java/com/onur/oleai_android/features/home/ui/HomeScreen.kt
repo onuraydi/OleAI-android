@@ -230,16 +230,16 @@ fun HomeScreen(
                 uiState = uiState,
                 onNavigateToRecipeDetail = onNavigateToRecipeDetail,
                 onNavigateToCreateRecipe = onNavigateToCreateRecipe,
+                onNavigateToAiTab = { selectedTab = 2 },
+                onNavigateToProfileTab = { selectedTab = 5 },
                 modifier = Modifier.padding(innerPadding)
             )
             1 -> DiscoverScreen(
                 onNavigateToRecipeDetail = onNavigateToRecipeDetail,
                 modifier = Modifier.padding(innerPadding)
             )
-            2 -> PlaceholderTab(
-                title = "AI Asistan",
-                subtitle = "Yapay zeka ile tarif önerisi al,\nmalzemelerine göre yemek bul",
-                icon = Icons.Filled.AutoAwesome,
+            2 -> com.onur.oleai_android.features.ai.ui.AiScreen(
+                onNavigateToRecipeDetail = onNavigateToRecipeDetail,
                 modifier = Modifier.padding(innerPadding)
             )
             3 -> com.onur.oleai_android.features.shoppinglist.ui.ShoppingListScreen(
@@ -267,6 +267,8 @@ private fun HomeContent(
     uiState: HomeUiState,
     onNavigateToRecipeDetail: (String) -> Unit,
     onNavigateToCreateRecipe: () -> Unit,
+    onNavigateToAiTab: () -> Unit,
+    onNavigateToProfileTab: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pagingRecipes = viewModel.personalizedRecipesPagingData.collectAsLazyPagingItems()
@@ -329,10 +331,10 @@ private fun HomeContent(
                     LazyRow(
                         horizontalArrangement = Arrangement.spacedBy(12.dp)
                     ) {
-                        item { QuickActionChip(icon = Icons.Default.AutoAwesome, text = "Bana Tarif Öner", isHighlighted = true) }
+                        item { QuickActionChip(icon = Icons.Default.AutoAwesome, text = "Bana Tarif Öner", isHighlighted = true, onClick = onNavigateToAiTab) }
                         item { QuickActionChip(icon = Icons.Default.Add, text = "Tarif Ekle", isHighlighted = false, onClick = onNavigateToCreateRecipe) }
-                        item { QuickActionChip(icon = Icons.Default.Bookmark, text = "Kaydedilenler", isHighlighted = false) }
-                        item { QuickActionChip(icon = Icons.AutoMirrored.Filled.MenuBook, text = "Tarif Defterim", isHighlighted = false) }
+                        item { QuickActionChip(icon = Icons.Default.Bookmark, text = "Kaydedilenler", isHighlighted = false, onClick = onNavigateToProfileTab) }
+                        item { QuickActionChip(icon = Icons.AutoMirrored.Filled.MenuBook, text = "Tarif Defterim", isHighlighted = false, onClick = onNavigateToProfileTab) }
                     }
                     Spacer(modifier = Modifier.height(32.dp))
                 }

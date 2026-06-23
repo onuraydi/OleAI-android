@@ -147,6 +147,15 @@ interface ApiService {
         @Part("StepImageStepNumbers") stepImageStepNumbers: @JvmSuppressWildcards List<RequestBody> = emptyList(),
         @Part("DeletedStepImageIds") deletedStepImageIds: @JvmSuppressWildcards List<RequestBody> = emptyList()
     )
+    // AI & Recommendations
+    @GET("/api/users/me/recommendations")
+    suspend fun getAiRecommendations(
+        @Query("Mode") mode: String,
+        @Query("UseZeroWaste") useZeroWaste: Boolean,
+        @Query("UseAllergyFilters") useAllergyFilters: Boolean,
+        @Query("UseDietFilters") useDietFilters: Boolean,
+        @Query("UseDislikedFilters") useDislikedFilters: Boolean
+    ): List<com.onur.oleai_android.core.network.dto.AiRecommendationResponse>
 
     // Recipe Details & Interactions
     @GET("/api/Recipes/{id}")
