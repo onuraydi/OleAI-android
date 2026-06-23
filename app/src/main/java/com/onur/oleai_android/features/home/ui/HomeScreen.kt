@@ -87,6 +87,7 @@ data class BottomNavItem(
 @Composable
 fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
+    onNavigateToRecipeDetail: (String) -> Unit,
     onLogout: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -216,9 +217,11 @@ fun HomeScreen(
             0 -> HomeContent(
                 viewModel = viewModel,
                 uiState = uiState,
+                onNavigateToRecipeDetail = onNavigateToRecipeDetail,
                 modifier = Modifier.padding(innerPadding)
             )
             1 -> DiscoverScreen(
+                onNavigateToRecipeDetail = onNavigateToRecipeDetail,
                 modifier = Modifier.padding(innerPadding)
             )
             2 -> PlaceholderTab(
@@ -248,6 +251,7 @@ fun HomeScreen(
 private fun HomeContent(
     viewModel: HomeViewModel,
     uiState: HomeUiState,
+    onNavigateToRecipeDetail: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val pagingRecipes = viewModel.personalizedRecipesPagingData.collectAsLazyPagingItems()
@@ -343,7 +347,7 @@ private fun HomeContent(
                         ) { page ->
                             HeroRecipeCard(
                                 recipe = uiState.trendingRecipes[page],
-                                onClick = { /* Navigate to Recipe Detail */ }
+                                onClick = { onNavigateToRecipeDetail(uiState.trendingRecipes[page].id) }
                             )
                         }
                         Spacer(modifier = Modifier.height(32.dp))
@@ -441,7 +445,7 @@ private fun HomeContent(
                     if (recipe != null) {
                         RecipeCard(
                             recipe = recipe,
-                            onClick = { /* Navigate */ },
+                            onClick = { onNavigateToRecipeDetail(recipe.id) },
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
