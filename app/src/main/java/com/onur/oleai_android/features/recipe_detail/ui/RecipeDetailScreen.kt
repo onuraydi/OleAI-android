@@ -33,6 +33,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun RecipeDetailScreen(
     onNavigateBack: () -> Unit,
+    onNavigateToEdit: (String) -> Unit,
     viewModel: RecipeDetailViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -67,7 +68,10 @@ fun RecipeDetailScreen(
                         
                         RecipeDetailHeader(
                             images = allImages,
-                            onNavigateBack = onNavigateBack
+                            onNavigateBack = onNavigateBack,
+                            onEditClick = if (recipe.userId == uiState.currentUserId) {
+                                { onNavigateToEdit(recipe.id) }
+                            } else null
                         )
                     }
                     item {

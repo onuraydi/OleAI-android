@@ -39,7 +39,11 @@ sealed class Screen(val route: String) {
     object RecipeDetail : Screen("recipe_detail/{recipeId}") {
         fun createRoute(recipeId: String) = "recipe_detail/$recipeId"
     }
-    object CreateRecipe : Screen("create_recipe")
+    object CreateRecipe : Screen("create_recipe?recipeId={recipeId}") {
+        fun createRoute(recipeId: String? = null): String {
+            return if (recipeId != null) "create_recipe?recipeId=$recipeId" else "create_recipe"
+        }
+    }
 }
 
 @Composable
@@ -135,7 +139,7 @@ fun AppNavigation() {
                     navController.navigate(Screen.RecipeDetail.createRoute(recipeId))
                 },
                 onNavigateToCreateRecipe = {
-                    navController.navigate(Screen.CreateRecipe.route)
+                    navController.navigate(Screen.CreateRecipe.createRoute())
                 },
                 onLogout = {
                     navController.navigate(Screen.Login.route) {
@@ -256,11 +260,20 @@ fun AppNavigation() {
         ) { backStackEntry ->
             val recipeId = backStackEntry.arguments?.getString("recipeId") ?: ""
             RecipeDetailScreen(
-                onNavigateBack = { navController.popBackStack() }
+                onNavigateBack = { navController.popBackStack() },
+                onNavigateToEdit = { rId -> navController.navigate(Screen.CreateRecipe.createRoute(rId)) }
             )
         }
         
-        composable(Screen.CreateRecipe.route) {
+        composable(
+            route = Screen.CreateRecipe.route,
+            arguments = listOf(navArgument("recipeId") {
+                type = NavType.StringType
+                nullable = true
+                defaultValue = null
+            })
+        ) { backStackEntry ->
+            val recipeId = backStackEntry.arguments?.getString("recipeId")
             com.onur.oleai_android.features.createrecipe.ui.CreateRecipeScreen(
                 onNavigateBack = { navController.popBackStack() },
                 onNavigateToHome = {

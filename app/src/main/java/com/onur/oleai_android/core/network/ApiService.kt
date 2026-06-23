@@ -127,6 +127,27 @@ interface ApiService {
         @Part("StepImageStepNumbers") stepImageStepNumbers: @JvmSuppressWildcards List<RequestBody> = emptyList()
     )
 
+    @Multipart
+    @PUT("/api/Recipes/{id}")
+    suspend fun updateRecipe(
+        @Path("id") id: String,
+        @Part("Title") title: RequestBody,
+        @Part("Description") description: RequestBody,
+        @Part("Visibility") visibility: RequestBody,
+        @Part("Difficulty") difficulty: RequestBody,
+        @Part("Servings") servings: RequestBody,
+        @Part("PrepTime") prepTime: RequestBody,
+        @Part("CookTime") cookTime: RequestBody,
+        @Part("CategoryIds") categoryIds: @JvmSuppressWildcards List<RequestBody> = emptyList(),
+        @Part("TagIds") tagIds: @JvmSuppressWildcards List<RequestBody> = emptyList(),
+        @Part("IngredientsJson") ingredientsJson: RequestBody,
+        @Part("StepsJson") stepsJson: RequestBody,
+        @Part newMainImage: MultipartBody.Part? = null,
+        @Part stepImages: @JvmSuppressWildcards List<MultipartBody.Part> = emptyList(),
+        @Part("StepImageStepNumbers") stepImageStepNumbers: @JvmSuppressWildcards List<RequestBody> = emptyList(),
+        @Part("DeletedStepImageIds") deletedStepImageIds: @JvmSuppressWildcards List<RequestBody> = emptyList()
+    )
+
     // Recipe Details & Interactions
     @GET("/api/Recipes/{id}")
     suspend fun getRecipeDetail(@Path("id") id: String): RecipeDetailResponse

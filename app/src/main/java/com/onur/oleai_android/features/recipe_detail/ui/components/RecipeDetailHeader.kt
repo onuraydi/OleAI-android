@@ -8,6 +8,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
@@ -33,6 +34,7 @@ import androidx.compose.material.icons.filled.Close
 fun RecipeDetailHeader(
     images: List<String>,
     onNavigateBack: () -> Unit,
+    onEditClick: (() -> Unit)? = null,
     modifier: Modifier = Modifier
 ) {
     var showFullScreenImage by remember { mutableStateOf<Int?>(null) }
@@ -99,6 +101,23 @@ fun RecipeDetailHeader(
                 contentDescription = "Geri",
                 tint = Color.White
             )
+        }
+
+        if (onEditClick != null) {
+            IconButton(
+                onClick = onEditClick,
+                modifier = Modifier
+                    .statusBarsPadding()
+                    .padding(16.dp)
+                    .align(Alignment.TopEnd)
+                    .background(Color.Black.copy(alpha = 0.5f), shape = CircleShape)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Düzenle",
+                    tint = Color.White
+                )
+            }
         }
     }
 

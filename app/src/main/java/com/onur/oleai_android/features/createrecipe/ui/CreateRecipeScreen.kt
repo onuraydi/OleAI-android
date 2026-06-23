@@ -4,6 +4,7 @@ import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -71,7 +72,7 @@ fun CreateRecipeScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Yeni Tarif Oluştur", fontSize = 16.sp, fontWeight = FontWeight.Bold) },
+                title = { Text(if (state.isEditMode) "Tarifi Düzenle" else "Yeni Tarif Oluştur", fontSize = 16.sp, fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     IconButton(onClick = onNavigateBack) {
                         Icon(Icons.Filled.ArrowBack, contentDescription = "Geri")
@@ -90,7 +91,7 @@ fun CreateRecipeScreen(
                         } else {
                             Icon(Icons.Outlined.Save, contentDescription = null, modifier = Modifier.size(16.dp), tint = Color.Black)
                             Spacer(modifier = Modifier.width(4.dp))
-                            Text("Tarifi Paylaş", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
+                            Text(if (state.isEditMode) "Değişiklikleri Kaydet" else "Tarifi Paylaş", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
                         }
                     }
                 },
@@ -114,32 +115,40 @@ fun CreateRecipeScreen(
             // Title & Description
             item {
                 Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+                    val hasTitleError = state.validationErrors.containsKey("title")
                     OutlinedTextField(
                         value = state.title,
                         onValueChange = { viewModel.updateTitle(it) },
-                        placeholder = { Text("Tarif Adı", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = Color.DarkGray) },
+                        placeholder = { Text("Tarif Adı", fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = if (hasTitleError) Color.Red.copy(alpha = 0.5f) else Color.DarkGray) },
+                        isError = hasTitleError,
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = if (hasTitleError) Color.Red else Color.Transparent,
+                            errorBorderColor = Color.Red,
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
+                            errorContainerColor = Color.Transparent
                         ),
                         textStyle = LocalTextStyle.current.copy(fontSize = 28.sp, fontWeight = FontWeight.ExtraBold, color = Color.White),
                         modifier = Modifier.fillMaxWidth()
                     )
 
+                    val hasDescError = state.validationErrors.containsKey("description")
                     OutlinedTextField(
                         value = state.description,
                         onValueChange = { viewModel.updateDescription(it) },
-                        label = { Text("AÇIKLAMA", fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold) },
+                        label = { Text("AÇIKLAMA", fontSize = 10.sp, color = if (hasDescError) Color.Red else Color.Gray, fontWeight = FontWeight.Bold) },
                         placeholder = { Text("Bu yemeğin hikayesini anlatın... (Örn. 'Büyükannemden bana kalan...')") },
+                        isError = hasDescError,
                         modifier = Modifier.fillMaxWidth().height(120.dp),
                         shape = RoundedCornerShape(12.dp),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color(0xFF7CB342),
-                            unfocusedBorderColor = Color.DarkGray,
+                            unfocusedBorderColor = if (hasDescError) Color.Red else Color.DarkGray,
+                            errorBorderColor = Color.Red,
                             focusedContainerColor = Color(0xFF161815),
-                            unfocusedContainerColor = Color(0xFF161815)
+                            unfocusedContainerColor = Color(0xFF161815),
+                            errorContainerColor = Color(0xFF161815)
                         ),
                         maxLines = 4
                     )
@@ -151,29 +160,36 @@ fun CreateRecipeScreen(
                 val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
                     viewModel.updateMainImage(uri)
                 }
+                val hasImageError = state.validationErrors.containsKey("mainImage")
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(200.dp)
                         .clip(RoundedCornerShape(16.dp))
                         .background(Color(0xFF161815))
+                        .then(
+                            if (hasImageError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(16.dp)) else Modifier
+                        )
                         .clickable { launcher.launch("image/*") },
                     contentAlignment = Alignment.Center
                 ) {
-                    if (state.mainImageUri != null) {
+                    if (state.mainImageUri != null || state.existingMainImageUrl != null) {
                         AsyncImage(
-                            model = state.mainImageUri,
+                            model = state.mainImageUri ?: state.existingMainImageUrl,
                             contentDescription = "Cover Image",
                             modifier = Modifier.fillMaxSize(),
                             contentScale = ContentScale.Crop
                         )
                     } else {
                         Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                            Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = Color.LightGray, modifier = Modifier.size(32.dp))
-                            Text("Kapak Fotoğrafı Yükle", color = Color.White, fontWeight = FontWeight.Bold)
-                            Text("PNG, JPG (Maks 10MB)", color = Color.Gray, fontSize = 12.sp)
+                            Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = if (hasImageError) Color.Red else Color.LightGray, modifier = Modifier.size(32.dp))
+                            Text("Kapak Fotoğrafı Yükle", color = if (hasImageError) Color.Red else Color.White, fontWeight = FontWeight.Bold)
+                            Text("PNG, JPG (Maks 10MB)", color = if (hasImageError) Color.Red.copy(alpha = 0.7f) else Color.Gray, fontSize = 12.sp)
                         }
                     }
+                }
+                if (hasImageError) {
+                    Text(text = state.validationErrors["mainImage"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(start = 16.dp, top = 4.dp))
                 }
             }
 
@@ -260,58 +276,72 @@ fun CreateRecipeScreen(
             // Prep, Cook Time & Servings
             item {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                    val hasServingsError = state.validationErrors.containsKey("servings")
                     OutlinedTextField(
                         value = state.servings,
                         onValueChange = { viewModel.updateServings(it) },
-                        label = { Text("PORSİYON", fontSize = 10.sp, color = Color.Gray, maxLines = 1) },
+                        label = { Text("PORSİYON", fontSize = 10.sp, color = if (hasServingsError) Color.Red else Color.Gray, maxLines = 1) },
+                        isError = hasServingsError,
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color(0xFF7CB342), 
-                            unfocusedBorderColor = Color.DarkGray, 
+                            unfocusedBorderColor = if (hasServingsError) Color.Red else Color.DarkGray, 
+                            errorBorderColor = Color.Red,
                             focusedContainerColor = Color(0xFF161815),
                             unfocusedContainerColor = Color(0xFF161815),
+                            errorContainerColor = Color(0xFF161815),
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp),
-                        suffix = { Text("Kişilik", fontSize = 12.sp, color = Color.Gray) },
+                        suffix = { Text("Kişilik", fontSize = 12.sp, color = if (hasServingsError) Color.Red else Color.Gray) },
                         singleLine = true
                     )
+                    
+                    val hasPrepError = state.validationErrors.containsKey("prepTime")
                     OutlinedTextField(
                         value = state.prepTime,
                         onValueChange = { viewModel.updatePrepTime(it) },
-                        label = { Text("HAZIRLIK", fontSize = 10.sp, color = Color.Gray, maxLines = 1) },
+                        label = { Text("HAZIRLIK", fontSize = 10.sp, color = if (hasPrepError) Color.Red else Color.Gray, maxLines = 1) },
+                        isError = hasPrepError,
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color(0xFF7CB342), 
-                            unfocusedBorderColor = Color.DarkGray, 
+                            unfocusedBorderColor = if (hasPrepError) Color.Red else Color.DarkGray, 
+                            errorBorderColor = Color.Red,
                             focusedContainerColor = Color(0xFF161815),
                             unfocusedContainerColor = Color(0xFF161815),
+                            errorContainerColor = Color(0xFF161815),
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp),
-                        suffix = { Text("Dk", fontSize = 12.sp, color = Color.Gray) },
+                        suffix = { Text("Dk", fontSize = 12.sp, color = if (hasPrepError) Color.Red else Color.Gray) },
                         singleLine = true
                     )
+                    
+                    val hasCookError = state.validationErrors.containsKey("cookTime")
                     OutlinedTextField(
                         value = state.cookTime,
                         onValueChange = { viewModel.updateCookTime(it) },
-                        label = { Text("PİŞİRME", fontSize = 10.sp, color = Color.Gray, maxLines = 1) },
+                        label = { Text("PİŞİRME", fontSize = 10.sp, color = if (hasCookError) Color.Red else Color.Gray, maxLines = 1) },
+                        isError = hasCookError,
                         modifier = Modifier.weight(1f),
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedBorderColor = Color(0xFF7CB342), 
-                            unfocusedBorderColor = Color.DarkGray, 
+                            unfocusedBorderColor = if (hasCookError) Color.Red else Color.DarkGray, 
+                            errorBorderColor = Color.Red,
                             focusedContainerColor = Color(0xFF161815),
                             unfocusedContainerColor = Color(0xFF161815),
+                            errorContainerColor = Color(0xFF161815),
                             focusedTextColor = Color.White,
                             unfocusedTextColor = Color.White
                         ),
                         shape = RoundedCornerShape(12.dp),
-                        suffix = { Text("Dk", fontSize = 12.sp, color = Color.Gray) },
+                        suffix = { Text("Dk", fontSize = 12.sp, color = if (hasCookError) Color.Red else Color.Gray) },
                         singleLine = true
                     )
                 }
@@ -323,18 +353,24 @@ fun CreateRecipeScreen(
 
             // Ingredients Area
             item {
+                val hasIngredientsError = state.validationErrors.containsKey("ingredients")
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().then(
+                        if (hasIngredientsError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(16.dp)) else Modifier
+                    ),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF111310))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Icon(Icons.Outlined.Scale, contentDescription = null, tint = Color.LightGray, modifier = Modifier.size(20.dp))
-                                Text("Malzemeler", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Icon(Icons.Outlined.Scale, contentDescription = null, tint = if (hasIngredientsError) Color.Red else Color.LightGray, modifier = Modifier.size(20.dp))
+                                Text("Malzemeler", color = if (hasIngredientsError) Color.Red else Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             }
                             Text("${state.ingredients.size} ADET", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        }
+                        if (hasIngredientsError) {
+                            Text(text = state.validationErrors["ingredients"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
                         }
                         Spacer(modifier = Modifier.height(16.dp))
 
@@ -504,18 +540,24 @@ fun CreateRecipeScreen(
 
             // Steps Area
             item {
+                val hasStepsError = state.validationErrors.containsKey("steps")
                 Card(
-                    modifier = Modifier.fillMaxWidth(),
+                    modifier = Modifier.fillMaxWidth().then(
+                        if (hasStepsError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(16.dp)) else Modifier
+                    ),
                     shape = RoundedCornerShape(16.dp),
                     colors = CardDefaults.cardColors(containerColor = Color(0xFF111310))
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
                             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                Icon(Icons.Outlined.Book, contentDescription = null, tint = Color.LightGray, modifier = Modifier.size(20.dp))
-                                Text("Hazırlanışı", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
+                                Icon(Icons.Outlined.Book, contentDescription = null, tint = if (hasStepsError) Color.Red else Color.LightGray, modifier = Modifier.size(20.dp))
+                                Text("Hazırlanışı", color = if (hasStepsError) Color.Red else Color.White, fontWeight = FontWeight.Bold, fontSize = 16.sp)
                             }
                             Text("${state.steps.size} ADIM", color = Color.Gray, fontSize = 10.sp, fontWeight = FontWeight.Bold)
+                        }
+                        if (hasStepsError) {
+                            Text(text = state.validationErrors["steps"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(top = 4.dp))
                         }
                         Spacer(modifier = Modifier.height(16.dp))
 
@@ -556,7 +598,8 @@ fun CreateRecipeScreen(
                                         TextButton(onClick = { launcher.launch("image/*") }) {
                                             Icon(Icons.Outlined.AddPhotoAlternate, contentDescription = null, tint = Color.Gray, modifier = Modifier.size(16.dp))
                                             Spacer(modifier = Modifier.width(4.dp))
-                                            Text(if (step.imageUri != null) "Fotoğraf Seçildi" else "Fotoğraf Ekle (İsteğe Bağlı)", color = Color.Gray, fontSize = 12.sp)
+                                            val hasImage = step.imageUri != null || step.existingImageUrl != null
+                                            Text(if (hasImage) "Fotoğraf Seçildi" else "Fotoğraf Ekle (İsteğe Bağlı)", color = Color.Gray, fontSize = 12.sp)
                                         }
                                         
                                         if (state.steps.size > 1) {
@@ -580,8 +623,12 @@ fun CreateRecipeScreen(
             
             // Categories
             item {
-                Column {
-                    Text("KATEGORİLER", fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                val hasCatError = state.validationErrors.containsKey("categories")
+                Column(modifier = Modifier.fillMaxWidth().then(if (hasCatError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(12.dp)).padding(8.dp) else Modifier)) {
+                    Text("KATEGORİLER", fontSize = 10.sp, color = if (hasCatError) Color.Red else Color.Gray, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                    if (hasCatError) {
+                        Text(text = state.validationErrors["categories"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(bottom = 8.dp))
+                    }
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         state.categories.forEach { category ->
                             val isSelected = state.selectedCategoryIds.contains(category.id)
@@ -601,8 +648,12 @@ fun CreateRecipeScreen(
 
             // Tags
             item {
-                Column {
-                    Text("ETİKETLER", fontSize = 10.sp, color = Color.Gray, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                val hasTagError = state.validationErrors.containsKey("tags")
+                Column(modifier = Modifier.fillMaxWidth().then(if (hasTagError) Modifier.border(2.dp, Color.Red, RoundedCornerShape(12.dp)).padding(8.dp) else Modifier)) {
+                    Text("ETİKETLER", fontSize = 10.sp, color = if (hasTagError) Color.Red else Color.Gray, fontWeight = FontWeight.Bold, modifier = Modifier.padding(bottom = 8.dp))
+                    if (hasTagError) {
+                        Text(text = state.validationErrors["tags"] ?: "", color = Color.Red, fontSize = 12.sp, modifier = Modifier.padding(bottom = 8.dp))
+                    }
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp), verticalArrangement = Arrangement.spacedBy(8.dp)) {
                         state.tags.forEach { tag ->
                             val isSelected = state.selectedTagIds.contains(tag.id)
