@@ -42,7 +42,8 @@ fun MyRecipesSection(
     modifier: Modifier = Modifier,
     viewModel: MyRecipesViewModel = hiltViewModel(),
     onCreateRecipeClick: () -> Unit = {},
-    listState: LazyListState = rememberLazyListState()
+    listState: LazyListState = rememberLazyListState(),
+    onRecipeClick: (String) -> Unit = {}
 ) {
     val state by viewModel.state.collectAsState()
     val focusManager = LocalFocusManager.current
@@ -353,7 +354,7 @@ fun MyRecipesSection(
                                 Box(modifier = Modifier.weight(1f)) {
                                     RecipeCard(
                                         recipe = recipe,
-                                        onClick = { /* TODO */ }
+                                        onClick = { onRecipeClick(recipe.id) }
                                     )
                                 }
                             }

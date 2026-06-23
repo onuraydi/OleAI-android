@@ -240,6 +240,7 @@ fun HomeScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .consumeWindowInsets(innerPadding),
+                onNavigateToRecipeDetail = onNavigateToRecipeDetail,
                 onLogoutClick = onLogout
             )
         }

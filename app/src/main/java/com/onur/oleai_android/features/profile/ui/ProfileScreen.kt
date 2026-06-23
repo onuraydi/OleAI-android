@@ -33,6 +33,7 @@ import com.onur.oleai_android.features.profile.viewmodel.UserViewModel
 fun ProfileScreen(
     modifier: Modifier = Modifier,
     viewModel: UserViewModel = hiltViewModel(),
+    onNavigateToRecipeDetail: (String) -> Unit = {},
     onEditProfileClick: () -> Unit = {},
     onLogoutClick: () -> Unit = {}
 ) {
@@ -104,7 +105,7 @@ fun ProfileScreen(
                 1 -> {
                     // Tariflerim
                     item {
-                        MyRecipesSection(listState = listState)
+                        MyRecipesSection(listState = listState, onRecipeClick = onNavigateToRecipeDetail)
                     }
                 }
                 2 -> {
