@@ -337,4 +337,27 @@ interface ApiService {
 
     @POST("/api/Auth/refresh-token")
     fun refreshToken(): Call<Unit>
+    // --- NOTIFICATIONS ---
+    
+    @GET("/api/Notifications")
+    suspend fun getMyNotifications(
+        @Query("page") page: Int = 0,
+        @Query("size") size: Int = 10,
+        @Query("onlyUnread") onlyUnread: Boolean = false
+    ): com.onur.oleai_android.core.network.dto.PaginatedResponse<com.onur.oleai_android.core.network.dto.NotificationDto>
+    
+    @GET("/api/Notifications/unread-count")
+    suspend fun getUnreadNotificationCount(): com.onur.oleai_android.core.network.dto.UnreadNotificationCountResponse
+    
+    @PUT("/api/Notifications/{id}/read")
+    suspend fun markNotificationAsRead(@Path("id") id: String)
+
+    @PUT("/api/Notifications/read-all")
+    suspend fun markAllNotificationsAsRead()
+
+    @DELETE("/api/Notifications/{id}")
+    suspend fun deleteNotification(@Path("id") id: String)
+
+    @POST("/api/UserDevices")
+    suspend fun registerDevice(@Body command: com.onur.oleai_android.features.notifications.service.RegisterDeviceCommand)
 }

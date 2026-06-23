@@ -36,6 +36,7 @@ data class HomeUiState(
     val isRefreshing: Boolean = false,
     val error: String? = null,
     val firstName: String = "",
+    val unreadNotificationCount: Int = 0,
 
     // Dashboard Stats
     val totalPantryItems: Int = 0,
@@ -98,6 +99,14 @@ class HomeViewModel @Inject constructor(
                 val pantry = homeRepository.getMyPantry()
                 val shopping = homeRepository.getMyShoppingList()
                 val categoriesList = homeRepository.getRecipeCategories()
+                
+                var unreadNotifications = 0
+                try {
+                    val notifCount = apiService.getUnreadNotificationCount()
+                    unreadNotifications = notifCount.count
+                } catch (e: Exception) {
+                    // Ignore
+                }
 
                 // Calculate Pantry Stats
                 val totalPantry = pantry.size
@@ -168,6 +177,7 @@ class HomeViewModel @Inject constructor(
                         isLoading = false,
                         isRefreshing = false,
                         firstName = userProfile.firstName,
+                        unreadNotificationCount = unreadNotifications,
                         totalPantryItems = totalPantry,
                         topCategories = topCatsList,
                         freshItems = fresh,

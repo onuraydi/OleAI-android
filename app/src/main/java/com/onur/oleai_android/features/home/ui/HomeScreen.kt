@@ -89,6 +89,7 @@ fun HomeScreen(
     viewModel: HomeViewModel = hiltViewModel(),
     onNavigateToRecipeDetail: (String) -> Unit,
     onNavigateToCreateRecipe: () -> Unit = {},
+    onNavigateToNotifications: () -> Unit = {},
     onLogout: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -116,14 +117,16 @@ fun HomeScreen(
                     )
                 },
                 actions = {
-                    IconButton(onClick = { /* Notifications */ }) {
+                    IconButton(onClick = onNavigateToNotifications) {
                         BadgedBox(
                             badge = {
-                                Badge(
-                                    containerColor = Color(0xFFEF4444),
-                                    contentColor = Color.White
-                                ) {
-                                    Text("2", fontSize = 10.sp)
+                                if (uiState.unreadNotificationCount > 0) {
+                                    Badge(
+                                        containerColor = Color(0xFFEF4444),
+                                        contentColor = Color.White
+                                    ) {
+                                        Text(uiState.unreadNotificationCount.toString(), fontSize = 10.sp)
+                                    }
                                 }
                             }
                         ) {

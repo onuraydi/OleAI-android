@@ -44,6 +44,7 @@ sealed class Screen(val route: String) {
             return if (recipeId != null) "create_recipe?recipeId=$recipeId" else "create_recipe"
         }
     }
+    object Notifications : Screen("notifications")
 }
 
 @Composable
@@ -133,6 +134,11 @@ fun AppNavigation() {
                 }
             )
         }
+        composable(Screen.Notifications.route) {
+            com.onur.oleai_android.features.notifications.ui.NotificationsScreen(
+                onNavigateBack = { navController.popBackStack() }
+            )
+        }
         composable(Screen.Home.route) {
             HomeScreen(
                 onNavigateToRecipeDetail = { recipeId ->
@@ -140,6 +146,9 @@ fun AppNavigation() {
                 },
                 onNavigateToCreateRecipe = {
                     navController.navigate(Screen.CreateRecipe.createRoute())
+                },
+                onNavigateToNotifications = {
+                    navController.navigate(Screen.Notifications.route)
                 },
                 onLogout = {
                     navController.navigate(Screen.Login.route) {
