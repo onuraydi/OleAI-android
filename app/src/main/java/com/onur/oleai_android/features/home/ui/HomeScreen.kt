@@ -86,7 +86,8 @@ data class BottomNavItem(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreen(
-    viewModel: HomeViewModel = hiltViewModel()
+    viewModel: HomeViewModel = hiltViewModel(),
+    onLogout: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var selectedTab by remember { mutableIntStateOf(0) }
@@ -232,11 +233,11 @@ fun HomeScreen(
             4 -> PantryScreen(
                 modifier = Modifier.padding(innerPadding)
             )
-            5 -> PlaceholderTab(
-                title = "Profil",
-                subtitle = "Hesap ayarlarını düzenle",
-                icon = Icons.Filled.Person,
-                modifier = Modifier.padding(innerPadding)
+            5 -> com.onur.oleai_android.features.profile.ui.ProfileScreen(
+                modifier = Modifier
+                    .padding(innerPadding)
+                    .consumeWindowInsets(innerPadding),
+                onLogoutClick = onLogout
             )
         }
     }
