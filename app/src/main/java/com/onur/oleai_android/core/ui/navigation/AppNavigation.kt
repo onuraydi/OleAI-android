@@ -22,6 +22,7 @@ import com.onur.oleai_android.features.onboarding.ui.DietaryPreferencesScreen
 import com.onur.oleai_android.features.onboarding.ui.AllergiesScreen
 import com.onur.oleai_android.features.onboarding.ui.DislikedIngredientsScreen
 import com.onur.oleai_android.features.onboarding.viewmodel.PersonalizationViewModel
+import com.onur.oleai_android.features.recipe_detail.ui.RecipeDetailScreen
 
 sealed class Screen(val route: String) {
     object Splash : Screen("splash")
@@ -35,6 +36,9 @@ sealed class Screen(val route: String) {
     object PersonalizationDiet : Screen("personalization_diet")
     object PersonalizationAllergies : Screen("personalization_allergies")
     object PersonalizationDisliked : Screen("personalization_disliked")
+    object RecipeDetail : Screen("recipe_detail/{recipeId}") {
+        fun createRoute(recipeId: String) = "recipe_detail/$recipeId"
+    }
 }
 
 @Composable
@@ -126,6 +130,9 @@ fun AppNavigation() {
         }
         composable(Screen.Home.route) {
             HomeScreen(
+                onNavigateToRecipeDetail = { recipeId ->
+                    navController.navigate(Screen.RecipeDetail.createRoute(recipeId))
+                },
                 onLogout = {
                     navController.navigate(Screen.Login.route) {
                         popUpTo(0) { inclusive = true }
@@ -236,6 +243,16 @@ fun AppNavigation() {
                 onNavigateBack = {
                     navController.popBackStack()
                 }
+            )
+        }
+
+        composable(
+            route = Screen.RecipeDetail.route,
+            arguments = listOf(navArgument("recipeId") { type = NavType.StringType })
+        ) { backStackEntry ->
+            val recipeId = backStackEntry.arguments?.getString("recipeId") ?: ""
+            RecipeDetailScreen(
+                onNavigateBack = { navController.popBackStack() }
             )
         }
     }

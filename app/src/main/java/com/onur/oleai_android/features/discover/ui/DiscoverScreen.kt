@@ -46,6 +46,7 @@ import com.onur.oleai_android.features.home.ui.components.RecipeCard
 @Composable
 fun DiscoverScreen(
     viewModel: DiscoverViewModel = hiltViewModel(),
+    onNavigateToRecipeDetail: (String) -> Unit,
     modifier: Modifier = Modifier
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -242,7 +243,7 @@ fun DiscoverScreen(
                         pagedRecipes[index]?.let { recipe ->
                             RecipeCard(
                                 recipe = recipe,
-                                onClick = { /* TODO: Navigate to detail */ }
+                                onClick = { onNavigateToRecipeDetail(recipe.id) }
                             )
                         }
                     }
